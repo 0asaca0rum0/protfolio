@@ -6,7 +6,7 @@ const projects = [
         id: 1,
         title: 'E-commerce Dashboard',
         description: 'An essential tool for online businesses, the Ecommerce Dashboard offers real-time sales tracking, inventory management, customer analytics, and marketing campaign monitoring in a user-friendly interface.',
-        imageUrl: 'project-1.png',
+        imageUrl: 'project-1.webp',
         techstack: ['Next 13 ' , 'tailwindcss ', 'nodejs ', 'express ', 'mongodb ', 'nginx ', 'linux '],
         link: null
     },
@@ -15,7 +15,7 @@ const projects = [
         title: 'student attendance system',
         description: 'The Student Attendance System is a web-app application designed to simplify tracking student attendance. It offers a user-friendly interface for teachers to record attendance and for administrators to monitor records. Key features include automated attendance recording, detailed reports, notifications in the students app and much more.',
         techstack: ['React ', 'Tailwind CSS ','vite ','nodejs','express','flutter '],
-        imageUrl: '/project-2.jpg',
+        imageUrl: '/project-2.webp',
         link: 'https://students-attendance.vercel.app/'
     },
     {
@@ -23,7 +23,7 @@ const projects = [
         title: 'Ecommerce website',
         description: 'An online platform for seamless shopping, the Ecommerce Website offers a variety of products, secure payments, and efficient order processing. It features user-friendly browsing, a shopping cart, secure payments, order tracking, and customer support, making it a valuable tool for expanding businesses online.',
         techstack: ['Next 13 ', 'Tailwind CSS ', 'nodejs', 'express '],
-        imageUrl: '/project-3.png',
+        imageUrl: '/project-3.webp',
         link: 'https://bilwafi.shop/'
     },
     {
@@ -31,7 +31,7 @@ const projects = [
         title: 'faculty website',
         description: 'An online platform for seamless shopping, the Ecommerce Website offers a variety of products, secure payments, and efficient order processing. It features user-friendly browsing, a shopping cart, secure payments, order tracking, and customer support, making it a valuable tool for expanding businesses online.',
         techstack: ['Next 13 ', 'Tailwind CSS ', 'nodejs', 'express '],
-        imageUrl: '/project-4.png',
+        imageUrl: '/project-4.webp',
         link: null
     },
     // Add more projects here

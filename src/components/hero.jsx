@@ -9,7 +9,7 @@ const Hero = () => {
         <div id='home' className='w-11/12 mt-5   p-4   h-full flex flex-col justify-evenly items-center bg-inherit  rounded-3xl bg-opacity-80 backdrop-filter backdrop-blur-lg  border border-gray-600  shadow-lg'>
 
             <div className="flex md:flex-row-reverse flex-col items-center justify-around w-full h-full  ">
-                <img src="self.jpg" alt="" className='h-[480px] md:w-1/2 hover:scale-105 transition-all md:me-10  aspect-auto rounded-xl border border-white/60 ' />
+                <img src="self.webp" alt="" className='h-[480px] md:w-1/2 hover:scale-105 transition-all md:me-10  aspect-auto rounded-xl border border-white/60 ' />
 
                 <div className='h-full  md:w-full flex flex-col justify-center m-2 items-center  md:text-left'>
                     <p className='text'>Hello, welcome to my portfolio!</p>
