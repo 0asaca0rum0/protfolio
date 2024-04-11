@@ -28,7 +28,7 @@ const techList = [
 ];
 
 export default function Card({ project }) {
-    const [bgColor, setBgColor] = useState("black");
+    const [bgColor, setBgColor] = useState("white");
     let handleBgColorChange = () => {
         const x = window.getComputedStyle(document.documentElement).getPropertyValue('background-color').toString();
         if (x === "rgb(0, 0, 0)") {
