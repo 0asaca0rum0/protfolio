@@ -52,19 +52,19 @@ const Header = ({ islight }) => {
                 <ul className="flex flex-row items-center justify-between gap-2 w-full ">
                     <li className="flex flex-row gap-2 items-center hover:text-teal-400 hover:scale-105 transition-all duration-300 cursor-pointer " onClick={() => { scroll('top') }}>
                         <FaHome size={"20"} />
-                        <p>Home </p>
+                        Home 
                     </li>
                     <li className="flex flex-row gap-2 items-center hover:text-teal-400 hover:scale-105 transition-all duration-300 cursor-pointer" onClick={() => { scroll('top') }}>
                         <FaReact className="motion-safe:animate-spin-slow" size={"20"} />
-                        <p>tech </p>
+                        tech 
                     </li>
                     <li className="flex flex-row gap-2 items-center hover:text-teal-400 hover:scale-105 transition-all duration-300 cursor-pointer" onClick={() => { scroll('top') }}>
                         <FaServer className="" />
-                        <p>Projects</p>
+                        Projects
                     </li>
                     <li className="flex flex-row gap-2 items-center hover:text-teal-400 hover:scale-105 transition-all duration-300 cursor-pointer" onClick={() => { scroll('top') }}>
                         <BiMailSend size={"20"} />
-                        <p>Contact</p>
+                    Contact
                     </li>
                 </ul>
             </nav>
