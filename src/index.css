@@ -99,10 +99,8 @@ input:checked + .slider:after {
         height: max-content;
 width: 100%;
         background-image: url("/public/ccchaos.svg");
-        background-repeat: no-repeat;
+        background-repeat: repeat-y;
         background-position: center;
-        background-size: cover;
-        
      
     }
     html{
