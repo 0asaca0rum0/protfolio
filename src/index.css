@@ -11,7 +11,7 @@ width: 100%;
 body {
 height: max-content;
 width: 100%;
-background-image: url("vite.svg");
+background-image: url("/public/vite.svg");
 background-repeat: no-repeat;
 background-size: cover;
 background-position: center;
@@ -96,5 +96,5 @@ input:checked + .slider:after {
   @media only screen and (max-width: 601px) {
     /* Apply different styles for screens wider than 600px */
     body {
-background-image: url("vite.svg");
+background-image: url("/public/ccchaos.svg");
 background-repeat: repeat;    }}
