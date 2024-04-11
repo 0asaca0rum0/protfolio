@@ -4,7 +4,7 @@ import { TbBrandNextjs, TbBrandMysql } from 'react-icons/tb';
 import { SiTailwindcss, SiNginx } from 'react-icons/si';
 import { BiMailSend } from "react-icons/bi";
 import { IoCloseCircleOutline } from "react-icons/io5";
-import { ButtonGroup, Button } from "@material-tailwind/react";
+import {  Button } from "@material-tailwind/react";
 import { BiHeart } from "react-icons/bi";
 import { BsStar } from "react-icons/bs";
 import { CiLink } from "react-icons/ci";
@@ -33,17 +33,16 @@ export default function Card({ project }) {
         const x = window.getComputedStyle(document.documentElement).getPropertyValue('background-color').toString();
         if (x === "rgb(0, 0, 0)") {
             setBgColor("black");
-        } else {
+        } else if (x === "rgb(255, 255, 255)"){
             setBgColor("white");
+        }else{
+            return;
         }
     };
     useEffect(() => {
-
-
         window.addEventListener('click', handleBgColorChange);
-
         return () => {
-            window.removeEventListener('resize', handleBgColorChange);
+            window.removeEventListener('click', handleBgColorChange);
         };
     }, []);
 
@@ -58,12 +57,12 @@ export default function Card({ project }) {
 
     return (
         <div className={`max-w-md min-w-60 flex flex-col items-center justify-between w-full overflow-hidden bg-opacity-80 backdrop-filter backdrop-blur-lg bg-inherit rounded-lg shadow-lg ${!bgColor ? 'text-white' : 'text-gray-800'}`}>
-            <img alt="Website Project" className="object-cover object-center w-full h-56" src={project.imageUrl} />
+            <img alt="Website Project" className="object-cover object-center w-full h-56" loading='lazy' src={project.imageUrl} />
             <button onClick={onOpenModal} className={`absolute top-52 right-0 -mt-4 bg-blue-300 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-20 rounded-tl ${bgColor ? 'text-white' : 'text-gray-800'}`}><GoZoomIn size={"25px"} className='text-indigo-500 m-1' /></button>
 
             <div className={`p-6 bg-opacity-80 backdrop-filter backdrop-blur-lg bg-inherit ${!bgColor ? 'text-white' : 'text-gray-800'}`}>
                 <Modal open={open} onClose={onCloseModal} center classNames={"w-full h-full flex flex-row items-center justify-center"} closeIcon={<IoCloseCircleOutline size={35} className='text-red-500' />} >
-                    <img alt="Website Project" className="object-cover object-center w-full h-[700px] " src={project.imageUrl} />
+                    <img alt="Website Project" className="object-cover object-center w-full h-[700px] " loading='lazy' src={project.imageUrl} />
                 </Modal>
                 <div className="flex justify-between gap-2 items-center">
                     <span className={`text-lg font-semibold ${bgColor === "black" ? 'text-black' : 'text-white'}`}>{project.title}</span>
