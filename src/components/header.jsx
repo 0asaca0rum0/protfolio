@@ -50,21 +50,21 @@ const Header = ({ islight }) => {
             />
             <nav className="w-1/2 hidden lg:block">
                 <ul className="flex flex-row items-center justify-between gap-2 w-full ">
-                    <li className="flex flex-row gap-2 items-center hover:text-teal-400 hover:scale-105 transition-all duration-300">
+                    <li className="flex flex-row gap-2 items-center hover:text-teal-400 hover:scale-105 transition-all duration-300 cursor-pointer " onClick={() => { scroll('top') }}>
                         <FaHome size={"20"} />
-                        <a onClick={() =>{scroll('top')}}>Home</a>
+                        <p>Home </p>
                     </li>
-                    <li className="flex flex-row gap-2 items-center hover:text-teal-400 hover:scale-105 transition-all duration-300">
+                    <li className="flex flex-row gap-2 items-center hover:text-teal-400 hover:scale-105 transition-all duration-300 cursor-pointer" onClick={() => { scroll('top') }}>
                         <FaReact className="motion-safe:animate-spin-slow" size={"20"} />
-                        <a onClick={() =>{scroll('tech')}}>tech</a>
+                        <p>tech </p>
                     </li>
-                    <li className="flex flex-row gap-2 items-center hover:text-teal-400 hover:scale-105 transition-all duration-300">
+                    <li className="flex flex-row gap-2 items-center hover:text-teal-400 hover:scale-105 transition-all duration-300 cursor-pointer" onClick={() => { scroll('top') }}>
                         <FaServer className="" />
-                        <a onClick={() =>{scroll('project')}}>Projects</a>
+                        <p>Projects</p>
                     </li>
-                    <li className="flex flex-row gap-2 items-center hover:text-teal-400 hover:scale-105 transition-all duration-300">
+                    <li className="flex flex-row gap-2 items-center hover:text-teal-400 hover:scale-105 transition-all duration-300 cursor-pointer" onClick={() => { scroll('top') }}>
                         <BiMailSend size={"20"} />
-                        <a onClick={() =>{scroll('contact')}}>Contact</a>
+                        <p>Contact</p>
                     </li>
                 </ul>
             </nav>
