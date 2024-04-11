@@ -10,7 +10,7 @@ function App() {
 
 
   return (
-    <div className='flex flex-col pt-16 items-center bg-backgorund bg-center bg-cover bg-no-repeat justify-around h-full w-full' >
+    <div className='flex flex-col pt-16 items-center  justify-around h-full w-full' >
       <div id='top'></div>
       <Header islight={false} />
       <Hero />
