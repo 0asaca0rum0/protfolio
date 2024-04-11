@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1000 900">
+    <defs>
+        <linearGradient id="cccoil-grad" x1="50%" y1="0%" x2="50%" y2="100%">
+            <stop stop-color="hsl(162, 100%, 58%)" stop-opacity="1" offset="0%"></stop>
+            <stop stop-color="hsl(270, 73%, 53%)" stop-opacity="1" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+
+    <circle r="480" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="5"
+        stroke-linecap="round" fill="none" stroke-dasharray="960 1255">
+        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
+            from="50 500 500" to="410 500 500" dur="30s" repeatCount="indefinite" />
+    </circle>
+    <circle r="460" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="5"
+        stroke-linecap="round" fill="none" stroke-dasharray="920 1215">
+        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
+            from="100 500 500" to="460 500 500" dur="25s" repeatCount="indefinite" />
+    </circle>
+    <circle r="440" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="5"
+        stroke-linecap="round" fill="none" stroke-dasharray="880 1175">
+        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
+            from="150 500 500" to="510 500 500" dur="28s" repeatCount="indefinite" />
+    </circle>
+    <circle r="420" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="5"
+        stroke-linecap="round" fill="none" stroke-dasharray="840 1135">
+        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
+            from="200 500 500" to="560 500 500" dur="22s" repeatCount="indefinite" />
+    </circle>
+    <circle r="400" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="5"
+        stroke-linecap="round" fill="none" stroke-dasharray="800 1095">
+        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
+            from="250 500 500" to="610 500 500" dur="23s" repeatCount="indefinite" />
+    </circle>
+    <circle r="380" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="5"
+        stroke-linecap="round" fill="none" stroke-dasharray="760 1055">
+        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
+            from="300 500 500" to="660 500 500" dur="26s" repeatCount="indefinite" />
+    </circle>
+    <circle r="360" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="5"
+        stroke-linecap="round" fill="none" stroke-dasharray="720 1015">
+        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
+            from="350 500 500" to="710 500 500" dur="32s" repeatCount="indefinite" />
+    </circle>
+    <circle r="340" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="5"
+        stroke-linecap="round" fill="none" stroke-dasharray="680 975">
+        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
+            from="400 500 500" to="760 500 500" dur="24s" repeatCount="indefinite" />
+    </circle>
+    <circle r="320" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="5"
+        stroke-linecap="round" fill="none" stroke-dasharray="640 935">
+        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
+            from="450 500 500" to="810 500 500" dur="22s" repeatCount="indefinite" />
+    </circle>
+    <circle r="300" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="5"
+        stroke-linecap="round" fill="none" stroke-dasharray="600 895">
+        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
+            from="500 500 500" to="860 500 500" dur="23s" repeatCount="indefinite" />
+    </circle>
+    <circle r="280" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="5"
+        stroke-linecap="round" fill="none" stroke-dasharray="560 855">
+        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
+            from="550 500 500" to="910 500 500" dur="23s" repeatCount="indefinite" />
+    </circle>
+    <circle r="260" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="5"
+        stroke-linecap="round" fill="none" stroke-dasharray="520 815">
+        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
+            from="600 500 500" to="960 500 500" dur="21.2s" repeatCount="indefinite" />
+    </circle>
+    <circle r="240" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="5"
+        stroke-linecap="round" fill="none" stroke-dasharray="480 775">
+        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
+            from="650 500 500" to="1010 500 500" dur="20.4s" repeatCount="indefinite" />
+    </circle>
+    <circle r="220" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="5"
+        stroke-linecap="round" fill="none" stroke-dasharray="440 735">
+        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
+            from="700 500 500" to="1060 500 500" dur="26s" repeatCount="indefinite" />
+    </circle>
+    <circle r="200" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="5"
+        stroke-linecap="round" fill="none" stroke-dasharray="400 695">
+        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
+            from="750 500 500" to="1110 500 500" dur="28s" repeatCount="indefinite" />
+    </circle>
+    <circle r="180" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="5"
+        stroke-linecap="round" fill="none" stroke-dasharray="360 655">
+        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
+            from="800 500 500" to="1160 500 500" dur="21s" repeatCount="indefinite" />
+    </circle>
+    <circle r="160" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="5"
+        stroke-linecap="round" fill="none" stroke-dasharray="320 615">
+        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
+            from="850 500 500" to="1210 500 500" dur="17.2s" repeatCount="indefinite" />
+    </circle>
+    <circle r="140" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="5"
+        stroke-linecap="round" fill="none" stroke-dasharray="280 575">
+        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
+            from="900 500 500" to="1260 500 500" dur="16.4s" repeatCount="indefinite" />
+    </circle>
+    <circle r="120" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="5"
+        stroke-linecap="round" fill="none" stroke-dasharray="240 535">
+        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
+            from="950 500 500" to="1310 500 500" dur="15.6s" repeatCount="indefinite" />
+    </circle>
+    <circle r="100" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="5"
+        stroke-linecap="round" fill="none" stroke-dasharray="200 495">
+        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
+            from="1000 500 500" to="1360 500 500" dur="14.8s" repeatCount="indefinite" />
+    </circle>
+</svg>
