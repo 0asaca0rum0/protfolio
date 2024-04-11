@@ -101,6 +101,7 @@ width: 100%;
         background-image: url("/public/ccchaos.svg");
         background-repeat: no-repeat;
         background-position: center;
+        background-size: cover;
         
      
     }
