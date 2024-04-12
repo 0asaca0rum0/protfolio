@@ -42,7 +42,7 @@ export default function Card({ project }) {
     useEffect(() => {
         document.getElementById("slider").addEventListener('click', handleBgColorChange);
         return () => {
-            document.getElementById("slider").removeEventListener('click', handleBgColorChange);
+            document.getElementById("slider")?.removeEventListener('click', handleBgColorChange);
         };
     }, []);
 
@@ -56,7 +56,7 @@ export default function Card({ project }) {
     const onCloseModal = () => setOpen(false);
 
     return (
-        <div className={`max-w-md min-w-60 flex flex-col items-center justify-between w-full overflow-hidden bg-opacity-80 backdrop-filter backdrop-blur-lg bg-inherit rounded-lg shadow-lg ${!bgColor ? 'text-white' : 'text-gray-800'}`}>
+        <div className={`max-w-md min-w-60 flex flex-col items-center justify-around w-full overflow-hidden bg-opacity-80 backdrop-filter backdrop-blur-lg bg-inherit rounded-lg shadow-lg ${!bgColor ? 'text-white' : 'text-gray-800'}`}>
             <img alt="Website Project" className="object-cover object-center w-full h-56" loading='lazy' src={project.imageUrl} />
             <button onClick={onOpenModal} className={`absolute top-52 right-0 -mt-4 bg-blue-300 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-20 rounded-tl ${bgColor ? 'text-white' : 'text-gray-800'}`}><GoZoomIn size={"25px"} className='text-indigo-500 m-1' /></button>
 
@@ -66,7 +66,7 @@ export default function Card({ project }) {
                 </Modal>
                 <div className="flex justify-between gap-2 items-center">
                     <span className={`text-lg font-semibold ${bgColor === "black" ? 'text-black' : 'text-white'}`}>{project.title}</span>
-                    <BiHeart className="text-red-500" />
+                    <BiHeart className="text-red-500" size={25}/>
                 </div>
                 <div className="flex items-center mt-4 text-yellow-500">
                     <BsStar className="w-5 h-5" />

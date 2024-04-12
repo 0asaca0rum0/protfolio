@@ -14,12 +14,12 @@ const Footer = () => {
                 <div className="mb-6 md:mb-0">
                     <h3 className="text-inherit font-bold text-lg mb-2">Social Links</h3>
                     <div className="text-inherit/50">
-                        <p>
+                        <p className='hover:scale-110 transition-all'>
                             <a
                                 href="https://github.com/0asaca0rum0"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="hover:bg-inherit transition-colors duration-300"
+                                className="hover:scale-105 font-light   transition-colors duration-300"
                             >
                                 GitHub
                             </a>
@@ -29,7 +29,7 @@ const Footer = () => {
                                 href="https://t.me/karasuma_renya"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="hover:text-inherit transition-colors duration-300"
+                                className="hover:scale-105  font-light transition-colors duration-300"
                             >
                                 Telegram
                             </a>
