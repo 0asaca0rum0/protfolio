@@ -3,7 +3,7 @@ import React from 'react';
 
 const Contact = () => {
     return (
-        <section className=' md:w-3/6 h-1/2 mt-10'>
+        <section className=' md:w-3/6 h-1/2 mt-10' id='contact'>
             <p className='text-2xl'>Contact</p>
             <form className="w-full h-full flex flex-col items-center justify-center bg-inherit bg-opacity-80 backdrop-blur-md p-6 rounded-lg shadow-lg" action='https://formspree.io/f/xgegpyra' method='POST'>
                 <div className='w-full flex flex-col md:flex-row items-center justify-around gap-4'>

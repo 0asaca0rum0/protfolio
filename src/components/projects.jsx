@@ -16,7 +16,7 @@ const projects = [
         description: 'The Student Attendance System is a web-app application designed to simplify tracking student attendance. It offers a user-friendly interface for teachers to record attendance and for administrators to monitor records. Key features include automated attendance recording, detailed reports, notifications in the students app and much more.',
         techstack: ['React ', 'Tailwind CSS ','vite ','nodejs','express','flutter '],
         imageUrl: '/project-2.webp',
-        link: 'https://students-attendance.vercel.app/'
+        link: 'https://qr-attend.netlify.app/'
     },
     {
         id: 3,

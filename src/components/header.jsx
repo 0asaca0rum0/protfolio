@@ -51,20 +51,28 @@ const Header = ({ islight }) => {
             <nav className="w-1/2 hidden lg:block">
                 <ul className="flex flex-row items-center justify-between gap-2 w-full ">
                     <li className="flex flex-row gap-2 items-center hover:text-teal-400 hover:scale-105 transition-all duration-300 cursor-pointer " onClick={() => { scroll('top') }}>
-                        <FaHome size={"20"} />
-                        Home 
+                        <div className="flex flex-row gap-2 items-center">
+                            <FaHome size={"20"} />
+                            Home 
+                       </div>
                     </li>
-                    <li className="flex flex-row gap-2 items-center hover:text-teal-400 hover:scale-105 transition-all duration-300 cursor-pointer" onClick={() => { scroll('top') }}>
-                        <FaReact className="motion-safe:animate-spin-slow" size={"20"} />
-                        tech 
+                    <li className="flex flex-row gap-2 items-center hover:text-teal-400 hover:scale-105 transition-all duration-300 cursor-pointer" onClick={() => { scroll('tech') }}>
+                        <div className="flex flex-row gap-2 items-center" >
+                            <FaReact className="motion-safe:animate-spin-slow" size={"20"} />
+                            tech
+                        </div>
                     </li>
-                    <li className="flex flex-row gap-2 items-center hover:text-teal-400 hover:scale-105 transition-all duration-300 cursor-pointer" onClick={() => { scroll('top') }}>
-                        <FaServer className="" />
-                        Projects
+                    <li className="flex flex-row gap-2 items-center hover:text-teal-400 hover:scale-105 transition-all duration-300 cursor-pointer" onClick={() => { scroll('project') }}>
+                        <div className="flex flex-row gap-2 items-center">
+                            <FaServer  />
+                            Projects
+                        </div>
                     </li>
-                    <li className="flex flex-row gap-2 items-center hover:text-teal-400 hover:scale-105 transition-all duration-300 cursor-pointer" onClick={() => { scroll('top') }}>
-                        <BiMailSend size={"20"} />
-                    Contact
+                    <li className="flex flex-row gap-2 items-center hover:text-teal-400 hover:scale-105 transition-all duration-300 cursor-pointer" onClick={() => { scroll('contact') }}>
+                        <div className="flex flex-row gap-2 items-center">
+                            <BiMailSend size={"20"} />
+                            Contact
+                        </div>
                     </li>
                 </ul>
             </nav>
@@ -76,7 +84,7 @@ const Header = ({ islight }) => {
                         onChange={handleSwitchChange}
                         className="hidden"
                     />
-                    <span className="slider"></span>
+                    <span className="slider" id="slider"></span>
                 </label>
                 <div className="lg:hidden flex flex-row items-center justify-center">
                     <Menu >

@@ -40,9 +40,9 @@ export default function Card({ project }) {
         }
     };
     useEffect(() => {
-        window.addEventListener('click', handleBgColorChange);
+        document.getElementById("slider").addEventListener('click', handleBgColorChange);
         return () => {
-            window.removeEventListener('click', handleBgColorChange);
+            document.getElementById("slider").removeEventListener('click', handleBgColorChange);
         };
     }, []);
 
