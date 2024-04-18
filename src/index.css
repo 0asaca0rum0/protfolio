@@ -7,9 +7,10 @@ html {
 height: max-content;
 width: 100%;
 background-image: url("/public/vite.svg");
-background-repeat: no-repeat;
-background-size: cover;
-background-position: center;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
 }
 body {
 height: max-content;

@@ -21,6 +21,7 @@
         <animateTransform attributeName="transform" attributeType="XML" type="rotate"
             from="150 500 500" to="510 500 500" dur="28s" repeatCount="indefinite" />
     </circle>
+    <!-- Add more circles with different 'from' positions here -->
     <circle r="420" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="5"
         stroke-linecap="round" fill="none" stroke-dasharray="840 1135">
         <animateTransform attributeName="transform" attributeType="XML" type="rotate"
