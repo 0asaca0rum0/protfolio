@@ -2,53 +2,55 @@
     xmlns:svgjs="http://svgjs.dev/svgjs" viewBox="0 0 800 800">
     <defs>
         <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="cccoil-grad">
-            <stop stop-color="hsl(206, 75%, 49%)" stop-opacity="1" offset="0%"></stop>
-            <stop stop-color="hsl(331, 90%, 56%)" stop-opacity="1" offset="100%"></stop>
+            <stop stop-color="hsl(270, 73%, 53%)" stop-opacity="1" offset="0%"></stop>
+            <stop stop-color="hsl(162, 100%, 58%)" stop-opacity="1" offset="100%"></stop>
         </linearGradient>
     </defs>
     <g stroke="url(#cccoil-grad)" fill="none" stroke-linecap="round">
-        <circle r="363" cx="400" cy="400" stroke-width="7" stroke-dasharray="1939 2281"
-            transform="rotate(360, 400, 400)" opacity="0.21"></circle>
-        <circle r="346.5" cx="400" cy="400" stroke-width="7" stroke-dasharray="1762 2177"
-            transform="rotate(343, 400, 400)" opacity="0.52"></circle>
-        <circle r="330" cx="400" cy="400" stroke-width="7" stroke-dasharray="1595 2073"
-            transform="rotate(326, 400, 400)" opacity="0.31"></circle>
-        <circle r="313.5" cx="400" cy="400" stroke-width="7" stroke-dasharray="1435 1970"
-            transform="rotate(309, 400, 400)" opacity="0.41"></circle>
-        <circle r="297" cx="400" cy="400" stroke-width="7" stroke-dasharray="1284 1866"
-            transform="rotate(291, 400, 400)" opacity="0.31"></circle>
-        <circle r="280.5" cx="400" cy="400" stroke-width="7" stroke-dasharray="1141 1762"
-            transform="rotate(274, 400, 400)" opacity="0.55"></circle>
-        <circle r="264" cx="400" cy="400" stroke-width="7" stroke-dasharray="1007 1659"
-            transform="rotate(257, 400, 400)" opacity="0.92"></circle>
-        <circle r="247.5" cx="400" cy="400" stroke-width="7" stroke-dasharray="881 1555"
-            transform="rotate(240, 400, 400)" opacity="0.64"></circle>
-        <circle r="231" cx="400" cy="400" stroke-width="7" stroke-dasharray="764 1451"
-            transform="rotate(223, 400, 400)" opacity="0.90"></circle>
-        <circle r="214.5" cx="400" cy="400" stroke-width="7" stroke-dasharray="655 1348"
-            transform="rotate(206, 400, 400)" opacity="0.85"></circle>
-        <circle r="198" cx="400" cy="400" stroke-width="7" stroke-dasharray="554 1244"
-            transform="rotate(189, 400, 400)" opacity="0.27"></circle>
-        <circle r="181.5" cx="400" cy="400" stroke-width="7" stroke-dasharray="462 1140"
-            transform="rotate(171, 400, 400)" opacity="0.36"></circle>
-        <circle r="165" cx="400" cy="400" stroke-width="7" stroke-dasharray="378 1037"
-            transform="rotate(154, 400, 400)" opacity="0.14"></circle>
-        <circle r="148.5" cx="400" cy="400" stroke-width="7" stroke-dasharray="302 933"
-            transform="rotate(137, 400, 400)" opacity="0.47"></circle>
-        <circle r="132" cx="400" cy="400" stroke-width="7" stroke-dasharray="235 829"
-            transform="rotate(120, 400, 400)" opacity="0.66"></circle>
-        <circle r="115.5" cx="400" cy="400" stroke-width="7" stroke-dasharray="176 726"
-            transform="rotate(103, 400, 400)" opacity="0.14"></circle>
-        <circle r="99" cx="400" cy="400" stroke-width="7" stroke-dasharray="126 622"
-            transform="rotate(86, 400, 400)" opacity="0.22"></circle>
-        <circle r="82.5" cx="400" cy="400" stroke-width="7" stroke-dasharray="84 518"
-            transform="rotate(69, 400, 400)" opacity="0.46"></circle>
-        <circle r="66" cx="400" cy="400" stroke-width="7" stroke-dasharray="50 415"
-            transform="rotate(51, 400, 400)" opacity="0.69"></circle>
-        <circle r="49.5" cx="400" cy="400" stroke-width="7" stroke-dasharray="25 311"
-            transform="rotate(34, 400, 400)" opacity="0.85"></circle>
-        <circle r="33" cx="400" cy="400" stroke-width="7" stroke-dasharray="8 207"
-            transform="rotate(17, 400, 400)" opacity="0.47"></circle>
-        <circle r="16.5" cx="400" cy="400" stroke-width="7" stroke-dasharray="0 104" opacity="0.08"></circle>
+        <circle r="391" cx="400" cy="400" stroke-width="3" stroke-dasharray="2334 2457"
+            transform="rotate(360, 400, 400)"></circle>
+        <circle r="374" cx="400" cy="400" stroke-width="3" stroke-dasharray="2131 2350"
+            transform="rotate(344, 400, 400)"></circle>
+        <circle r="357" cx="400" cy="400" stroke-width="3" stroke-dasharray="1937 2243"
+            transform="rotate(327, 400, 400)"></circle>
+        <circle r="340" cx="400" cy="400" stroke-width="3" stroke-dasharray="1753 2136"
+            transform="rotate(311, 400, 400)"></circle>
+        <circle r="323" cx="400" cy="400" stroke-width="3" stroke-dasharray="1577 2029"
+            transform="rotate(295, 400, 400)"></circle>
+        <circle r="306" cx="400" cy="400" stroke-width="3" stroke-dasharray="1411 1923"
+            transform="rotate(278, 400, 400)"></circle>
+        <circle r="289" cx="400" cy="400" stroke-width="3" stroke-dasharray="1255 1816"
+            transform="rotate(262, 400, 400)"></circle>
+        <circle r="272" cx="400" cy="400" stroke-width="3" stroke-dasharray="1107 1709"
+            transform="rotate(245, 400, 400)"></circle>
+        <circle r="255" cx="400" cy="400" stroke-width="3" stroke-dasharray="969 1602"
+            transform="rotate(229, 400, 400)"></circle>
+        <circle r="238" cx="400" cy="400" stroke-width="3" stroke-dasharray="839 1495"
+            transform="rotate(213, 400, 400)"></circle>
+        <circle r="221" cx="400" cy="400" stroke-width="3" stroke-dasharray="720 1389"
+            transform="rotate(196, 400, 400)"></circle>
+        <circle r="204" cx="400" cy="400" stroke-width="3" stroke-dasharray="609 1282"
+            transform="rotate(180, 400, 400)"></circle>
+        <circle r="187" cx="400" cy="400" stroke-width="3" stroke-dasharray="507 1175"
+            transform="rotate(164, 400, 400)"></circle>
+        <circle r="170" cx="400" cy="400" stroke-width="3" stroke-dasharray="415 1068"
+            transform="rotate(147, 400, 400)"></circle>
+        <circle r="153" cx="400" cy="400" stroke-width="3" stroke-dasharray="332 961"
+            transform="rotate(131, 400, 400)"></circle>
+        <circle r="136" cx="400" cy="400" stroke-width="3" stroke-dasharray="258 855"
+            transform="rotate(115, 400, 400)"></circle>
+        <circle r="119" cx="400" cy="400" stroke-width="3" stroke-dasharray="194 748"
+            transform="rotate(98, 400, 400)"></circle>
+        <circle r="102" cx="400" cy="400" stroke-width="3" stroke-dasharray="138 641"
+            transform="rotate(82, 400, 400)"></circle>
+        <circle r="85" cx="400" cy="400" stroke-width="3" stroke-dasharray="92 534"
+            transform="rotate(65, 400, 400)"></circle>
+        <circle r="68" cx="400" cy="400" stroke-width="3" stroke-dasharray="55 427"
+            transform="rotate(49, 400, 400)"></circle>
+        <circle r="51" cx="400" cy="400" stroke-width="3" stroke-dasharray="28 320"
+            transform="rotate(33, 400, 400)"></circle>
+        <circle r="34" cx="400" cy="400" stroke-width="3" stroke-dasharray="9 214"
+            transform="rotate(16, 400, 400)"></circle>
+        <circle r="17" cx="400" cy="400" stroke-width="3" stroke-dasharray="0 107"></circle>
     </g>
 </svg>

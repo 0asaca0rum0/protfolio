@@ -9,8 +9,7 @@ width: 100%;
 background-image: url("/public/vite.svg");
     background-repeat: no-repeat;
     background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
+background-size: calc(100vw + 1px) auto;    background-attachment: fixed;
 }
 body {
 height: max-content;
@@ -100,8 +99,10 @@ input:checked + .slider:after {
         height: max-content;
 width: 100%;
         background-image: url("/public/ccchaos-min.svg");
-        background-repeat: repeat-y;
+        background-repeat: no-repeat;
         background-position: center;
+        background-size: calc(100vh + 1px) auto;
+        background-attachment: fixed;
         
      
     }
