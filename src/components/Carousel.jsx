@@ -25,7 +25,7 @@ const TechGrid = () => {
                     <div
                         key={index}
                         
-                        className={`bg-inherit/10 bg-opacity-50  backdrop-filter backdrop-blur-lg rounded-xl border border-gray-400 p-6 flex flex-col items-center hover:bg-opacity-75 hover:scale-105 hover:text-teal-300 transition-all duration-300`}
+                        className={`bg-gray-700/15 bg-opacity-80  backdrop-filter backdrop-blur-md rounded p-6 flex flex-col items-center hover:bg-opacity-75 hover:scale-110 hover:text-teal-300 transition-all duration-200`}
 
                     >
                         <div className="text-6xl mb-4 text-inherit">{tech.icon}</div>

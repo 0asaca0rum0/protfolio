@@ -9,7 +9,7 @@ const Hero = () => {
             id='home'
             className='container w-full mx-auto px-8 md:px-4 py-12 min-h-screen flex items-center'
         >
-            <div className="w-full max-w-fu mx-auto p-8 bg-opacity-60 backdrop-filter backdrop-blur-lg border border-gray-600 shadow-lg rounded-xl">
+            <div className="w-full max-w-fu mx-auto p-8 bg-opacity-80 backdrop-filter backdrop-blur-md  shadow-lg rounded-xl bg-gray-800/15">
                 <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-12">
                     <div className='flex flex-col justify-center items-center md:items-start text-center md:text-left md:w-1/2'>
                         <p className='text-xl mb-4'>Hello, welcome to my portfolio!</p>
