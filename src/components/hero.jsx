@@ -5,36 +5,53 @@ import { FaTelegramPlane } from "react-icons/fa";
 
 const Hero = () => {
     return (
-        <div id='home' className='w-11/12 mt-5   p-4   h-full flex flex-col justify-evenly items-center bg-inherit  rounded-3xl bg-opacity-80 backdrop-filter backdrop-blur-lg  border border-gray-600  shadow-lg'>
-
-            <div className="flex md:flex-row-reverse flex-col items-center justify-around w-full h-full  ">
-                <img src="self.webp" alt="" loading='lazy' className='h-[480px] md:w-1/2 hover:scale-105 transition-all md:me-10  aspect-auto rounded-xl border border-white/60 ' />
-
-                <div className='h-full  md:w-full flex flex-col justify-center m-2 items-center  md:text-left'>
-                    <p className='text'>Hello, welcome to my portfolio!</p>
-                    <h1 className='text-2xl md:text-5xl mb-2'>I'm ELMASRI Ahmed </h1>
-                    <h1 className='text-2xl md:text-5xl font-medium bg-gradient-to-r from-teal-300 to-indigo-600 bg-clip-text text-transparent'>a full stack developer</h1>
-                    <h1 className='text-2xl md:text-5xl '>  and  </h1>
-                    <h1 className='text-2xl h-16 font-medium md:text-5xl bg-gradient-to-r from-pink-400 to-blue-600 bg-clip-text text-transparent'>  server engineer  </h1>
-
+        <div
+            id='home'
+            className='container w-full mx-auto px-8 md:px-4 py-12 min-h-screen flex items-center'
+        >
+            <div className="w-full max-w-fu mx-auto p-8 bg-opacity-60 backdrop-filter backdrop-blur-lg border border-gray-600 shadow-lg rounded-xl">
+                <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-12">
+                    <div className='flex flex-col justify-center items-center md:items-start text-center md:text-left md:w-1/2'>
+                        <p className='text-xl mb-4'>Hello, welcome to my portfolio!</p>
+                        <h1 className='text-3xl md:text-6xl font-bold mb-6'>I'm ELMASRI Ahmed</h1>
+                        <h2 className='text-2xl md:text-4xl font-medium mb-4'>
+                            <span className='bg-gradient-to-r from-teal-300 to-indigo-600 bg-clip-text text-transparent'>
+                                Full Stack Developer
+                            </span>
+                        </h2>
+                        <h2 className='text-xl md:text-4xl font-medium mb-8'>
+                            <span className='bg-gradient-to-r from-pink-400 to-blue-600 bg-clip-text text-transparent'>
+                                Server Engineer
+                            </span>
+                        </h2>
+                        <ul className='flex flex-wrap justify-center md:justify-start gap-4 md:gap-6'>
+                            {[
+                                { icon: FaGithub, text: "Github", link: "https://github.com/0asaca0rum0" },
+                                { icon: FaTelegramPlane, text: "Telegram", link: "https://t.me/karasuma_renya" },
+                                { icon: SiGmail, text: "Gmail", link: "mailto:foxdeath100@gmail.com" }
+                            ].map((item, index) => (
+                                <li key={index}>
+                                    <a
+                                        href={item.link}
+                                        className='flex items-center gap-3 px-4 py-2 rounded-full bg-gray-400 bg-opacity-10 backdrop-filter backdrop-blur-sm hover:bg-opacity-20 hover:text-teal-400 transition-all duration-200 '
+                                    >
+                                        <item.icon size={20} />
+                                        <span>{item.text}</span>
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div className="md:w-1/2 flex justify-center">
+                        <img
+                            src="self.webp"
+                            alt="Ahmed Elmasri"
+                            loading='lazy'
+                            className='h-96 md:h-[32rem] w-auto object-cover rounded-md shadow-lg hover:scale-105 transition-transform duration-300'
+                        />
+                    </div>
                 </div>
-
             </div>
-            <ul className='flex flex-row items-center md:justify-start justify-evenly   mt-5 gap-2 md:gap-5 md:w-1/2'>
-                <li className='flex flex-row items-center justify-evenly md:gap-2 gap-1 p-2 rounded-lg  bg-gray-400 hover:text-teal-400 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 md:hover:scale-125 hover:scale-110 transition-all duration-200'>
-                    <FaGithub size={"20"} />
-                    <a href="https://github.com/0asaca0rum0" >Github</a>
-                    </li>
-                <li className='flex flex-row items-center justify-evenly md:gap-2 gap-1 p-2 rounded-lg  bg-gray-400 hover:text-teal-400 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 md:hover:scale-125 hover:scale-110 transition-all duration-200 '>
-                    <FaTelegramPlane size={"20"} />
-                    <a href="https://t.me/karasuma_renya" >Telegram</a>
-                    </li>
-                <li className='flex flex-row items-center justify-evenly md:gap-2 gap-1 p-2 rounded-lg  bg-gray-400 hover:text-teal-400 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 md:hover:scale-125 hover:scale-110 transition-all duration-200'>
-                    <SiGmail size={"20"} />
-                    <a href="mailto:foxdeath100@gmail.com" >Gmail</a>
-                    </li>
-            </ul>
-
         </div>
     );
 };

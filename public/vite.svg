@@ -1,109 +1,71 @@
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1000 900">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
     <defs>
-        <linearGradient id="cccoil-grad" x1="50%" y1="0%" x2="50%" y2="100%">
-            <stop stop-color="hsl(162, 100%, 58%)" stop-opacity="1" offset="0%"></stop>
-            <stop stop-color="hsl(270, 73%, 53%)" stop-opacity="1" offset="100%"></stop>
+        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#00ffaa" />
+            <stop offset="100%" stop-color="#8a2be2" />
         </linearGradient>
     </defs>
 
-    <circle r="480" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="3"
-        stroke-linecap="round" fill="none" stroke-dasharray="960 1255">
-        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
-            from="0 500 500" to="360 500 500" dur="40s" repeatCount="indefinite" />
-    </circle>
-    <circle r="460" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="3"
-        stroke-linecap="round" fill="none" stroke-dasharray="920 1215">
-        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
-            from="30 500 500" to="390 500 500" dur="39.2s" repeatCount="indefinite" />
-    </circle>
-    <circle r="440" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="3"
-        stroke-linecap="round" fill="none" stroke-dasharray="880 1175">
-        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
-            from="60 500 500" to="420 500 500" dur="38.4s" repeatCount="indefinite" />
-    </circle>
-    <circle r="420" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="3"
-        stroke-linecap="round" fill="none" stroke-dasharray="840 1135">
-        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
-            from="90 500 500" to="450 500 500" dur="37.6s" repeatCount="indefinite" />
-    </circle>
-    <circle r="400" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="3"
-        stroke-linecap="round" fill="none" stroke-dasharray="800 1095">
-        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
-            from="120 500 500" to="480 500 500" dur="36.8s" repeatCount="indefinite" />
-    </circle>
-    <circle r="380" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="3"
-        stroke-linecap="round" fill="none" stroke-dasharray="760 1055">
-        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
-            from="150 500 500" to="510 500 500" dur="36s" repeatCount="indefinite" />
-    </circle>
-    <circle r="360" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="3"
-        stroke-linecap="round" fill="none" stroke-dasharray="720 1015">
-        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
-            from="180 500 500" to="540 500 500" dur="35.2s" repeatCount="indefinite" />
-    </circle>
-    <circle r="340" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="3"
-        stroke-linecap="round" fill="none" stroke-dasharray="680 975">
-        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
-            from="210 500 500" to="570 500 500" dur="34.4s" repeatCount="indefinite" />
-    </circle>
-    <circle r="320" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="3"
-        stroke-linecap="round" fill="none" stroke-dasharray="640 935">
-        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
-            from="240 500 500" to="600 500 500" dur="33.6s" repeatCount="indefinite" />
-    </circle>
-    <circle r="300" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="3"
-        stroke-linecap="round" fill="none" stroke-dasharray="600 895">
-        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
-            from="270 500 500" to="630 500 500" dur="32.8s" repeatCount="indefinite" />
-    </circle>
-    <circle r="280" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="3"
-        stroke-linecap="round" fill="none" stroke-dasharray="560 855">
-        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
-            from="300 500 500" to="660 500 500" dur="32s" repeatCount="indefinite" />
-    </circle>
-    <circle r="260" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="3"
-        stroke-linecap="round" fill="none" stroke-dasharray="520 815">
-        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
-            from="330 500 500" to="690 500 500" dur="31.2s" repeatCount="indefinite" />
-    </circle>
-    <circle r="240" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="3"
-        stroke-linecap="round" fill="none" stroke-dasharray="480 775">
-        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
-            from="360 500 500" to="720 500 500" dur="30.4s" repeatCount="indefinite" />
-    </circle>
-    <circle r="220" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="3"
-        stroke-linecap="round" fill="none" stroke-dasharray="440 735">
-        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
-            from="390 500 500" to="750 500 500" dur="29.6s" repeatCount="indefinite" />
-    </circle>
-    <circle r="200" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="3"
-        stroke-linecap="round" fill="none" stroke-dasharray="400 695">
-        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
-            from="420 500 500" to="780 500 500" dur="28.8s" repeatCount="indefinite" />
-    </circle>
-    <circle r="180" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="3"
-        stroke-linecap="round" fill="none" stroke-dasharray="360 655">
-        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
-            from="450 500 500" to="810 500 500" dur="28s" repeatCount="indefinite" />
-    </circle>
-    <circle r="160" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="3"
-        stroke-linecap="round" fill="none" stroke-dasharray="320 615">
-        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
-            from="480 500 500" to="840 500 500" dur="27.2s" repeatCount="indefinite" />
-    </circle>
-    <circle r="140" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="3"
-        stroke-linecap="round" fill="none" stroke-dasharray="280 575">
-        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
-            from="510 500 500" to="870 500 500" dur="26.4s" repeatCount="indefinite" />
-    </circle>
-    <circle r="120" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="3"
-        stroke-linecap="round" fill="none" stroke-dasharray="240 535">
-        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
-            from="540 500 500" to="900 500 500" dur="25.6s" repeatCount="indefinite" />
-    </circle>
-    <circle r="100" cx="500" cy="500" stroke="url(#cccoil-grad)" stroke-width="3"
-        stroke-linecap="round" fill="none" stroke-dasharray="200 495">
-        <animateTransform attributeName="transform" attributeType="XML" type="rotate"
-            from="570 500 500" to="930 500 500" dur="24.8s" repeatCount="indefinite" />
-    </circle>
+    <g stroke="url(#grad)" stroke-width="4" fill="none" stroke-linecap="round">
+        <circle cx="500" cy="500" r="480" stroke-dasharray="301.59 301.59">
+            <animateTransform attributeName="transform" type="rotate" from="0 500 500"
+                to="360 500 500" dur="40s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="500" cy="500" r="450" stroke-dasharray="282.74 282.74">
+            <animateTransform attributeName="transform" type="rotate" from="30 500 500"
+                to="390 500 500" dur="38s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="500" cy="500" r="420" stroke-dasharray="263.89 263.89">
+            <animateTransform attributeName="transform" type="rotate" from="60 500 500"
+                to="420 500 500" dur="36s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="500" cy="500" r="390" stroke-dasharray="245.04 245.04">
+            <animateTransform attributeName="transform" type="rotate" from="90 500 500"
+                to="450 500 500" dur="34s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="500" cy="500" r="360" stroke-dasharray="226.19 226.19">
+            <animateTransform attributeName="transform" type="rotate" from="120 500 500"
+                to="480 500 500" dur="32s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="500" cy="500" r="330" stroke-dasharray="207.35 207.35">
+            <animateTransform attributeName="transform" type="rotate" from="150 500 500"
+                to="510 500 500" dur="30s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="500" cy="500" r="300" stroke-dasharray="188.50 188.50">
+            <animateTransform attributeName="transform" type="rotate" from="180 500 500"
+                to="540 500 500" dur="28s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="500" cy="500" r="270" stroke-dasharray="169.65 169.65">
+            <animateTransform attributeName="transform" type="rotate" from="210 500 500"
+                to="570 500 500" dur="26s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="500" cy="500" r="240" stroke-dasharray="150.80 150.80">
+            <animateTransform attributeName="transform" type="rotate" from="240 500 500"
+                to="600 500 500" dur="24s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="500" cy="500" r="210" stroke-dasharray="131.95 131.95">
+            <animateTransform attributeName="transform" type="rotate" from="270 500 500"
+                to="630 500 500" dur="22s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="500" cy="500" r="180" stroke-dasharray="113.10 113.10">
+            <animateTransform attributeName="transform" type="rotate" from="300 500 500"
+                to="660 500 500" dur="20s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="500" cy="500" r="150" stroke-dasharray="94.25 94.25">
+            <animateTransform attributeName="transform" type="rotate" from="330 500 500"
+                to="690 500 500" dur="18s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="500" cy="500" r="120" stroke-dasharray="75.40 75.40">
+            <animateTransform attributeName="transform" type="rotate" from="360 500 500"
+                to="720 500 500" dur="16s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="500" cy="500" r="90" stroke-dasharray="56.55 56.55">
+            <animateTransform attributeName="transform" type="rotate" from="390 500 500"
+                to="750 500 500" dur="14s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="500" cy="500" r="60" stroke-dasharray="37.70 37.70">
+            <animateTransform attributeName="transform" type="rotate" from="420 500 500"
+                to="780 500 500" dur="12s" repeatCount="indefinite" />
+        </circle>
+    </g>
 </svg>
