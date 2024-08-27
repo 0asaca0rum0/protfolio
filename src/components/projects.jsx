@@ -23,7 +23,7 @@ export default function Projects() {
             description: "A responsive e-commerce website for selling products online, was intended for bilwafi, a local cosmetic shop in algeria, the website is integrated with a payment gateway and a dashboard for managing the products.",
             image: "project-3.webp",
             techstack: ['Next 13 ', "nodejs", "express "],
-            link: "bilwafi.shop",
+            link: "",
             category: "Web App",
         },
         {
