@@ -27,10 +27,7 @@ const techList = [
     { name: 'Expo', icon: <SiExpo size={30} /> },
     { name: 'java', icon: <FaJava size={30} /> },
     { name: 'Python', icon: <FaPython size={30} /> },
-    {name: 'AI', icon: <SiOpenai size={30} />},
-
-
-
+    { name: 'AI', icon: <SiOpenai size={30} /> },
 ];
 
 export default function Card({ project }) {
@@ -38,14 +35,15 @@ export default function Card({ project }) {
     const [bgColor, setBgColor] = useState("white");
     const onOpenModal = () => setOpen(true);
     const onCloseModal = () => setOpen(false);
+
     useEffect(() => {
         document.getElementById("slider").addEventListener('click', handleBgColorChange);
         return () => {
             document.getElementById("slider")?.removeEventListener('click', handleBgColorChange);
         }
-    }
-        , []);
-      const handleBgColorChange = () => {
+    }, []);
+
+    const handleBgColorChange = () => {
         const x = window.getComputedStyle(document.documentElement).getPropertyValue('background-color').toString();
         if (x === "rgb(0, 0, 0)") {
             setBgColor("black");
@@ -56,11 +54,14 @@ export default function Card({ project }) {
         }
     }
 
-    
-
     return (
-        <div className="max-w-md min-w-[340px] h-[550px] md:h-[450px] lg:h-[500px] rounded-lg shadow-lg overflow-hidden relative hover:scale-105 transition-all">
-            <img alt="Website Project" className="object-cover object-center w-full h-full absolute inset-0" loading='lazy' src={project.image} />
+        <div className="min-w-80 sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl h-[550px] md:h-[450px] lg:h-[500px] rounded-lg shadow-lg overflow-hidden relative hover:scale-105 transition-all">
+            <img
+                alt="Website Project"
+                className="object-cover object-center w-full h-full absolute inset-0"
+                loading='lazy'
+                src={project.image}
+            />
 
             <div className="absolute inset-0 bg-black bg-opacity-30">
                 <button onClick={onOpenModal} className="absolute top-2 right-2 bg-teal-400 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-20 rounded p-2">
@@ -103,10 +104,24 @@ export default function Card({ project }) {
                 </div>
             </div>
 
-            <Modal open={open} onClose={onCloseModal} center classNames="flex flex-row items-center justify-center " closeIcon={<IoCloseCircleOutline size={25} className='text-red-500' />} >
-                <img alt="Website Project" className="object-cover max-h-[80vh] max-w-[95vw] items-center justify-center" loading='lazy' src={project.image} />
+            <Modal
+                open={open}
+                onClose={onCloseModal}
+                center
+                classNames={{
+                    modal: ' h-1/2 md:h-full w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-5xl',
+                    overlay: '2 bg-black bg-opacity-50 flex flex-col items-center justify-center',
+                    modalContainer: '1 flex justify-center items-center bg-black bg-opacity-10 backdrop-filter backdrop-blur-sm p-4',
+                }}
+                closeIcon={<IoCloseCircleOutline size={25} className='text-red-500' />}
+            >
+                <img
+                    alt="Website Project"
+                    className="object-contain md:object-cover w-full h-full  md:max-h-[80vh] md:max-w-none"
+                    loading='lazy'
+                    src={project.image}
+                />
             </Modal>
         </div>
-
     );
 }

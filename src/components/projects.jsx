@@ -100,9 +100,9 @@ export default function Projects() {
     return (
         <Tabs value={activeTab} onChange={(value) => setActiveTab(value)} >
             <TabsHeader
-                className="h-full w-full rounded-md bg-gray-700/20 backdrop-blur-md backdrop-filter max-w-full min-w-full mx-auto"
+                className="h-full w-full rounded-lg p-2 m-2 bg-gray-700/20 backdrop-blur-md backdrop-filter max-w-full min-w-full mx-auto"
                 indicatorProps={{
-                    className: "bg-white/20 p-2 ",
+                    className: "bg-white/20 py-3 mx-2  rounded-xl",
                 }}
                 id="project"
             >
