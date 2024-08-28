@@ -117,7 +117,7 @@ export default function Card({ project }) {
             >
                 <img
                     alt="Website Project"
-                    className="object-contain md:object-cover w-full h-full  md:max-h-[80vh] md:max-w-none"
+                    className="object-contain object-center md:object-cover w-full h-full  md:max-h-[80vh] md:max-w-none"
                     loading='lazy'
                     src={project.image}
                 />
