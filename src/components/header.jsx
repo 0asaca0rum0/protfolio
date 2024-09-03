@@ -89,7 +89,7 @@ const Header = ({ islight }) => {
                 <div className="lg:hidden flex flex-row items-center justify-center">
                     <Menu >
                         <MenuHandler  >
-                            <Button className={`${isChecked ? "text-black":"text-white"}`}>
+                            <Button className={`${isChecked ? "text-black bg-white bg-opacity-10 shadow z-50    backdrop-blur-lg backdrop-filter" :"text-white bg-gray-500 bg-opacity-5  shadow backdrop-blur-lg backdrop-filter"}`}>
                                 <RxHamburgerMenu size={"25"}  />
                             </Button>
                         </MenuHandler>
