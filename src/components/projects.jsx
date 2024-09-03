@@ -85,24 +85,30 @@ export default function Projects() {
 
     const [activeTab, setActiveTab] = useState("Web App");
     const [bgColor, setBgColor] = useState("white");
-
-    const handleBgColorChange = () => {
-        const bgColor = window.getComputedStyle(document.documentElement).getPropertyValue('background-color').toString();
-        setBgColor(bgColor === "rgb(0, 0, 0)" ? "black" : "white");
+    const checkDarkMode = () => {
+        const bgColor = window.getComputedStyle(document.documentElement).getPropertyValue('color');
+        if (bgColor === 'rgb(51, 51, 51)') {
+            return true;
+        } else if (bgColor === 'rgb(255, 255, 255)') {
+            return false;
+        }
     };
 
+    const [isDarkMode, setIsDarkMode] = useState(true);
+
     useEffect(() => {
-        const slider = document.getElementById("slider");
-        slider?.addEventListener('click', handleBgColorChange);
-        return () => slider?.removeEventListener('click', handleBgColorChange);
+        new MutationObserver(() => {
+            !checkDarkMode() ? console.log('dark') : console.log('light');
+            setIsDarkMode(!checkDarkMode());
+        }).observe(document.documentElement, { attributes: true });
     }, []);
 
     return (
         <Tabs value={activeTab} onChange={(value) => setActiveTab(value)} >
             <TabsHeader
-                className="h-full w-full rounded-lg p-2 m-2 bg-gray-700/20 backdrop-blur-md backdrop-filter max-w-full min-w-full mx-auto"
+                className="h-full w-full   rounded-2xl p-2 m-4 bg-gray-600 bg-opacity-15   backdrop-blur-lg backdrop-filter max-w-full min-w-full mx-auto"
                 indicatorProps={{
-                    className: "bg-white/20 py-3 mx-2  rounded-xl",
+                    className: "bg-white bg-opacity-10 shadow-[0px_4px_12px_rgba(0,0,0,0.1),_0px_8px_32px_rgba(0,0,0,0.08),_inset_0px_1px_1px_rgba(255,255,255,0.2)]  py-3 mx-2  rounded-xl",
                 }}
                 id="project"
             >

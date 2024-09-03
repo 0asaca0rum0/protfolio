@@ -41,7 +41,7 @@ const Header = ({ islight }) => {
         });
     }
     return (
-        <header id="top" className="md:w-8/12 w-11/12 fixed top-0  z-50 h-16 mx-2 flex flex-row items-center justify-between my-2 px-10 shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] bg-gray-800/15  bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-60 rounded-full  ">
+        <header id="top" className={`md:w-8/12 w-11/12 fixed top-0  z-50 h-16 mx-2 flex flex-row items-center justify-between my-2 px-10 shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] ${!islight ? "bg-black " : " bg-white      "} bg-opacity-15 backdrop-filter backdrop-blur-lg border border-white border-opacity-10  rounded-full`}>
             <img
                 src={`${isChecked ? "crow2.webp " : "crow-removebg.webp"}`}
                 alt=""

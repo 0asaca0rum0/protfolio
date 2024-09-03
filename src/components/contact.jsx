@@ -5,7 +5,7 @@ const Contact = () => {
     return (
         <section className=' md:w-3/6 h-1/2 mt-10' id='contact'>
             <p className='text-2xl'>Contact</p>
-            <form className="w-full h-full flex flex-col items-center justify-center bg-gray-700/10 bg-opacity-80 backdrop-blur-md p-6 rounded shadow-lg" action='https://formspree.io/f/xgegpyra' method='POST'>
+            <form className="w-full h-full flex flex-col items-center justify-center bg-gray-500   bg-opacity-5 backdrop-blur-md p-6 rounded shadow-xl" action='https://formspree.io/f/xgegpyra' method='POST'>
                 <div className='w-full flex flex-col md:flex-row items-center justify-around gap-4'>
                     <label htmlFor="name" className='-mt-4'>Name:</label>
                     <input type="text" id="name" name="name" className="bg-transparent border-2  rounded-md border-gray-500 focus:border-teal-500 outline-none mb-4" />
