@@ -77,9 +77,9 @@ export default function Projects() {
     ];
 
     const categories = [
-        { label: "Web App", value: "Websites" },
-        { label: "Mobile App", value: "Mobile " },
-        { label: "Desktop App", value: "Desktop " },
+        { label: "Websites", value: "Web App" },
+        { label: "Mobile", value: "Mobile App" },
+        { label: "Desktop", value: "Desktop App" },
         { label: "AI", value: "AI" },
     ];
 
