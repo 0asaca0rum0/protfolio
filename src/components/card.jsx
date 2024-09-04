@@ -38,7 +38,7 @@ export default function Card({ project }) {
     const [isclicked , setIsclicked] = useState(false);
 
     return (
-        <div className="group min-w-80 sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl h-[550px] md:h-[450px] lg:h-[500px] rounded-lg shadow-lg overflow-hidden relative hover:scale-105 transition-all">
+        <div className="group min-w-80 sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl h-[550px] md:h-[450px] lg:h-[500px] rounded-xl shadow-lg overflow-hidden relative hover:bg-black hover:bg-opacity-15 transition-all">
             <img
                 alt="Website Project"
                 className="object-cover object-center w-full h-full absolute inset-0"
@@ -46,47 +46,41 @@ export default function Card({ project }) {
                 src={project.image}
             />
 
-            <div className="absolute inset-0 bg-black bg-opacity-30">
-                <button onClick={onOpenModal} className="absolute top-2 right-2 bg-teal-400 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-20 rounded p-2">
-                    <GoZoomIn size={24} className='text-white' />
+            <div className="absolute inset-0 bg-black bg-opacity-10">
+                <button onClick={onOpenModal} className="absolute top-2 right-2 bg-white/20 hover:bg-white/80 backdrop-blur-sm rounded-full p-2 transition-all duration-300">
+                    <GoZoomIn size={24} className='text-black/70' />
                 </button>
 
-                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg text-white delay-75 transition-all duration-500 ease-in group-hover:max-h-full max-h-[16%] md:max-h-[20%] overflow-hidden">
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 bg-gradient-to-t from-black/80 via-black/60 to-black/10 bg-opacity-5 backdrop-filter backdrop-blur-md text-white delay-75 transition-all duration-500 ease-in group-hover:max-h-full max-h-[16%] md:max-h-[20%] overflow-hidden">
                     <div className="flex justify-between items-center mb-2">
-                        <span className="text-lg font-semibold">{project.title}</span>
-{
-                            isclicked ?
-                             <FaHeart className='text-red-500 ' size={'20'} onClick={() => { setIsclicked(!isclicked) }} /> 
-                             : 
-                                <BiHeart className='text-teal-500  ' size={'24'} onClick={ ()=>{setIsclicked(!isclicked)}   }/>
-}
+                        <span className="text-lg text-white font-semibold">{project.title}</span>
+                        <button onClick={() => setIsclicked(!isclicked)} className="transition-transform duration-300 hover:scale-110">
+                            <FaHeart className={`${isclicked ? 'text-red-500' : 'text-gray-300'}`} size={24} />
+                        </button>
                     </div>
-                    <div className="flex items-center mb-2 text-yellow-500">
+                    <div className="flex items-center mb-3 text-yellow-400">
                         <BsStar className="w-5 h-5" />
-                        <span className="mx-2 text-lg font-semibold">5.0</span>
+                        <span className="ml-2 text-lg font-semibold">5.0</span>
                     </div>
-                    <p className="text-sm mb-4 line-clamp-none peer ">
+                    <p className="text-sm mb-4 text-gray-200  transition-all duration-300">
                         {project.description}
                     </p>
-                    <div className="flex flex-row items-center w-full justify-between mb-4">
-                        <div className="flex flex-row items-center gap-2">
-                            {project.techstack && project.techstack.slice(0, 3).map((tech, index) => {
-                                const techIcon = techList.find(item => item.name === tech);
-                                return techIcon && <div key={index}>{techIcon.icon}</div>;
-                            })}
-                        </div>
-                        {project.techstack && project.techstack.length > 3 && (
-                            <Button className="px-2 py-1 text-xs font-bold text-white bg-white bg-opacity-20 rounded-full hover:bg-opacity-30 transition-all">
-                                +{project.techstack.length - 3}
-                            </Button>
-                        )}
+                    <div className="flex flex-wrap w-full items-center gap-1 mb-4 p-2">
+                        {project.techstack && project.techstack.map((tech, index) => {
+                            const techIcon = techList.find(item => item.name === tech);
+                            return techIcon && (
+                                <Button key={index} className="bg-white/10 backdrop-blur rounded-full p-2 m-1 transition-all duration-300 hover:bg-white/20">
+                                    {techIcon.icon}
+                                </Button>
+                            );
+                        })}
                     </div>
-                    <div className='flex flex-col md:flex-row gap-2'>
-                        <Button className="flex-1 p-2 text-base flex items-center justify-center gap-2 bg-teal-400 hover:bg-teal-500 transition-all" onClick={() => { window.location.href = "https://mail.google.com/mail/u/0/#inbox?compose=CllgCJqVNkTxBxJwvgjCpgvVWCPfrwfxSNQjwfHWWzQPHsnCzbFXGKZSDBjZrsHNFfGRmtFNdtL" }}>
-                            Request <BiMailSend size={20} />
+                    <div className='flex gap-3'>
+                        <Button className="flex-1 py-2 px-4 text-sm font-medium flex items-center justify-center gap-2 bg-teal-500 hover:bg-teal-600 rounded-full transition-all duration-300" onClick={() => { window.location.href = "https://mail.google.com/mail/u/0/#inbox?compose=new" }}>
+                            Request <BiMailSend size={18} />
                         </Button>
-                        <Button className={`flex-1 p-2 text-base flex items-center justify-center gap-2 ${project.link ? "bg-cyan-400 hover:bg-cyan-500" : "bg-gray-500"} transition-all`} disabled={!project.link} onClick={() => { window.location.href = project.link ? project.link : '#' }}>
-                            View <CiLink size={20} />
+                        <Button className={`flex-1 py-2 px-4 text-sm font-medium flex items-center justify-center gap-2 ${project.link ? "bg-blue-500 hover:bg-blue-600" : "bg-gray-500"} rounded-full transition-all duration-300`} disabled={!project.link} onClick={() => { window.location.href = project.link ? project.link : '#' }}>
+                            View <CiLink size={18} />
                         </Button>
                     </div>
                 </div>
