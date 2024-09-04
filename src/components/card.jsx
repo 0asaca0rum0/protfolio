@@ -51,7 +51,7 @@ export default function Card({ project }) {
                     <GoZoomIn size={24} className='text-white' />
                 </button>
 
-                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg text-white transition-all duration-500 ease-in group-hover:max-h-full max-h-24 overflow-hidden">
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg text-white transition-all duration-500 ease-in group-hover:max-h-full max-h-[16%] md:max-h-[20%] overflow-hidden">
                     <div className="flex justify-between items-center mb-2">
                         <span className="text-lg font-semibold">{project.title}</span>
 {
