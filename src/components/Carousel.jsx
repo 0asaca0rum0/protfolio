@@ -1,41 +1,81 @@
 import React, { useEffect, useState } from 'react';
-import { FaReact, FaNodeJs, FaServer, FaDatabase, FaLinux } from 'react-icons/fa';
+import { FaReact, FaNodeJs, FaServer, FaLinux } from 'react-icons/fa';
 import { TbBrandNextjs, TbBrandMysql } from 'react-icons/tb';
 import { SiTailwindcss, SiNginx } from 'react-icons/si';
 
 const techList = [
-    { name: 'React', icon: FaReact, color: '#00D8FF' },
-    { name: 'Next.js', icon: TbBrandNextjs, color: '#000000' },
-    { name: 'Tailwind CSS', icon: SiTailwindcss, color: '#06B6D4' },
-    { name: 'Node.js', icon: FaNodeJs, color: '#8CC84B' },
-    { name: 'Express', icon: FaServer, color: '#808080' },
-    { name: 'MySQL', icon: TbBrandMysql, color: '#00758F' },
-    { name: 'Nginx', icon: SiNginx, color: '#009639' },
-    { name: 'Linux', icon: FaLinux, color: '#FCC624' }
+    {
+        name: 'React',
+        icon: FaReact,
+        lightColor: '#61DAFB',
+        darkColor: '#00D8FF',
+    },
+    {
+        name: 'Next.js',
+        icon: TbBrandNextjs,
+        lightColor: '#000000',
+        darkColor: '#FFFFFF',
+    },
+    {
+        name: 'Tailwind CSS',
+        icon: SiTailwindcss,
+        lightColor: '#38BDF8',
+        darkColor: '#06B6D4',
+    },
+    {
+        name: 'Node.js',
+        icon: FaNodeJs,
+        lightColor: '#68A063',
+        darkColor: '#8CC84B',
+    },
+    {
+        name: 'Express',
+        icon: FaServer,
+        lightColor: '#808080',
+        darkColor: '#CCCCCC',
+    },
+    {
+        name: 'MySQL',
+        icon: TbBrandMysql,
+        lightColor: '#00758F',
+        darkColor: '#F29111',
+    },
+    {
+        name: 'Nginx',
+        icon: SiNginx,
+        lightColor: '#009639',
+        darkColor: '#00FF00',
+    },
+    {
+        name: 'Linux',
+        icon: FaLinux,
+        lightColor: '#FCC624',
+        darkColor: '#FFFFFF',
+    }
 ];
 
 const TechGrid = () => {
     const checkDarkMode = () => {
         const bgColor = window.getComputedStyle(document.documentElement).getPropertyValue('color');
-        if (bgColor === 'rgb(51, 51, 51)') {
-            return true;
-        } else if (bgColor === 'rgb(255, 255, 255)') {
-            return false;
-        }
+        return bgColor === 'rgb(51, 51, 51)';
     };
 
     const [isDarkMode, setIsDarkMode] = useState(true);
 
     useEffect(() => {
-        new MutationObserver(() => {
+        const observer = new MutationObserver(() => {
             setIsDarkMode(!checkDarkMode());
-        }).observe(document.documentElement, { attributes: true });
+        });
+
+        observer.observe(document.documentElement, { attributes: true });
+
+        return () => observer.disconnect();
     }, []);
 
     return (
         <div id='tech' className="min-h-screen w-full flex flex-col items-center justify-center py-16 px-4">
             <div className={`text-2xl md:text-4xl p-4 text-center font-mono font-light mb-12 ${isDarkMode ? 'text-white' : 'text-black'}`}>
-                <h2 className={`bg-${isDarkMode ? 'gray-600' : 'gray-100'} bg-opacity-5 backdrop-filter backdrop-blur-md rounded-lg shadow-lg inline-block px-8 py-4`} >
+                <h2 className={`bg-${isDarkMode ? 'gray-600' : 'gray-100'} bg-opacity-5 backdrop-filter backdrop-blur-md rounded-lg shadow-lg inline-block px-8 py-4`}>
                     Technologies I've Mastered
                 </h2>
             </div>
@@ -43,11 +83,12 @@ const TechGrid = () => {
                 {techList.map((tech, index) => (
                     <div
                         key={index}
-                        className={`group relative bg-${isDarkMode ? 'gray-700' : 'gray-100'} bg-opacity-5 backdrop-filter backdrop-blur-md rounded-xl p-6 flex flex-col items-center justify-center transition-all duration-300 overflow-hidden hover:bg-opacity-20`}
+                        className={`group relative bg-${isDarkMode ? 'gray-800 shadow-white/10 shadow-sm' : 'gray-100 shadow-black/10 shadow-lg'}   bg-opacity-5 backdrop-filter backdrop-blur-md rounded-xl p-6 flex flex-col items-center justify-center transition-all duration-300 overflow-hidden hover:bg-opacity-20`}
+                        
                     >
                         <div
                             className="text-6xl mb-4 group-hover:scale-110 transition-transform duration-300"
-                            style={{ color: isDarkMode ? tech.color : tech.color }}
+                            style={{ color: isDarkMode ? tech.darkColor : tech.lightColor }}
                         >
                             <tech.icon size={60} />
                         </div>

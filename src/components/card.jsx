@@ -12,50 +12,33 @@ import { SiOpenai } from "react-icons/si";
 import { GoZoomIn } from "react-icons/go";
 import 'react-responsive-modal/styles.css';
 import { FaJava, FaPython } from 'react-icons/fa6';
+import { FaHeart } from "react-icons/fa6";
 
 const techList = [
     { name: 'React ', icon: <FaReact size={30} /> },
     { name: 'Next 13 ', icon: <TbBrandNextjs size={30} /> },
     { name: 'Tailwind CSS ', icon: <SiTailwindcss size={30} /> },
-    { name: 'nodejs', icon: <FaNodeJs size={30} /> },
-    { name: 'express ', icon: <FaServer size={30} /> },
-    { name: 'mysql ', icon: <TbBrandMysql size={30} /> },
-    { name: 'nginx ', icon: <SiNginx size={30} /> },
-    { name: 'linux ', icon: <FaLinux size={30} /> },
-    { name: 'mongodb ', icon: <SiMongodb size={30} /> },
+    { name: 'Node.js', icon: <FaNodeJs size={30} /> },
+    { name: 'Express ', icon: <FaServer size={30} /> },
+    { name: 'MySQL ', icon: <TbBrandMysql size={30} /> },
+    { name: 'Nginx ', icon: <SiNginx size={30} /> },
+    { name: 'Linux ', icon: <FaLinux size={30} /> },
+    { name: 'MongoDB ', icon: <SiMongodb size={30} /> },
     { name: 'React Native ', icon: <TbBrandReactNative size={30} /> },
     { name: 'Expo', icon: <SiExpo size={30} /> },
-    { name: 'java', icon: <FaJava size={30} /> },
+    { name: 'Java', icon: <FaJava size={30} /> },
     { name: 'Python', icon: <FaPython size={30} /> },
     { name: 'AI', icon: <SiOpenai size={30} /> },
 ];
 
 export default function Card({ project }) {
     const [open, setOpen] = useState(false);
-    const [bgColor, setBgColor] = useState("white");
     const onOpenModal = () => setOpen(true);
     const onCloseModal = () => setOpen(false);
-
-    useEffect(() => {
-        document.getElementById("slider").addEventListener('click', handleBgColorChange);
-        return () => {
-            document.getElementById("slider")?.removeEventListener('click', handleBgColorChange);
-        }
-    }, []);
-
-    const handleBgColorChange = () => {
-        const x = window.getComputedStyle(document.documentElement).getPropertyValue('background-color').toString();
-        if (x === "rgb(0, 0, 0)") {
-            setBgColor("black");
-        } else if (x === "rgb(255, 255, 255)") {
-            setBgColor("white");
-        } else {
-            return;
-        }
-    }
+    const [isclicked , setIsclicked] = useState(false);
 
     return (
-        <div className="min-w-80 sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl h-[550px] md:h-[450px] lg:h-[500px] rounded-lg shadow-lg overflow-hidden relative hover:scale-105 transition-all">
+        <div className="group min-w-80 sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl h-[550px] md:h-[450px] lg:h-[500px] rounded-lg shadow-lg overflow-hidden relative hover:scale-105 transition-all">
             <img
                 alt="Website Project"
                 className="object-cover object-center w-full h-full absolute inset-0"
@@ -68,16 +51,21 @@ export default function Card({ project }) {
                     <GoZoomIn size={24} className='text-white' />
                 </button>
 
-                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg text-white">
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg text-white transition-all duration-500 ease-in group-hover:max-h-full max-h-24 overflow-hidden">
                     <div className="flex justify-between items-center mb-2">
                         <span className="text-lg font-semibold">{project.title}</span>
-                        <BiHeart className="text-red-500" size={25} />
+{
+                            isclicked ?
+                             <FaHeart className='text-red-500 ' size={'20'} onClick={() => { setIsclicked(!isclicked) }} /> 
+                             : 
+                                <BiHeart className='text-teal-500  ' size={'24'} onClick={ ()=>{setIsclicked(!isclicked)}   }/>
+}
                     </div>
                     <div className="flex items-center mb-2 text-yellow-500">
                         <BsStar className="w-5 h-5" />
                         <span className="mx-2 text-lg font-semibold">5.0</span>
                     </div>
-                    <p className="text-sm mb-4 line-clamp-3">
+                    <p className="text-sm mb-4 line-clamp-none peer ">
                         {project.description}
                     </p>
                     <div className="flex flex-row items-center w-full justify-between mb-4">
