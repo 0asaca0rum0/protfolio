@@ -108,15 +108,16 @@ export default function Projects() {
         new MutationObserver(() => {
             !checkDarkMode() ? console.log('dark') : console.log('light');
             setIsDarkMode(!checkDarkMode());
+            setBgColor(checkDarkMode() ? 'black' : 'white');
         }).observe(document.documentElement, { attributes: true });
     }, []);
 
     return (
         <Tabs value={activeTab} onChange={(value) => setActiveTab(value)} >
             <TabsHeader
-                className="h-full w-full   rounded-2xl px-5 py-2 md:p-2 m-4 bg-gray-600 bg-opacity-15   backdrop-blur-lg backdrop-filter max-w-full min-w-full mx-auto"
+                className={`h-full w-full   rounded-3xl px-5 py-2 md:p-2 m-4 bg-${isDarkMode ? 'gray-600 shadow-white/10 shadow' : 'gray-100 shadow-black/10 shadow-lg'}    bg-opacity-5 backdrop-filter backdrop-blur max-w-full min-w-full mx-auto` }
                 indicatorProps={{
-                    className: "bg-white  bg-opacity-10 shadow-[0px_4px_12px_rgba(0,0,0,0.1),_0px_8px_32px_rgba(0,0,0,0.08),_inset_0px_1px_1px_rgba(255,255,255,0.2)]  py-3 -mx-1 md:mx-4  rounded-xl",
+                    className: "bg-white text-black  bg-opacity-10 shadow-[0px_4px_12px_rgba(0,0,0,0.1),_0px_8px_32px_rgba(0,0,0,0.08),_inset_0px_1px_1px_rgba(255,255,255,0.2)]  py-3 -mx-1 md:mx-4  rounded-full",
                 }}
                 id="project"
             >
@@ -124,7 +125,7 @@ export default function Projects() {
                     <Tab
                         key={value}
                         value={value}
-                        className={`${activeTab === value ? `text-${bgColor}` : ` text-${bgColor}/35 font-normal`
+                        className={`${activeTab === value ? `text-${bgColor} font-semibold font-sans` : ` text-${bgColor}/35 font-normal`
                             }`}
                         onClick={() => setActiveTab(value)}
                     >
