@@ -28,7 +28,7 @@ const Hero = () => {
         >
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-screen-2xl">
                 <div className={`w-full mx-auto p-8 ${!isDarkMode
-                    ? 'bg-gradient-to-tr from-black/10 via-gray-900/10 to-[rgb(97,97,97,0.05)]   rounded-lg'
+                    ? 'bg-gradient-to-tr from-black/10 via-gray-900/10 to-[rgb(97,97,97,0.05)]   rounded-lg shadow-sm shadow-white/10'
                     : 'bg-gray-400 bg-opacity-15 shadow-[rgba(0,_0,_0,_0.1)_0px_60px_40px_-7px] rounded-xl '} backdrop-filter backdrop-blur md:backdrop-blur-md  transition-colors duration-300`}>
                     <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12">
                         <div className={`flex flex-col justify-center items-center lg:items-start text-center lg:text-left lg:w-1/2 ${!isDarkMode
