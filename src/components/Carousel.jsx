@@ -83,7 +83,7 @@ const TechGrid = () => {
                 {techList.map((tech, index) => (
                     <div
                         key={index}
-                        className={`group relative bg-${isDarkMode ? 'gray-800 shadow-white/10 shadow-sm' : 'gray-100 shadow-black/10 shadow-lg'}   bg-opacity-5 backdrop-filter backdrop-blur-md rounded-xl p-6 flex flex-col items-center justify-center transition-all duration-300 overflow-hidden hover:bg-opacity-20`}
+                        className={`group relative bg-${isDarkMode ? 'gray-800 shadow-white/10 shadow-sm' : 'gray-100 shadow-black/10 shadow-lg'}   bg-opacity-5 backdrop-filter backdrop-blur md:backdrop-blur-md rounded-xl p-6 flex flex-col items-center justify-center transition-all duration-300 overflow-hidden hover:bg-opacity-20`}
                         
                     >
                         <div

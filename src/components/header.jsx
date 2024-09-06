@@ -41,7 +41,7 @@ const Header = ({ islight }) => {
         });
     }
     return (
-        <header id="top" className={`md:w-8/12 w-11/12 fixed top-0  z-50 h-16 mx-2 flex flex-row items-center justify-between my-2 px-10 shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] ${!islight ? "bg-black " : " bg-white      "} bg-opacity-15 backdrop-filter backdrop-blur-lg border border-white border-opacity-10  rounded-full`}>
+        <header id="top" className={`md:w-8/12 w-11/12 fixed top-0  z-50 h-16 mx-2 flex flex-row items-center justify-between my-2 px-10 shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px] ${!islight ? "bg-black " : " bg-white "} bg-opacity-10 backdrop-filter backdrop-blur-md md:backdrop-blur-lg border border-white border-opacity-10  rounded-full`}>
             <img
                 src={`${isChecked ? "crow2.webp " : "crow-removebg.webp"}`}
                 alt=""
@@ -89,24 +89,24 @@ const Header = ({ islight }) => {
                 <div className="lg:hidden flex flex-row items-center justify-center">
                     <Menu >
                         <MenuHandler  >
-                            <Button className={`${isChecked ? "text-black bg-white bg-opacity-10 shadow z-50    backdrop-blur-lg backdrop-filter" :"text-white bg-gray-500 bg-opacity-5  shadow backdrop-blur-lg backdrop-filter"}`}>
+                            <Button className={`${isChecked ? "text-black bg-white bg-opacity-10 shadow z-50    backdrop-blur-lg backdrop-filter" :"text-white bg-gray-500 bg-opacity-5  shadow backdrop-blur-lg backdrop-filter"}`} >
                                 <RxHamburgerMenu size={"25"}  />
                             </Button>
                         </MenuHandler>
-                        <MenuList className=" my-5 p-4  w-1/3 h-1/4 flex flex-col justify-around items-center bg-gray-400 rounded-xl bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-500">
-                            <MenuItem className="flex gap-2 hover:bg-white hover:text-black transition-all delay-100 flex-row justify-evenly items-center">
+                        <MenuList className=" my-5 p-4  w-1/3 h-1/4 flex flex-col justify-around items-center bg-gray-400 rounded-xl bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-500" >
+                            <MenuItem className="flex gap-2 hover:bg-white text-teal-400 transition-all delay-100 flex-row justify-evenly items-center" onClick={() => { scroll('top') }}>
                                 <FaHome size={"20"} />
                                 Home
                             </MenuItem>
-                            <MenuItem className="flex gap-2 flex-row justify-evenly items-center hover:text-teal-400 hover:scale-105 transition-all duration-300">
+                            <MenuItem className="flex gap-2 flex-row  justify-evenly items-center text-teal-400 hover:scale-105 transition-all duration-300" onClick={() => { scroll('tech') }}>
                                 <FaReact className="motion-safe:animate-spin-slow" size={"20"} />
                                 tech
                             </MenuItem>
-                            <MenuItem className="flex gap-2 flex-row justify-evenly items-center hover:text-teal-400 hover:scale-105 transition-all duration-300">
+                            <MenuItem className="flex gap-2 flex-row justify-evenly items-center text-teal-400 hover:scale-105 transition-all duration-300" onClick={() => { scroll('project') }}>
                                 <FaServer className="" />
                                 Projects
                             </MenuItem>
-                            <MenuItem className="flex gap-2 flex-row justify-evenly items-center hover:text-teal-400 hover:scale-105 transition-all duration-300">
+                            <MenuItem className="flex gap-2 flex-row justify-evenly items-center text-teal-400 hover:scale-105 transition-all duration-300" onClick={() => { scroll('contact') }}>
                                 <BiMailSend size={"20"} />
                                 Contact
                             </MenuItem>

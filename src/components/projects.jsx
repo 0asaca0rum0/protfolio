@@ -115,7 +115,7 @@ export default function Projects() {
     return (
         <Tabs value={activeTab} onChange={(value) => setActiveTab(value)} >
             <TabsHeader
-                className={`h-full w-full   rounded-3xl px-5 py-2 md:p-2 m-4 bg-${isDarkMode ? 'gray-600 shadow-white/10 shadow' : 'gray-100 shadow-black/10 shadow-lg'}    bg-opacity-5 backdrop-filter backdrop-blur max-w-full min-w-full mx-auto` }
+                className={`h-full w-full   rounded-3xl px-5 py-2 md:p-2 m-4 bg-${isDarkMode ? 'gray-600 shadow-white/10 shadow' : 'gray-100 shadow-black/10 shadow-lg'}    bg-opacity-5 backdrop-filter backdrop-blur-sm md:backdrop-blur-md max-w-full min-w-full mx-auto` }
                 indicatorProps={{
                     className: "bg-white text-black  bg-opacity-10 shadow-[0px_4px_12px_rgba(0,0,0,0.1),_0px_8px_32px_rgba(0,0,0,0.08),_inset_0px_1px_1px_rgba(255,255,255,0.2)]  py-3 -mx-1 md:mx-4  rounded-full",
                 }}

@@ -6,7 +6,7 @@ const Contact = () => {
         <section className='w-full max-w-4xl mx-auto mt-20 px-4' id='contact'>
             <h2 className='text-3xl font-bold mb-8 text-center text-gray-200'>Contact Me</h2>
             <form
-                className="w-full flex flex-col gap-6 bg-gray-900 bg-opacity-10 backdrop-filter backdrop-blur-md p-8 rounded-xl shadow-2xl border border-gray-700/30"
+                className="w-full flex flex-col gap-6 bg-gray-900 bg-opacity-10 backdrop-filter backdrop-blur md:backdrop-blur-md p-8 rounded-xl shadow-2xl border border-gray-700/30"
                 action='https://formspree.io/f/xgegpyra'
                 method='POST'
             >

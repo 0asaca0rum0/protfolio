@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = () => {
     return (
-        <footer className="w-full mt-10 flex flex-col items-center py-10 bg-gray-800 bg-opacity-5 backdrop-filter backdrop-blur-lg shadow-xl border-t border-gray-300 border-opacity-20">
+        <footer className="w-full mt-10 flex flex-col items-center py-10 bg-gray-800 bg-opacity-5 backdrop-filter backdrop-blur md:backdrop-blur-md shadow-xl border-t border-gray-300 border-opacity-20">
             <div className="w-full max-w-5xl flex flex-col md:flex-row justify-between mb-8 px-4">
                 <div className="mb-8 md:mb-0">
                     <h3 className="text-inherit font-semibold text-xl mb-4">Contact Information</h3>
