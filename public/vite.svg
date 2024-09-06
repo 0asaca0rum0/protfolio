@@ -1,43 +1,34 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
-    <defs>
-        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#00ffaa" stop-opacity="0.7" />
-            <stop offset="100%" stop-color="#8a2be2" stop-opacity="0.5" />
-        </linearGradient>
-    </defs>
-
-    <g stroke="url(#grad)" stroke-width="2" fill="none" stroke-linecap="square">
-        <circle cx="500" cy="500" r="480" stroke-dasharray="301.59 301.59">
-            <animateTransform attributeName="transform" type="rotate" from="0 500 500"
-                to="360 500 500" dur="240s" repeatCount="indefinite" />
-        </circle>
-        <circle cx="500" cy="500" r="420" stroke-dasharray="263.89 263.89">
-            <animateTransform attributeName="transform" type="rotate" from="45 500 500"
-                to="405 500 500" dur="210s" repeatCount="indefinite" />
-        </circle>
-        <circle cx="500" cy="500" r="360" stroke-dasharray="226.19 226.19">
-            <animateTransform attributeName="transform" type="rotate" from="90 500 500"
-                to="450 500 500" dur="180s" repeatCount="indefinite" />
-        </circle>
-        <circle cx="500" cy="500" r="300" stroke-dasharray="188.50 188.50">
-            <animateTransform attributeName="transform" type="rotate" from="135 500 500"
-                to="495 500 500" dur="150s" repeatCount="indefinite" />
-        </circle>
-        <circle cx="500" cy="500" r="240" stroke-dasharray="150.80 150.80">
-            <animateTransform attributeName="transform" type="rotate" from="180 500 500"
-                to="540 500 500" dur="120s" repeatCount="indefinite" />
-        </circle>
-        <circle cx="500" cy="500" r="180" stroke-dasharray="113.10 113.10">
-            <animateTransform attributeName="transform" type="rotate" from="225 500 500"
-                to="585 500 500" dur="90s" repeatCount="indefinite" />
-        </circle>
-        <circle cx="500" cy="500" r="120" stroke-dasharray="75.40 75.40">
-            <animateTransform attributeName="transform" type="rotate" from="270 500 500"
-                to="630 500 500" dur="60s" repeatCount="indefinite" />
-        </circle>
-        <circle cx="500" cy="500" r="60" stroke-dasharray="37.70 37.70">
-            <animateTransform attributeName="transform" type="rotate" from="315 500 500"
-                to="675 500 500" dur="30s" repeatCount="indefinite" />
-        </circle>
-    </g>
+  <defs>
+    <linearGradient id="a" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#0fa" stop-opacity=".7"/>
+      <stop offset="100%" stop-color="#8a2be2" stop-opacity=".5"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke="url(#a)" stroke-linecap="square" stroke-width="2">
+    <circle cx="500" cy="500" r="480" stroke-dasharray="301.59 301.59">
+      <animateTransform attributeName="transform" dur="240s" from="0 500 500" repeatCount="indefinite" to="360 500 500" type="rotate"/>
+    </circle>
+    <circle cx="500" cy="500" r="420" stroke-dasharray="263.89 263.89">
+      <animateTransform attributeName="transform" dur="210s" from="45 500 500" repeatCount="indefinite" to="405 500 500" type="rotate"/>
+    </circle>
+    <circle cx="500" cy="500" r="360" stroke-dasharray="226.19 226.19">
+      <animateTransform attributeName="transform" dur="180s" from="90 500 500" repeatCount="indefinite" to="450 500 500" type="rotate"/>
+    </circle>
+    <circle cx="500" cy="500" r="300" stroke-dasharray="188.5 188.5">
+      <animateTransform attributeName="transform" dur="150s" from="135 500 500" repeatCount="indefinite" to="495 500 500" type="rotate"/>
+    </circle>
+    <circle cx="500" cy="500" r="240" stroke-dasharray="150.8 150.8">
+      <animateTransform attributeName="transform" dur="120s" from="180 500 500" repeatCount="indefinite" to="540 500 500" type="rotate"/>
+    </circle>
+    <circle cx="500" cy="500" r="180" stroke-dasharray="113.1 113.1">
+      <animateTransform attributeName="transform" dur="90s" from="225 500 500" repeatCount="indefinite" to="585 500 500" type="rotate"/>
+    </circle>
+    <circle cx="500" cy="500" r="120" stroke-dasharray="75.4 75.4">
+      <animateTransform attributeName="transform" dur="60s" from="270 500 500" repeatCount="indefinite" to="630 500 500" type="rotate"/>
+    </circle>
+    <circle cx="500" cy="500" r="60" stroke-dasharray="37.7 37.7">
+      <animateTransform attributeName="transform" dur="30s" from="315 500 500" repeatCount="indefinite" to="675 500 500" type="rotate"/>
+    </circle>
+  </g>
 </svg>
