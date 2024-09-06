@@ -88,9 +88,9 @@ input:checked + .slider:after {
     body {
         height: max-content;
         width: 100%;
-        background-image: url("/public/ccchaos-min.svg");
+        background-image: url("/public/vite.svg");
        background-repeat: no-repeat;
-       background-position: initial;
+       background-position: center;
          background-size: 100vh auto;
          background-attachment: fixed;
     }
