@@ -23,7 +23,7 @@ export default function Projects() {
             description: "A comprehensive website  for an e-commerce platform, was meant for fri7a, a local shop  in algeria, the website has a feature for uploading short videos of the products or any other content.",
             image: "fri7a.png",
             techstack: ['Next 13 ', "Node.js", "Express "],
-            link: "fri7a.pages.dev",
+            link: "https://fri7a.pages.dev",
             category: "Web App",
         },
         {
