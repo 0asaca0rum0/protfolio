@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FaGithub } from "react-icons/fa6";
 import { SiGmail } from "react-icons/si";
 import { FaTelegramPlane } from "react-icons/fa";
-
+import { TbFileCv } from "react-icons/tb";
 const Hero = () => {
     const checkDarkMode = () => {
         const bgColor = window.getComputedStyle(document.documentElement).getPropertyValue('color');
@@ -28,7 +28,7 @@ const Hero = () => {
         >
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-screen-2xl">
                 <div className={`w-full mx-auto p-8 ${!isDarkMode
-                    ? 'bg-gradient-to-tr from-black/10 via-gray-900/10 to-[rgb(97,97,97,0.05)]   rounded-lg shadow-sm shadow-white/10'
+                    ? 'bg-gradient-to-tr from-black/10 via-gray-800/5 to-gray-800/10   rounded-lg shadow-sm shadow-white/10'
                     : 'bg-gray-400 bg-opacity-15 shadow-[rgba(0,_0,_0,_0.1)_0px_60px_40px_-7px] rounded-xl '} backdrop-filter backdrop-blur md:backdrop-blur-md  transition-colors duration-300`}>
                     <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12">
                         <div className={`flex flex-col justify-center items-center lg:items-start text-center lg:text-left lg:w-1/2 ${!isDarkMode
@@ -50,14 +50,17 @@ const Hero = () => {
                                 {[
                                     { icon: FaGithub, text: "Github", link: "https://github.com/0asaca0rum0" },
                                     { icon: FaTelegramPlane, text: "Telegram", link: "https://t.me/karasuma_renya" },
-                                    { icon: SiGmail, text: "Gmail", link: "mailto:foxdeath100@gmail.com" }
+                                    { icon: SiGmail, text: "Gmail", link: "mailto:foxdeath100@gmail.com" },
+                                    { icon: TbFileCv ,text:"CV" , link: "/cv.pdf" }
+                                    
                                 ].map((item, index) => (
                                     <li key={index}>
                                         <a
-                                            href={item.link}
+                                            href={item.link }
+                                            download={item.text === 'CV' ? 'Ahmed Elmasri CV.pdf' : undefined}
                                             className={`flex items-center gap-3 px-4 py-2 rounded-full ${!isDarkMode
-                                                ? 'bg-white bg-opacity-10 text-white hover:bg-opacity-20 hover:text-[#00ffaa]'
-                                                : 'bg-gray-800 bg-opacity-10 text-gray-800 hover:bg-opacity-20 hover:text-[#8a2be2]'} backdrop-filter backdrop-blur-sm transition-all duration-200`}
+                                                ? 'bg-white bg-opacity-10 text-white hover:bg-opacity-20 hover:text-[#43bdad]'
+                                                : 'bg-gray-800 bg-opacity-10 text-gray-800 hover:bg-opacity-20 hover:text-[#8a2be2]'} backdrop-filter backdrop-blur-sm transition-all duration-300 hover:scale-105  `}
                                         >
                                             <item.icon size={20} />
                                             <span>{item.text}</span>

@@ -75,7 +75,7 @@ const TechGrid = () => {
     return (
         <div id='tech' className="min-h-screen w-full flex flex-col items-center justify-center py-16 px-4">
             <div className={`text-2xl md:text-4xl p-4 text-center font-mono font-light mb-12 ${isDarkMode ? 'text-white' : 'text-black'}`}>
-                <h2 className={`bg-${isDarkMode ? 'gray-600' : 'gray-100'} bg-opacity-5 backdrop-filter backdrop-blur-md rounded-lg shadow-lg inline-block px-8 py-4`}>
+                <h2 className={`${isDarkMode ? 'bg-gradient-to-tr from-gray-600/5 via-gray-800/5 to-gray-700/10 shadow-sm shadow-white/10' : 'bg-gray-400'} bg-opacity-5 backdrop-filter backdrop-blur rounded-lg shadow-lg inline-block px-8 py-4`}>
                     Technologies I've Mastered
                 </h2>
             </div>
@@ -83,7 +83,7 @@ const TechGrid = () => {
                 {techList.map((tech, index) => (
                     <div
                         key={index}
-                        className={`group relative bg-${isDarkMode ? 'gray-800 shadow-white/10 shadow-sm' : 'gray-100 shadow-black/10 shadow-lg'}   bg-opacity-5 backdrop-filter backdrop-blur md:backdrop-blur-md rounded-xl p-6 flex flex-col items-center justify-center transition-all duration-300 overflow-hidden hover:bg-opacity-20`}
+                        className={`group relative ${isDarkMode ? 'bg-gradient-to-tr from-gray-600/5 via-gray-800/5 to-gray-700/10 shadow shadow-white/10' : 'bg-gray-400 shadow-black/10 shadow-lg'}   bg-opacity-5 backdrop-filter backdrop-blur md:backdrop-blur-md rounded-xl p-6 flex flex-col items-center justify-center transition-all duration-300 overflow-hidden hover:bg-opacity-20`}
                         
                     >
                         <div
@@ -93,7 +93,7 @@ const TechGrid = () => {
                             <tech.icon size={60} />
                         </div>
                         <div
-                            className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-black'} group-hover:text-[#00ffaa] transition-colors duration-300`}
+                            className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-black'} group-hover:text-[#00ffaa] transition-colors duration-300 text-center`}
                         >
                             {tech.name}
                         </div>
