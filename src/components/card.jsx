@@ -1,4 +1,5 @@
 import React, { useState, memo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FaReact, FaNodeJs, FaServer, FaLinux, FaHeart, FaJava, FaPython } from 'react-icons/fa';
 import { TbBrandNextjs, TbBrandMysql, TbBrandReactNative } from 'react-icons/tb';
 import { SiTailwindcss, SiNginx, SiMongodb, SiExpo, SiOpenai } from 'react-icons/si';
@@ -7,9 +8,7 @@ import { IoCloseCircleOutline } from "react-icons/io5";
 import { Button } from "@material-tailwind/react";
 import { BsStar } from "react-icons/bs";
 import { CiLink } from "react-icons/ci";
-import { Modal } from 'react-responsive-modal';
 import { GoZoomIn } from "react-icons/go";
-import 'react-responsive-modal/styles.css';
 
 // Tech icons mapping - moved outside component for better performance
 const techList = {
@@ -110,24 +109,45 @@ const Card = memo(({ project }) => {
                 </div>
             </div>
 
-            <Modal
-                open={open}
-                onClose={handleModalToggle}
-                center
-                classNames={{
-                    modal: 'h-1/2 md:h-full w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-5xl',
-                    overlay: 'bg-black bg-opacity-50 flex flex-col items-center justify-center',
-                    modalContainer: 'flex justify-center items-center bg-black bg-opacity-10 backdrop-filter backdrop-blur-sm p-4',
-                }}
-                closeIcon={<IoCloseCircleOutline size={25} className='text-red-500' />}
-            >
-                <img
-                    alt={project.title}
-                    className="object-contain object-center md:object-cover w-full h-full md:max-h-[80vh] md:max-w-none"
-                    loading='lazy'
-                    src={project.image}
-                />
-            </Modal>
+            {/* Custom Modal Implementation */}
+            <AnimatePresence>
+                {open && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-filter backdrop-blur-sm p-4"
+                        onClick={handleModalToggle}
+                    >
+                        <motion.div 
+                            className="relative max-w-5xl max-h-[90vh] overflow-hidden"
+                            initial={{ scale: 0.9 }}
+                            animate={{ scale: 1 }}
+                            exit={{ scale: 0.9 }}
+                            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <button
+                                className="absolute top-4 right-4 bg-red-500/80 hover:bg-red-500 p-2 rounded-full z-10 transition-all"
+                                onClick={handleModalToggle}
+                                aria-label="Close modal"
+                            >
+                                <IoCloseCircleOutline size={28} className="text-white" />
+                            </button>
+                            
+                            <motion.img
+                                src={project.image}
+                                alt={project.title}
+                                className="w-full h-full object-contain md:object-cover md:max-h-[80vh]"
+                                loading="lazy"
+                                whileHover={{ scale: 1.02 }}
+                                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                            />
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 });
