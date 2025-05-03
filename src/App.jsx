@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
-import Projects from './components/Projects';
+import Projects from './components/projects'; // Changed from ./components/Projects to ./components/projects
 import Carousel from './components/Carousel';
 import Contact from './components/contact';
 import FloatingNav from './components/FloatingNav';

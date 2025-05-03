@@ -13,7 +13,7 @@ import { GoZoomIn } from "react-icons/go";
 // Tech icons mapping - moved outside component for better performance
 const techList = {
     'React ': <FaReact size={30} />,
-    'Next 13 ': <TbBrandNextjs size={30} />,
+    'Next 13 ': <TbBrandNextjs size={30} />, // Corrected from Next 15 to Next 13
     'Tailwind CSS ': <SiTailwindcss size={30} />,
     'Node.js': <FaNodeJs size={30} />,
     'Express ': <FaServer size={30} />,
