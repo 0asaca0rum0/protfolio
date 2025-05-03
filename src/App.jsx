@@ -1,42 +1,99 @@
-import Header from './components/header'
-import Hero from './components/hero'
-import Carousel from './components/Carousel'
-import Projects from './components/projects'
-import Footer from './components/footer'
-import Contact from './components/contact'
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
+import Sidebar from './components/Sidebar';
+import Projects from './components/Projects';
+import Carousel from './components/Carousel';
+import Contact from './components/contact';
+import FloatingNav from './components/FloatingNav';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaProjectDiagram, FaCode } from 'react-icons/fa';
+import { BiMailSend } from 'react-icons/bi';
+import './index.css';
 
 function App() {
-  const [condition, setCondition] = useState(false);
-  const [location, setLocation] = useState("");
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [activeSection, setActiveSection] = useState('projects');
+  const [showSidebar, setShowSidebar] = useState(window.innerWidth < 768); // Default to true on mobile
+
+  // Handle responsive breakpoints
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.location.pathname !== "/") {
-      setLocation(window.location.pathname);
-      setCondition(true)
-    } 
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      
+      // Set sidebar visibility when transitioning between mobile and desktop
+      if (mobile) {
+        setShowSidebar(true); // Make profile view default on mobile
+      } else {
+        setShowSidebar(false);
+      }
+    };
+    
+    // Initial run to set sidebar on first load
+    handleResize();
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
-  if (!condition) {
-    return (
-      <div className='flex flex-col pt-16 items-center  justify-around h-full w-full' >
-        <div id='top'></div>
-        <Header islight={false} />
-        <Hero />
-        <Carousel />
-        <Projects />
-        <Contact />
-        <Footer />
-      </div>
-    )
-  } else {
-    return (
-      <div className="flex justify-center items-center h-screen ">
-        <div className="bg-inherit bg-opacity-50 backdrop-filter backdrop-blur w-full h-full flex items-center flex-col justify-center text-center rounded-lg p-8 shadow-xl">
-          <h1 className="text-6xl text-white mb-4">404</h1>
-          <p className="text-2xl text-white">Elmasri.pages.dev{location} does not exist</p>
-          <a href="/" className='text-lg mt-10 bg-red-500 rounded-md    p-2 '>return home</a>      </div>
-      </div>
-    )
-  }
+
+  // Navigation handlers
+  const handleNavigation = (section) => {
+    setActiveSection(section);
+  };
+
+  // Toggle sidebar visibility for mobile
+  const toggleSidebar = () => {
+    setShowSidebar(!showSidebar);
+  };
+
+  const navItems = [
+    { name: 'projects', label: 'Projects', icon: <FaProjectDiagram /> },
+    { name: 'tech', label: 'Technologies', icon: <FaCode /> },
+    { name: 'contact', label: 'Contact', icon: <BiMailSend /> },
+  ];
+
+  return (
+    <div className="main-container">
+      {/* Show sidebar based on screen size and state */}
+      {(!isMobile || (isMobile && showSidebar)) && (
+        <Sidebar className={`sidebar ${isMobile ? 'mobile-sidebar' : ''}`} />
+      )}
+      
+      {/* Show content based on screen size and state */}
+      {(!isMobile || (isMobile && !showSidebar)) && (
+        <main className={`content-container ${isMobile ? 'mobile-content' : ''}`}>
+          {/* Content section with animations */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeSection}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+              className="w-full h-full flex items-center justify-center"
+            >
+              {activeSection === 'projects' && 
+                <div className={`${isMobile ? 'mobile-projects' : ''} w-full h-full flex items-center justify-center`}>
+                  <Projects />
+                </div>
+              }
+              {activeSection === 'tech' && <Carousel />}
+              {activeSection === 'contact' && <Contact />}
+            </motion.div>
+          </AnimatePresence>
+        </main>
+      )}
+
+      {/* Floating Navigation */}
+      <FloatingNav 
+        items={navItems} 
+        activeSection={activeSection} 
+        onNavigate={handleNavigation}
+        isMobile={isMobile}
+        showSidebar={showSidebar}
+        toggleSidebar={toggleSidebar}
+      />
+    </div>
+  );
 }
 
-export default App
+export default App;
