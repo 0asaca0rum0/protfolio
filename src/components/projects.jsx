@@ -120,9 +120,9 @@ export default function Projects() {
     }, [activeCategory]);
 
     return (
-        <div className="w-full py-2 md:py-3 flex flex-col items-center justify-center">
+        <div className="w-full py-2 md:py-3 flex flex-col items-center justify-center font-['Comfortaa']">
             <motion.h2 
-                className="text-xl md:text-2xl lg:text-3xl font-bold mb-3 md:mb-3 text-[#FAF3DD]"
+                className="text-xl md:text-2xl lg:text-3xl font-bold mb-4 md:mb-5 text-[#FAF3DD]"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
@@ -130,37 +130,39 @@ export default function Projects() {
                 Projects
             </motion.h2>
 
-            {/* Category Filter */}
+            {/* Improved Category Filter */}
             <motion.div 
-                className="flex flex-wrap gap-1 md:gap-2 mb-2 md:mb-6 justify-center"
+                className="flex flex-wrap gap-2 md:gap-3 mb-4 md:mb-8 justify-center bg-[#131313]/50 p-2 rounded-full backdrop-filter backdrop-blur-sm border border-[#1A936F]/20"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
             >
                 {categories.map((category) => (
-                    <button
+                    <motion.button
                         key={category.value}
                         onClick={() => setActiveCategory(category.value)}
-                        className={`px-2 py-1 md:px-3 md:py-1.5 text-xs md:text-sm rounded-full font-medium transition-all ${
+                        className={`px-3 py-1.5 md:py-2 text-xs md:text-sm rounded-full font-medium transition-all ${
                             activeCategory === category.value 
-                                ? "bg-[#1A936F] text-[#FCFFF0]" 
-                                : "bg-[#131313] text-[#FCFFF0]/70 border border-[#1A936F]/20 hover:border-[#1A936F]/50"
+                                ? "bg-[#1A936F] text-[#FCFFF0] shadow-md" 
+                                : "bg-transparent text-[#FCFFF0]/80 hover:text-[#FCFFF0]"
                         }`}
+                        whileHover={activeCategory !== category.value ? { scale: 1.05 } : {}}
+                        whileTap={{ scale: 0.95 }}
                     >
                         {category.label}
-                    </button>
+                    </motion.button>
                 ))}
             </motion.div>
 
             {/* Improved Stacked Card Display with Navigation */}
-            <div className="w-full flex flex-col items-center mt-2 md:mt-4">
+            <div className="w-full flex flex-col items-center mt-1 md:mt-2">
                 {/* Card Stack Container */}
-                <div className="relative w-full max-w-xs md:max-w-sm lg:max-w-md h-[350px] md:h-[400px] lg:h-[450px] mb-2 md:mb-4">
+                <div className="relative w-full max-w-xs md:max-w-sm lg:max-w-md h-[320px] md:h-[360px] lg:h-[400px] mb-1 md:mb-3">
                     {filteredProjects.map((project, idx) => {
                         // Calculate position in stack relative to current card
                         const position = (idx - currentIndex + filteredProjects.length) % filteredProjects.length;
-                        // Only render visible cards (current + 3 behind)
-                        const isVisible = position < 4;
+                        // Only render visible cards (current + 4 behind)
+                        const isVisible = position < 5;
                         
                         return isVisible && (
                             <AnimatedCard
@@ -174,33 +176,41 @@ export default function Projects() {
                 </div>
                 
                 {/* Navigation Controls - More compact for mobile */}
-                <div className="flex justify-center mt-1 gap-4 md:gap-6">
-                    <button 
+                <div className="flex justify-center gap-3 md:gap-5 bg-[#131313]/50 px-3 py-1.5 rounded-full backdrop-filter backdrop-blur-sm border border-[#1A936F]/20">
+                    <motion.button 
                         onClick={prevCard}
-                        className="p-2 md:p-3 rounded-full bg-[#1A936F]/20 hover:bg-[#1A936F] text-[#8FE7C3] hover:text-[#FCFFF0] transition-colors"
+                        className="p-2 rounded-full bg-[#1A936F]/20 hover:bg-[#1A936F] text-[#8FE7C3] hover:text-[#FCFFF0] transition-colors"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
                     >
                         <FaChevronLeft className="text-sm md:text-base" />
-                    </button>
-                    <div className="flex gap-1 md:gap-2 items-center">
+                    </motion.button>
+                    
+                    <div className="flex gap-1.5 md:gap-2 items-center">
                         {filteredProjects.map((_, idx) => (
-                            <button
+                            <motion.button
                                 key={idx}
                                 onClick={() => setCurrentIndex(idx)}
-                                className={`w-1.5 md:w-2 h-1.5 md:h-2 rounded-full transition-all ${
+                                className={`w-2 h-2 md:w-2.5 md:h-2.5 rounded-full transition-all ${
                                     idx === currentIndex 
-                                    ? "bg-[#1ED696] w-3 md:w-4" 
-                                    : "bg-[#1A936F]/40"
+                                    ? "bg-[#1ED696]" 
+                                    : "bg-[#1A936F]/30 hover:bg-[#1A936F]/60"
                                 }`}
+                                whileHover={{ scale: 1.2 }}
+                                whileTap={{ scale: 0.8 }}
                                 aria-label={`Go to slide ${idx + 1}`}
                             />
                         ))}
                     </div>
-                    <button 
+                    
+                    <motion.button 
                         onClick={nextCard}
-                        className="p-2 md:p-3 rounded-full bg-[#1A936F]/20 hover:bg-[#1A936F] text-[#8FE7C3] hover:text-[#FCFFF0] transition-colors"
+                        className="p-2 rounded-full bg-[#1A936F]/20 hover:bg-[#1A936F] text-[#8FE7C3] hover:text-[#FCFFF0] transition-colors"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
                     >
                         <FaChevronRight className="text-sm md:text-base" />
-                    </button>
+                    </motion.button>
                 </div>
             </div>
         </div>
@@ -211,13 +221,13 @@ function AnimatedCard({ project, position, isActive }) {
     // Different styles based on position in stack
     const getCardStyles = () => {
         const baseScale = 1 - (position * 0.05); // Decrease size for cards deeper in stack
-        const yOffset = position * -15; // Stack cards with slight vertical offset
+        const yOffset = position * -12; // Reduce vertical spacing between cards
         const zIndex = 10 - position; // Higher z-index for top cards
         
         // Alternate rotation for stacked effect
         let rotation = 0;
         if (position > 0) {
-            rotation = position % 2 === 0 ? -5 : 5;
+            rotation = position % 2 === 0 ? -6 : 6;  // Reduce rotation angle
             rotation = rotation / (position + 1); // Reduce rotation for deeper cards
         }
 
@@ -282,16 +292,16 @@ function AnimatedCard({ project, position, isActive }) {
             </div>
             
             {/* Project Content - More compact for better fit */}
-            <div className="p-3 md:p-4">
-                <h3 className="text-sm md:text-base lg:text-lg font-bold mb-1 md:mb-2 text-[#FAF3DD] group-hover:text-[#1ED696] transition-colors">
+            <div className="p-2.5 md:p-3">
+                <h3 className="text-sm md:text-base font-bold mb-0.5 md:mb-1 text-[#FAF3DD] group-hover:text-[#1ED696] transition-colors">
                     {project.title}
                 </h3>
                 
-                <p className="text-xs md:text-sm text-[#FCFFF0]/70 mb-2 md:mb-3 line-clamp-2 group-hover:opacity-30 transition-opacity duration-300">
+                <p className="text-xs md:text-sm text-[#FCFFF0]/70 mb-1.5 md:mb-2 line-clamp-2 group-hover:opacity-30 transition-opacity duration-300">
                     {project.description}
                 </p>
                 
-                <div className="flex flex-wrap gap-1 mt-auto">
+                <div className="flex flex-wrap gap-0.5 mt-auto">
                     {project.techstack.map((tech, i) => (
                         <span 
                             key={i} 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
-import Projects from './components/projects'; // Changed from ./components/Projects to ./components/projects
+import Projects from './components/projects';
 import Carousel from './components/Carousel';
 import Contact from './components/contact';
 import FloatingNav from './components/FloatingNav';
@@ -12,7 +12,8 @@ import './index.css';
 function App() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [activeSection, setActiveSection] = useState('projects');
-  const [showSidebar, setShowSidebar] = useState(window.innerWidth < 768); // Default to true on mobile
+  const [showSidebar, setShowSidebar] = useState(window.innerWidth < 768);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   // Handle responsive breakpoints
   useEffect(() => {
@@ -23,14 +24,13 @@ function App() {
       // Set sidebar visibility when transitioning between mobile and desktop
       if (mobile) {
         setShowSidebar(true); // Make profile view default on mobile
+        setSidebarCollapsed(false); // Ensure sidebar is expanded on mobile
       } else {
         setShowSidebar(false);
       }
     };
     
-    // Initial run to set sidebar on first load
     handleResize();
-    
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -45,6 +45,11 @@ function App() {
     setShowSidebar(!showSidebar);
   };
 
+  // Handle sidebar collapse with animation
+  const handleSidebarCollapse = (collapsed) => {
+    setSidebarCollapsed(collapsed);
+  };
+
   const navItems = [
     { name: 'projects', label: 'Projects', icon: <FaProjectDiagram /> },
     { name: 'tech', label: 'Technologies', icon: <FaCode /> },
@@ -52,16 +57,26 @@ function App() {
   ];
 
   return (
-    <div className="main-container">
+    <div className="main-container font-['Comfortaa']">
       {/* Show sidebar based on screen size and state */}
       {(!isMobile || (isMobile && showSidebar)) && (
-        <Sidebar className={`sidebar ${isMobile ? 'mobile-sidebar' : ''}`} />
+        <Sidebar 
+          className={` ${isMobile ? 'mobile-sidebar' : ''}`} 
+          onCollapse={handleSidebarCollapse}
+        />
       )}
       
-      {/* Show content based on screen size and state */}
+      {/* Show content based on screen size and state with smooth transition */}
       {(!isMobile || (isMobile && !showSidebar)) && (
-        <main className={`content-container ${isMobile ? 'mobile-content' : ''}`}>
-          {/* Content section with animations */}
+        <motion.main 
+          className={`content-container ${isMobile ? 'mobile-content' : ''}`}
+          initial={false}
+          animate={{ 
+            marginLeft: !isMobile && sidebarCollapsed ? "5rem" : !isMobile ? "1.5rem" : "0",
+            width: !isMobile && sidebarCollapsed ? "calc(100% - 6.5rem)" : !isMobile ? "calc(100% - 23rem)" : "100%"
+          }}
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        >
           <AnimatePresence mode="wait">
             <motion.div
               key={activeSection}
@@ -80,7 +95,7 @@ function App() {
               {activeSection === 'contact' && <Contact />}
             </motion.div>
           </AnimatePresence>
-        </main>
+        </motion.main>
       )}
 
       {/* Floating Navigation */}

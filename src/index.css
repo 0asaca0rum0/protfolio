@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,6 +12,7 @@
   --color-text-light: #FCFFF0;
   --shadow-default: 0 10px 15px -3px rgba(0, 0, 0, 0.6);
   --border-radius: 0.75rem;
+  --font-comfortaa: 'Comfortaa', sans-serif;
 }
 
 body, html {
@@ -20,7 +22,7 @@ body, html {
   padding: 0;
   background: var(--color-bg);
   color: var(--color-text);
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-comfortaa);
   overflow-x: hidden;
 }
 
