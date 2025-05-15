@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Projects from './components/projects';
 import Carousel from './components/Carousel';
@@ -9,9 +10,41 @@ import { FaProjectDiagram, FaCode } from 'react-icons/fa';
 import { BiMailSend } from 'react-icons/bi';
 import './index.css';
 
+// Component to handle animated routes
+const AnimatedRoutes = ({ isMobile }) => {
+  const location = useLocation();
+  return (
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={location.pathname}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.3 }}
+        className="w-full h-full flex items-center justify-center"
+      >
+        <Routes location={location}>
+          <Route path="/" element={<Navigate replace to="/projects" />} />
+          <Route 
+            path="/projects" 
+            element={
+              <div className={`${isMobile ? 'mobile-projects' : ''} w-full h-full flex items-center justify-center`}>
+                <Projects />
+              </div>
+            } 
+          />
+          <Route path="/tech" element={<Carousel />} />
+          <Route path="/contact" element={<Contact />} />
+          {/* Add other routes here as needed */}
+        </Routes>
+      </motion.div>
+    </AnimatePresence>
+  );
+};
+
 function App() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  const [activeSection, setActiveSection] = useState('projects');
+  // const [activeSection, setActiveSection] = useState('projects'); // Removed: Handled by router
   const [showSidebar, setShowSidebar] = useState(window.innerWidth < 768);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
@@ -36,9 +69,9 @@ function App() {
   }, []);
 
   // Navigation handlers
-  const handleNavigation = (section) => {
-    setActiveSection(section);
-  };
+  // const handleNavigation = (section) => { // Removed: Handled by router
+  //   setActiveSection(section);
+  // };
 
   // Toggle sidebar visibility for mobile
   const toggleSidebar = () => {
@@ -51,63 +84,48 @@ function App() {
   };
 
   const navItems = [
-    { name: 'projects', label: 'Projects', icon: <FaProjectDiagram /> },
-    { name: 'tech', label: 'Technologies', icon: <FaCode /> },
-    { name: 'contact', label: 'Contact', icon: <BiMailSend /> },
+    { name: 'projects', label: 'Projects', icon: <FaProjectDiagram />, path: '/projects' },
+    { name: 'tech', label: 'Technologies', icon: <FaCode />, path: '/tech' },
+    { name: 'contact', label: 'Contact', icon: <BiMailSend />, path: '/contact' },
   ];
 
   return (
-    <div className="main-container font-['Comfortaa']">
-      {/* Show sidebar based on screen size and state */}
-      {(!isMobile || (isMobile && showSidebar)) && (
-        <Sidebar 
-          className={` ${isMobile ? 'mobile-sidebar' : ''}`} 
-          onCollapse={handleSidebarCollapse}
-        />
-      )}
-      
-      {/* Show content based on screen size and state with smooth transition */}
-      {(!isMobile || (isMobile && !showSidebar)) && (
-        <motion.main 
-          className={`content-container ${isMobile ? 'mobile-content' : ''}`}
-          initial={false}
-          animate={{ 
-            marginLeft: !isMobile && sidebarCollapsed ? "5rem" : !isMobile ? "1.5rem" : "0",
-            width: !isMobile && sidebarCollapsed ? "calc(100% - 6.5rem)" : !isMobile ? "calc(100% - 23rem)" : "100%"
-          }}
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        >
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeSection}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-              className="w-full h-full flex items-center justify-center"
-            >
-              {activeSection === 'projects' && 
-                <div className={`${isMobile ? 'mobile-projects' : ''} w-full h-full flex items-center justify-center`}>
-                  <Projects />
-                </div>
-              }
-              {activeSection === 'tech' && <Carousel />}
-              {activeSection === 'contact' && <Contact />}
-            </motion.div>
-          </AnimatePresence>
-        </motion.main>
-      )}
+    <Router>
+      <div className="main-container font-['Comfortaa']">
+        {/* Show sidebar based on screen size and state */}
+        {(!isMobile || (isMobile && showSidebar)) && (
+          <Sidebar 
+            className={` ${isMobile ? 'mobile-sidebar' : ''}`} 
+            onCollapse={handleSidebarCollapse}
+          />
+        )}
+        
+        {/* Show content based on screen size and state with smooth transition */}
+        {(!isMobile || (isMobile && !showSidebar)) && (
+          <motion.main 
+            className={`content-container ${isMobile ? 'mobile-content' : ''}`}
+            initial={false}
+            animate={{ 
+              marginLeft: !isMobile && sidebarCollapsed ? "5rem" : !isMobile ? "1.5rem" : "0",
+              width: !isMobile && sidebarCollapsed ? "calc(100% - 6.5rem)" : !isMobile ? "calc(100% - 23rem)" : "100%"
+            }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          >
+            <AnimatedRoutes isMobile={isMobile} />
+          </motion.main>
+        )}
 
-      {/* Floating Navigation */}
-      <FloatingNav 
-        items={navItems} 
-        activeSection={activeSection} 
-        onNavigate={handleNavigation}
-        isMobile={isMobile}
-        showSidebar={showSidebar}
-        toggleSidebar={toggleSidebar}
-      />
-    </div>
+        {/* Floating Navigation */}
+        <FloatingNav 
+          items={navItems} 
+          // activeSection={activeSection} // Removed: Will be handled by NavLink in FloatingNav
+          // onNavigate={handleNavigation} // Removed: Will be handled by NavLink in FloatingNav
+          isMobile={isMobile}
+          showSidebar={showSidebar}
+          toggleSidebar={toggleSidebar}
+        />
+      </div>
+    </Router>
   );
 }
 

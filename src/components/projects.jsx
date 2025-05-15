@@ -1,6 +1,8 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect } from "react";
 import { FaGithub, FaExternalLinkAlt, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { useState, useMemo } from "react";
+import { motion } from "framer-motion";
+
 export default function Projects() {
     const projects = [
         {
@@ -120,9 +122,9 @@ export default function Projects() {
     }, [activeCategory]);
 
     return (
-        <div className="w-full py-2 md:py-3 flex flex-col items-center justify-center font-['Comfortaa']">
+        <div className="w-full h-full flex flex-col items-center justify-center font-['Comfortaa'] py-6">
             <motion.h2 
-                className="text-xl md:text-2xl lg:text-3xl font-bold mb-4 md:mb-5 text-[#FAF3DD]"
+                className="text-lg md:text-xl lg:text-2xl font-bold mb-4 text-[#FAF3DD]"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
@@ -130,34 +132,60 @@ export default function Projects() {
                 Projects
             </motion.h2>
 
-            {/* Improved Category Filter */}
+            {/* Category Filter - Better positioning and sizing */}
             <motion.div 
-                className="flex flex-wrap gap-2 md:gap-3 mb-4 md:mb-8 justify-center bg-[#131313]/50 p-2 rounded-full backdrop-filter backdrop-blur-sm border border-[#1A936F]/20"
+                className="w-full max-w-xs md:max-w-sm lg:max-w-md px-4 mb-5"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-            >
-                {categories.map((category) => (
-                    <motion.button
-                        key={category.value}
-                        onClick={() => setActiveCategory(category.value)}
-                        className={`px-3 py-1.5 md:py-2 text-xs md:text-sm rounded-full font-medium transition-all ${
-                            activeCategory === category.value 
-                                ? "bg-[#1A936F] text-[#FCFFF0] shadow-md" 
-                                : "bg-transparent text-[#FCFFF0]/80 hover:text-[#FCFFF0]"
-                        }`}
-                        whileHover={activeCategory !== category.value ? { scale: 1.05 } : {}}
-                        whileTap={{ scale: 0.95 }}
-                    >
-                        {category.label}
-                    </motion.button>
-                ))}
+            >                
+                {/* Filter Pills Container - Improved styling */}
+                <div className="relative overflow-hidden rounded-lg p-1 bg-[#111111] border border-[#1A936F]/20 backdrop-blur-md shadow-inner">
+                    {/* Active Background Pill */}
+                    <motion.div 
+                        className="absolute h-7 bg-gradient-to-r from-[#114E3C] to-[#1A936F] rounded-md shadow-md"
+                        layoutId="filterBackground"
+                        transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                        style={{
+                            width: `calc(${100 / categories.length}% - 2px)`,
+                            x: `calc(${categories.findIndex(c => c.value === activeCategory) * 100}% + ${categories.findIndex(c => c.value === activeCategory) * 2}px)`
+                        }}
+                    />
+                    
+                    {/* Filter Buttons - Better spacing */}
+                    <div className="relative flex justify-between z-10">
+                        {categories.map((category) => {
+                            const isActive = activeCategory === category.value;
+                            
+                            return (
+                                <motion.button
+                                    key={category.value}
+                                    onClick={() => setActiveCategory(category.value)}
+                                    className={`relative flex-1 py-1.5 px-0.5 text-center text-xs font-medium transition-all duration-300 ${
+                                        isActive ? "text-[#FCFFF0]" : "text-[#FCFFF0]/60 hover:text-[#FCFFF0]/90"
+                                    }`}
+                                    whileHover={{ y: -1 }}
+                                    whileTap={{ scale: 0.97 }}
+                                >
+                                    {category.label}
+                                </motion.button>
+                            );
+                        })}
+                    </div>
+                </div>
+                
+                {/* Stats Indicator - More subtle */}
+                <div className="flex justify-center mt-2 text-[10px] text-[#FCFFF0]/50">
+                    <span>
+                        Showing <span className="text-[#1ED696] font-medium">{filteredProjects.length}</span> of {projects.length} projects
+                    </span>
+                </div>
             </motion.div>
 
-            {/* Improved Stacked Card Display with Navigation */}
-            <div className="w-full flex flex-col items-center mt-1 md:mt-2">
-                {/* Card Stack Container */}
-                <div className="relative w-full max-w-xs md:max-w-sm lg:max-w-md h-[320px] md:h-[360px] lg:h-[400px] mb-1 md:mb-3">
+            {/* Card Stack - Centered and better positioned */}
+            <div className="w-full flex flex-col items-center">
+                {/* Card Stack Container - Better centered */}
+                <div className="relative w-full mx-auto max-w-[280px] md:max-w-[310px] lg:max-w-[330px] h-[300px] md:h-[330px] lg:h-[350px]">
                     {filteredProjects.map((project, idx) => {
                         // Calculate position in stack relative to current card
                         const position = (idx - currentIndex + filteredProjects.length) % filteredProjects.length;
@@ -175,137 +203,199 @@ export default function Projects() {
                     })}
                 </div>
                 
-                {/* Navigation Controls - More compact for mobile */}
-                <div className="flex justify-center gap-3 md:gap-5 bg-[#131313]/50 px-3 py-1.5 rounded-full backdrop-filter backdrop-blur-sm border border-[#1A936F]/20">
-                    <motion.button 
-                        onClick={prevCard}
-                        className="p-2 rounded-full bg-[#1A936F]/20 hover:bg-[#1A936F] text-[#8FE7C3] hover:text-[#FCFFF0] transition-colors"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                    >
-                        <FaChevronLeft className="text-sm md:text-base" />
-                    </motion.button>
-                    
-                    <div className="flex gap-1.5 md:gap-2 items-center">
-                        {filteredProjects.map((_, idx) => (
-                            <motion.button
-                                key={idx}
-                                onClick={() => setCurrentIndex(idx)}
-                                className={`w-2 h-2 md:w-2.5 md:h-2.5 rounded-full transition-all ${
-                                    idx === currentIndex 
-                                    ? "bg-[#1ED696]" 
-                                    : "bg-[#1A936F]/30 hover:bg-[#1A936F]/60"
-                                }`}
-                                whileHover={{ scale: 1.2 }}
-                                whileTap={{ scale: 0.8 }}
-                                aria-label={`Go to slide ${idx + 1}`}
-                            />
-                        ))}
+                {/* Navigation Controls - Better positioning and spacing */}
+                <div className="relative w-full max-w-xs md:max-w-sm lg:max-w-md flex flex-col items-center mt-5">
+                    {/* Progress Bar - More subtle */}
+                    <div className="w-full h-0.5 bg-[#111111] rounded-full overflow-hidden mb-3">
+                        <motion.div 
+                            className="h-full bg-gradient-to-r from-[#1A936F] to-[#1ED696]"
+                            initial={{ width: '0%' }}
+                            animate={{ 
+                                width: filteredProjects.length > 1 
+                                    ? `${(currentIndex / (filteredProjects.length - 1)) * 100}%` 
+                                    : '100%'
+                            }}
+                            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                        />
                     </div>
                     
-                    <motion.button 
-                        onClick={nextCard}
-                        className="p-2 rounded-full bg-[#1A936F]/20 hover:bg-[#1A936F] text-[#8FE7C3] hover:text-[#FCFFF0] transition-colors"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                    >
-                        <FaChevronRight className="text-sm md:text-base" />
-                    </motion.button>
+                    {/* Navigation Buttons - Better alignment */}
+                    <div className="w-full flex items-center justify-between gap-2">
+                        {/* Previous Button */}
+                        <motion.button 
+                            onClick={prevCard}
+                            className="group flex items-center gap-1 py-1.5 px-2.5 rounded-md bg-[#111111] border border-[#1A936F]/20 text-[#8FE7C3]/90 hover:bg-[#1A936F]/10 transition-colors"
+                            whileTap={{ scale: 0.95 }}
+                            title="Previous project"
+                            disabled={filteredProjects.length <= 1}
+                        >
+                            <FaChevronLeft className="text-xs" />
+                            <span className="text-[9px] hidden sm:inline truncate max-w-[40px]">
+                                {filteredProjects[(currentIndex - 1 + filteredProjects.length) % filteredProjects.length]?.title?.split(" ")[0]}
+                            </span>
+                        </motion.button>
+                        
+                        {/* Project Counter - Centered better */}
+                        <div className="flex-1 text-center">
+                            <motion.div 
+                                key={currentIndex}
+                                initial={{ opacity: 0, y: 5 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -5 }}
+                                transition={{ duration: 0.2 }}
+                                className="text-[11px] text-[#FCFFF0]/70"
+                            >
+                                <span className="text-[#1ED696] font-medium">{currentIndex + 1}</span>
+                                <span className="mx-0.5">/</span>
+                                <span>{filteredProjects.length}</span>
+                                <span className="hidden sm:inline ml-1 text-[#FCFFF0]/40">•</span>
+                                <span className="hidden sm:inline ml-1 font-medium text-[#FCFFF0]/80 text-[10px]">
+                                    {filteredProjects[currentIndex]?.category}
+                                </span>
+                            </motion.div>
+                        </div>
+                        
+                        {/* Next Button */}
+                        <motion.button 
+                            onClick={nextCard}
+                            className="group flex items-center gap-1 py-1.5 px-2.5 rounded-md bg-[#111111] border border-[#1A936F]/20 text-[#8FE7C3]/90 hover:bg-[#1A936F]/10 transition-colors"
+                            whileTap={{ scale: 0.95 }}
+                            title="Next project"
+                            disabled={filteredProjects.length <= 1}
+                        >
+                            <span className="text-[9px] hidden sm:inline truncate max-w-[40px]">
+                                {filteredProjects[(currentIndex + 1) % filteredProjects.length]?.title?.split(" ")[0]}
+                            </span>
+                            <FaChevronRight className="text-xs" />
+                        </motion.button>
+                    </div>
+                    
+                    {/* Dots Navigation - Only show if we have a reasonable number */}
+                    {filteredProjects.length <= 8 && filteredProjects.length > 1 && (
+                        <div className="flex justify-center gap-1 mt-3">
+                            {filteredProjects.map((_, idx) => (
+                                <SmartNavDot 
+                                    key={idx} 
+                                    isActive={idx === currentIndex}
+                                    onClick={() => setCurrentIndex(idx)}
+                                />
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
     );
 }
 
+// Smart Navigation Dot Component - Slightly larger
+const SmartNavDot = ({ isActive, onClick }) => (
+    <motion.button
+        onClick={onClick}
+        className={`rounded-full transition-all ${
+            isActive 
+                ? "bg-[#1ED696] w-2.5 h-2.5" 
+                : "bg-[#1A936F]/30 w-2 h-2 hover:bg-[#1A936F]/60"
+        }`}
+        whileHover={{ scale: 1.2 }}
+        whileTap={{ scale: 0.8 }}
+        initial={false}
+        animate={isActive ? { 
+            scale: [1, 1.2, 1],
+            transition: { duration: 0.6, repeat: 0 }
+        } : {}}
+    />
+);
+
 function AnimatedCard({ project, position, isActive }) {
-    // Different styles based on position in stack
-    const getCardStyles = () => {
-        const baseScale = 1 - (position * 0.05); // Decrease size for cards deeper in stack
-        const yOffset = position * -12; // Reduce vertical spacing between cards
-        const zIndex = 10 - position; // Higher z-index for top cards
-        
-        // Alternate rotation for stacked effect
-        let rotation = 0;
-        if (position > 0) {
-            rotation = position % 2 === 0 ? -6 : 6;  // Reduce rotation angle
-            rotation = rotation / (position + 1); // Reduce rotation for deeper cards
-        }
+    const [isExpanded, setIsExpanded] = useState(false);
+
+    // Refined card positioning logic - Adjusted for larger cards
+    const cardStyle = useMemo(() => {
+        // Smoother, more subtle positioning
+        const scale = 1 - position * 0.035;
+        const yOffset = -10 * position;
+        const zIndex = 10 - position;
+        // Less extreme rotation for cleaner appearance
+        const rotation = position > 0 ? (position % 2 === 0 ? -2 : 2) / (position + 1) : 0;
 
         return {
             position: "absolute",
-            scale: baseScale,
-            zIndex: zIndex,
+            scale,
             y: yOffset,
+            zIndex,
             rotate: rotation,
-            opacity: position === 0 ? 1 : 0.9 - (position * 0.2),
+            opacity: position === 0 ? 1 : 0.95 - position * 0.15,
             top: 0,
             left: 0,
             right: 0,
         };
-    };
+    }, [position]);
 
     return (
         <motion.div
-            className="bg-[#131313] border border-[#1A936F]/30 rounded-xl overflow-hidden w-full shadow-lg group"
+            className="bg-[#131313] border border-[#1A936F]/30 rounded-lg overflow-hidden w-full shadow-lg group"
             initial={{ opacity: 0, y: 50 }}
-            animate={getCardStyles()}
-            transition={{
-                type: "spring",
-                stiffness: 200,
-                damping: 20,
-                duration: 0.4
-            }}
-            whileHover={isActive ? { scale: 1.02, y: -5 } : {}}
+            animate={cardStyle}
+            transition={{ type: "spring", stiffness: 200, damping: 20, duration: 0.4 }}
+            whileHover={isActive ? { scale: 1.02, y: -4 } : {}}
         >
-            {/* Project Image - Adjusted for better fit */}
+            {/* Card content */}
             <div className="relative aspect-video overflow-hidden">
-                <img 
-                    src={project.image} 
+                <img
+                    src={project.image}
                     alt={project.title}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-                
                 {isActive && (
                     <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300">
-                        <div className="flex gap-4">
-                            <a 
-                                href="https://github.com/0asaca0rum0" 
-                                target="_blank" 
+                        <div className="flex gap-3.5">
+                            <a
+                                href="https://github.com/0asaca0rum0"
+                                target="_blank"
                                 rel="noopener noreferrer"
-                                className="p-3 bg-[#1A936F] text-white rounded-full hover:bg-[#1ED696] transition-colors"
+                                className="p-2.5 bg-[#1A936F] text-white rounded-full hover:bg-[#1ED696] transition-colors"
                             >
-                                <FaGithub size={20} />
+                                <FaGithub size={18} />
                             </a>
                             {project.link && (
-                                <a 
-                                    href={project.link} 
-                                    target="_blank" 
+                                <a
+                                    href={project.link}
+                                    target="_blank"
                                     rel="noopener noreferrer"
-                                    className="p-3 bg-[#1A936F] text-white rounded-full hover:bg-[#1ED696] transition-colors"
+                                    className="p-2.5 bg-[#1A936F] text-white rounded-full hover:bg-[#1ED696] transition-colors"
                                 >
-                                    <FaExternalLinkAlt size={20} />
+                                    <FaExternalLinkAlt size={18} />
                                 </a>
                             )}
                         </div>
                     </div>
                 )}
             </div>
-            
-            {/* Project Content - More compact for better fit */}
-            <div className="p-2.5 md:p-3">
-                <h3 className="text-sm md:text-base font-bold mb-0.5 md:mb-1 text-[#FAF3DD] group-hover:text-[#1ED696] transition-colors">
+
+            <div className="p-3.5 flex flex-col">
+                <h3 className="text-sm md:text-base font-bold mb-1.5 text-[#FAF3DD] group-hover:text-[#1ED696] transition-colors">
                     {project.title}
                 </h3>
-                
-                <p className="text-xs md:text-sm text-[#FCFFF0]/70 mb-1.5 md:mb-2 line-clamp-2 group-hover:opacity-30 transition-opacity duration-300">
+                <p
+                    onClick={() => setIsExpanded((prev) => !prev)}
+                    className={`text-xs leading-relaxed text-[#FCFFF0]/80 transition-all duration-300 cursor-pointer ${
+                        !isExpanded && "line-clamp-2"
+                    }`}
+                >
                     {project.description}
                 </p>
-                
-                <div className="flex flex-wrap gap-0.5 mt-auto">
+                <button
+                    onClick={() => setIsExpanded((prev) => !prev)}
+                    className="self-start mt-1.5 text-[10px] text-[#1ED696] hover:underline font-medium"
+                >
+                    {isExpanded ? "Show less" : "Read more"}
+                </button>
+                <div className="flex flex-wrap gap-1.5 mt-2.5">
                     {project.techstack.map((tech, i) => (
-                        <span 
-                            key={i} 
-                            className="bg-[#1A936F]/10 text-[#8FE7C3] text-[8px] md:text-xs px-1.5 py-0.5 rounded-full group-hover:bg-opacity-30 transition-all duration-300"
+                        <span
+                            key={i}
+                            className="bg-[#1A936F]/10 text-[#8FE7C3] text-[9px] px-2 py-0.5 rounded-full"
                         >
                             {tech}
                         </span>
@@ -315,3 +405,4 @@ function AnimatedCard({ project, position, isActive }) {
         </motion.div>
     );
 }
+
