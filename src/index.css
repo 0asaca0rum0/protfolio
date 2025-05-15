@@ -94,8 +94,9 @@ body, html {
   background-color: rgba(26, 147, 111, 0.1);
   border: 1px solid rgba(26, 147, 111, 0.3);
   border-radius: var(--border-radius);
-  box-shadow: var(--shadow-default);
   overflow: hidden;
+  box-shadow: var(--shadow-default);
+  
   transition: transform 0.3s ease;
 }
 

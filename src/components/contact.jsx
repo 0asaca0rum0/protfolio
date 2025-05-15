@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from '@material-tailwind/react';
 import { FaPaperPlane, FaGithub, FaTelegramPlane, FaPhone, FaRegPaperPlane } from 'react-icons/fa';
 import { SiGmail } from 'react-icons/si';
 import { FaUser, FaDownload } from 'react-icons/fa6';
@@ -48,351 +47,422 @@ const Contact = () => {
         });
     };
     
-    // Animation variants
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: { opacity: 1, transition: { duration: 0.3 } },
-        exit: { opacity: 0, transition: { duration: 0.2 } }
-    };
-    
-    const tabVariants = {
-        enter: (direction) => ({
-            x: direction > 0 ? 50 : -50,
-            opacity: 0
-        }),
-        center: {
-            x: 0,
-            opacity: 1,
-            transition: { 
-                duration: 0.3,
-                when: "beforeChildren",
-                staggerChildren: 0.1
-            }
-        },
-        exit: (direction) => ({
-            x: direction < 0 ? 50 : -50,
-            opacity: 0,
-            transition: { 
-                duration: 0.2,
-                when: "afterChildren",
-                staggerChildren: 0.05,
-                staggerDirection: -1
-            }
-        })
-    };
-    
-    const itemVariants = {
-        hidden: { y: 20, opacity: 0 },
-        visible: { y: 0, opacity: 1, transition: { duration: 0.3 } },
-        exit: { y: -10, opacity: 0, transition: { duration: 0.2 } }
-    };
-    
     return (
         <motion.section 
-            className='w-full max-w-3xl mx-auto px-3 py-4'
+            className="w-full py-8 font-['Comfortaa'] bg-gradient-to-b from-[#0A0A0A]/80 to-[#0A0A0A]/30"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
-            id='contact'
+            id="contact"
         >
-            <motion.div 
-                className="text-center mb-6"
-                initial={{ y: -20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.2, duration: 0.5 }}
-            >
-                <h2 className='text-2xl md:text-3xl font-bold text-[#FAF3DD] inline-flex items-center gap-2'>
-                    <span className="text-[#1ED696]">📬</span> Get In Touch
-                </h2>
-                <p className="text-sm text-[#8FE7C3] mt-2">I'd love to hear from you!</p>
-            </motion.div>
-            
-            {/* Tab Navigation - Enhanced with active indicator animation */}
-            <div className="flex justify-center mb-6">
-                <div className="bg-[#0a0a0a] rounded-full p-1 inline-flex relative">
-                    <motion.div 
-                        className="absolute h-full top-0 rounded-full bg-[#1A936F] z-0"
-                        initial={false}
-                        animate={{ 
-                            left: activeTab === 'form' ? '0%' : '50%',
-                            width: '50%'
-                        }}
-                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            <div className="max-w-4xl mx-auto px-4">
+                {/* Section Header */}
+                <motion.div 
+                    className="text-center mb-8"
+                    initial={{ y: -20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.1, duration: 0.5 }}
+                >
+                    <motion.div
+                        className="h-px w-[80%] mx-auto bg-gradient-to-r from-transparent via-[#1ED696]/40 to-transparent mb-4"
+                        initial={{ width: 0 }}
+                        animate={{ width: "80%" }}
+                        transition={{ duration: 1.2 }}
                     />
-                    <button 
-                        className={`px-4 py-2 text-sm rounded-full transition-all relative z-10 ${activeTab === 'form' ? 'text-white' : 'text-[#8FE7C3] hover:text-[#1ED696]'}`}
-                        onClick={() => switchTab('form')}
-                    >
-                        Message Me
-                    </button>
-                    <button 
-                        className={`px-4 py-2 text-sm rounded-full transition-all relative z-10 ${activeTab === 'info' ? 'text-white' : 'text-[#8FE7C3] hover:text-[#1ED696]'}`}
-                        onClick={() => switchTab('info')}
-                    >
-                        Contact Info
-                    </button>
-                </div>
-            </div>
-            
-            {/* Content Container with Animation */}
-            <motion.div 
-                className="bg-[#131313] rounded-xl border border-[#1A936F]/20 shadow-lg overflow-hidden"
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-            >
-                <AnimatePresence mode="wait" custom={direction}>
-                    {/* Contact Form Tab */}
-                    {activeTab === 'form' && (
-                        <motion.div
-                            key="form"
-                            custom={direction}
-                            variants={tabVariants}
-                            initial="enter"
-                            animate="center"
-                            exit="exit"
-                            className="p-6"
+                    <h2 className="text-2xl md:text-3xl font-bold mb-2">
+                        <span className="text-gradient bg-clip-text text-transparent bg-gradient-to-r from-[#1A936F] to-[#1ED696]">
+                            Get In Touch
+                        </span>
+                    </h2>
+                    <p className="text-[#8FE7C3]/80 text-sm md:text-base">
+                        Have a question or want to work together? Let me know!
+                    </p>
+                    <motion.div
+                        className="h-px w-[60%] mx-auto bg-gradient-to-r from-transparent via-[#1ED696]/40 to-transparent mt-4"
+                        initial={{ width: 0 }}
+                        animate={{ width: "60%" }}
+                        transition={{ duration: 1.2, delay: 0.2 }}
+                    />
+                </motion.div>
+
+                {/* Tab Navigation */}
+                <div className="flex justify-center mb-8">
+                    <div className="bg-[#131313]/80 backdrop-blur-sm rounded-full p-1 inline-flex relative border border-[#1A936F]/20 shadow-lg">
+                        <motion.div 
+                            className="absolute h-full top-0 rounded-full bg-gradient-to-r from-[#114E3C] to-[#1A936F]"
+                            initial={false}
+                            animate={{ 
+                                left: activeTab === 'form' ? '0%' : '50%',
+                                width: '50%'
+                            }}
+                            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                        />
+                        <button 
+                            className={`px-6 py-2.5 text-sm rounded-full transition-all relative z-10 font-medium ${activeTab === 'form' ? 'text-white' : 'text-[#8FE7C3] hover:text-[#1ED696]'}`}
+                            onClick={() => switchTab('form')}
                         >
-                            <form
-                                action="https://formspree.io/f/xgegpyra"
-                                method="POST"
-                                onSubmit={handleSubmit}
-                                className="space-y-4"
+                            Send Message
+                        </button>
+                        <button 
+                            className={`px-6 py-2.5 text-sm rounded-full transition-all relative z-10 font-medium ${activeTab === 'info' ? 'text-white' : 'text-[#8FE7C3] hover:text-[#1ED696]'}`}
+                            onClick={() => switchTab('info')}
+                        >
+                            Contact Info
+                        </button>
+                    </div>
+                </div>
+                
+                {/* Main Content Container */}
+                <motion.div 
+                    className="bg-[#131313]/90 backdrop-blur-md rounded-2xl border border-[#1A936F]/20 shadow-xl overflow-hidden max-w-2xl mx-auto"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.2 }}
+                >
+                    <AnimatePresence mode="wait" custom={direction}>
+                        {/* Contact Form Tab */}
+                        {activeTab === 'form' && (
+                            <motion.div
+                                key="form"
+                                custom={direction}
+                                variants={pageVariants}
+                                initial="enter"
+                                animate="center"
+                                exit="exit"
+                                className="p-6 md:p-8"
                             >
-                                <motion.div 
-                                    variants={itemVariants}
-                                    className='grid grid-cols-2 gap-4'
+                                <form
+                                    action="https://formspree.io/f/xgegpyra"
+                                    method="POST"
+                                    onSubmit={handleSubmit}
+                                    className="space-y-5"
                                 >
-                                    <div className='relative group'>
+                                    <motion.div 
+                                        variants={itemVariants}
+                                        className="grid grid-cols-1 md:grid-cols-2 gap-4"
+                                    >
+                                        {/* Name Input */}
+                                        <div className="relative group">
+                                            <input
+                                                type="text"
+                                                id="name"
+                                                name="name"
+                                                placeholder=" "
+                                                className="peer w-full bg-[#0a0a0a] border border-[#1A936F]/30 text-[#FCFFF0] rounded-lg p-3 pt-5 focus:outline-none focus:border-[#1ED696] focus:shadow-[0_0_10px_rgba(30,214,150,0.15)] transition-all"
+                                                required
+                                            />
+                                            <label 
+                                                htmlFor="name" 
+                                                className="absolute text-xs text-[#8FE7C3] top-1.5 left-3 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-sm peer-focus:top-1.5 peer-focus:text-xs"
+                                            >
+                                                Name
+                                            </label>
+                                        </div>
+                                        
+                                        {/* Email Input */}
+                                        <div className="relative group">
+                                            <input
+                                                type="email"
+                                                id="email"
+                                                name="email"
+                                                placeholder=" "
+                                                className="peer w-full bg-[#0a0a0a] border border-[#1A936F]/30 text-[#FCFFF0] rounded-lg p-3 pt-5 focus:outline-none focus:border-[#1ED696] focus:shadow-[0_0_10px_rgba(30,214,150,0.15)] transition-all"
+                                                required
+                                            />
+                                            <label 
+                                                htmlFor="email" 
+                                                className="absolute text-xs text-[#8FE7C3] top-1.5 left-3 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-sm peer-focus:top-1.5 peer-focus:text-xs"
+                                            >
+                                                Email
+                                            </label>
+                                        </div>
+                                    </motion.div>
+                                    
+                                    {/* Subject Input */}
+                                    <motion.div 
+                                        variants={itemVariants}
+                                        className="relative group"
+                                    >
                                         <input
                                             type="text"
-                                            id="name"
-                                            name="name"
+                                            id="subject"
+                                            name="subject"
                                             placeholder=" "
-                                            className="peer w-full bg-[#0a0a0a] border border-[#1A936F]/30 text-[#FCFFF0] rounded-lg p-2 pt-4 focus:outline-none focus:border-[#1ED696] transition-all"
+                                            className="peer w-full bg-[#0a0a0a] border border-[#1A936F]/30 text-[#FCFFF0] rounded-lg p-3 pt-5 focus:outline-none focus:border-[#1ED696] focus:shadow-[0_0_10px_rgba(30,214,150,0.15)] transition-all"
+                                        />
+                                        <label 
+                                            htmlFor="subject" 
+                                            className="absolute text-xs text-[#8FE7C3] top-1.5 left-3 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-sm peer-focus:top-1.5 peer-focus:text-xs"
+                                        >
+                                            Subject
+                                        </label>
+                                    </motion.div>
+                                    
+                                    {/* Message Textarea */}
+                                    <motion.div 
+                                        variants={itemVariants}
+                                        className="relative group"
+                                    >
+                                        <textarea
+                                            id="message"
+                                            name="message"
+                                            rows="4"
+                                            placeholder=" "
+                                            className="peer w-full bg-[#0a0a0a] border border-[#1A936F]/30 text-[#FCFFF0] rounded-lg p-3 pt-5 focus:outline-none focus:border-[#1ED696] focus:shadow-[0_0_10px_rgba(30,214,150,0.15)] transition-all resize-none"
                                             required
                                         />
                                         <label 
-                                            htmlFor="name" 
-                                            className="absolute text-xs text-[#8FE7C3] top-1 left-3 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-sm peer-focus:top-1 peer-focus:text-xs"
+                                            htmlFor="message" 
+                                            className="absolute text-xs text-[#8FE7C3] top-1.5 left-3 transition-all peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-1.5 peer-focus:text-xs"
                                         >
-                                            Name
+                                            Message
                                         </label>
+                                    </motion.div>
+                                    
+                                    {/* Form Footer */}
+                                    <motion.div 
+                                        variants={itemVariants}
+                                        className="flex justify-between items-center pt-2"
+                                    >
+                                        {/* Status Messages */}
+                                        <div className="text-sm h-6">
+                                            {formStatus === 'success' && (
+                                                <motion.div 
+                                                    initial={{ scale: 0.8, opacity: 0 }}
+                                                    animate={{ scale: 1, opacity: 1 }}
+                                                    className="flex items-center text-[#1ED696] font-medium"
+                                                >
+                                                    <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                                                    </svg>
+                                                    Message sent!
+                                                </motion.div>
+                                            )}
+                                            
+                                            {formStatus === 'error' && (
+                                                <motion.div 
+                                                    initial={{ scale: 0.8, opacity: 0 }}
+                                                    animate={{ scale: 1, opacity: 1 }}
+                                                    className="flex items-center text-red-500"
+                                                >
+                                                    <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                                                    </svg>
+                                                    Something went wrong
+                                                </motion.div>
+                                            )}
+                                        </div>
+                                        
+                                        {/* Submit Button */}
+                                        <motion.button
+                                            type="submit"
+                                            className="group bg-gradient-to-r from-[#114E3C] to-[#1A936F] hover:from-[#1A936F] hover:to-[#1ED696] text-[#FCFFF0] font-medium flex items-center gap-2 py-2.5 px-5 rounded-full transition-all duration-300 shadow-md hover:shadow-[0_5px_15px_rgba(30,214,150,0.3)]"
+                                            disabled={formStatus === 'sending'}
+                                            whileHover={{ y: -2 }}
+                                            whileTap={{ scale: 0.98 }}
+                                        >
+                                            {formStatus === 'sending' ? (
+                                                <>
+                                                    Sending
+                                                    <motion.div 
+                                                        animate={{ rotate: 360 }}
+                                                        transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                                                    >
+                                                        <FaRegPaperPlane className="text-sm opacity-90" />
+                                                    </motion.div>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    Send Message
+                                                    <FaPaperPlane className="text-sm opacity-90 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                                                </>
+                                            )}
+                                        </motion.button>
+                                    </motion.div>
+                                </form>
+                            </motion.div>
+                        )}
+                        
+                        {/* Contact Info Tab */}
+                        {activeTab === 'info' && (
+                            <motion.div 
+                                key="info"
+                                custom={direction}
+                                variants={pageVariants}
+                                initial="enter"
+                                animate="center"
+                                exit="exit"
+                                className="p-6 md:p-8"
+                            >
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    {/* Direct Contact */}
+                                    <div className="space-y-5">
+                                        <motion.h3 
+                                            variants={itemVariants}
+                                            className="text-[#1ED696] font-semibold text-lg flex items-center gap-2 pb-2 border-b border-[#1A936F]/20"
+                                        >
+                                            <span className="w-1.5 h-6 bg-[#1ED696] rounded-full block"></span>
+                                            Direct Contact
+                                        </motion.h3>
+                                        
+                                        {/* Contact Links */}
+                                        <div className="space-y-4">
+                                            {[
+                                                {
+                                                    icon: <SiGmail className="text-[#1ED696]" size={20} />,
+                                                    label: "Email",
+                                                    text: "foxdeath100@gmail.com",
+                                                    href: "mailto:foxdeath100@gmail.com"
+                                                },
+                                                {
+                                                    icon: <FaPhone className="text-[#1ED696]" size={18} />,
+                                                    label: "Phone",
+                                                    text: "+213 540 430 098",
+                                                    href: "tel:+213540430098"
+                                                },
+                                                {
+                                                    icon: <FaTelegramPlane className="text-[#1ED696]" size={20} />,
+                                                    label: "Telegram",
+                                                    text: "@karasuma_renya",
+                                                    href: "https://t.me/karasuma_renya",
+                                                    external: true
+                                                }
+                                            ].map((item, index) => (
+                                                <motion.a
+                                                    key={index}
+                                                    variants={itemVariants}
+                                                    href={item.href}
+                                                    target={item.external ? "_blank" : undefined}
+                                                    rel={item.external ? "noopener noreferrer" : undefined}
+                                                    className="flex items-start gap-3 group p-3 rounded-lg hover:bg-[#1A936F]/10 transition-all"
+                                                    whileHover={{ x: 3 }}
+                                                >
+                                                    <div className="mt-0.5">
+                                                        <div className="w-10 h-10 rounded-full bg-[#0a0a0a] flex items-center justify-center border border-[#1A936F]/30 group-hover:border-[#1ED696]/50 transition-all">
+                                                            {item.icon}
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div className="text-xs text-[#8FE7C3]">{item.label}</div>
+                                                        <div className="text-[#FCFFF0] font-medium group-hover:text-[#1ED696] transition-colors">
+                                                            {item.text}
+                                                        </div>
+                                                    </div>
+                                                </motion.a>
+                                            ))}
+                                        </div>
                                     </div>
                                     
-                                    <div className='relative group'>
-                                        <input
-                                            type="email"
-                                            id="email"
-                                            name="email"
-                                            placeholder=" "
-                                            className="peer w-full bg-[#0a0a0a] border border-[#1A936F]/30 text-[#FCFFF0] rounded-lg p-2 pt-4 focus:outline-none focus:border-[#1ED696] transition-all"
-                                            required
-                                        />
-                                        <label 
-                                            htmlFor="email" 
-                                            className="absolute text-xs text-[#8FE7C3] top-1 left-3 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-sm peer-focus:top-1 peer-focus:text-xs"
+                                    {/* Additional Information */}
+                                    <div className="space-y-5">
+                                        <motion.h3 
+                                            variants={itemVariants}
+                                            className="text-[#1ED696] font-semibold text-lg flex items-center gap-2 pb-2 border-b border-[#1A936F]/20"
                                         >
-                                            Email
-                                        </label>
+                                            <span className="w-1.5 h-6 bg-[#1ED696] rounded-full block"></span>
+                                            Other Links
+                                        </motion.h3>
+                                        
+                                            {[
+                                                {
+                                                    icon: <FaGithub className="text-[#1ED696]" size={20} />,
+                                                    label: "GitHub",
+                                                    text: "github.com/0asaca0rum0",
+                                                    href: "https://github.com/0asaca0rum0",
+                                                    external: true
+                                                },
+                                                {
+                                                    icon: <FaDownload className="text-[#1ED696]" size={18} />,
+                                                    label: "Resume",
+                                                    text: "Download CV (PDF)",
+                                                    href: "/cv.pdf",
+                                                    download: true
+                                                },
+                                                {
+                                                    icon: <FaUser className="text-[#1ED696]" size={18} />,
+                                                    label: "Full Name",
+                                                    text: "Elmasri Ahmed",
+                                                    isSpan: true
+                                                }
+                                            ].map((item, index) => (
+                                                <motion.div
+                                                    key={index}
+                                                    variants={itemVariants}
+                                                    className="flex items-start gap-3 group p-3 rounded-lg hover:bg-[#1A936F]/10 transition-all"
+                                                >
+                                                    <div className="mt-0.5">
+                                                        <div className="w-10 h-10 rounded-full bg-[#0a0a0a] flex items-center justify-center border border-[#1A936F]/30 group-hover:border-[#1ED696]/50 transition-all">
+                                                            {item.icon}
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div className="text-xs text-[#8FE7C3]">{item.label}</div>
+                                                        {item.isSpan ? (
+                                                            <div className="text-[#FCFFF0] font-medium">
+                                                                {item.text}
+                                                            </div>
+                                                        ) : (
+                                                            <a 
+                                                                href={item.href} 
+                                                                target={item.external ? "_blank" : undefined}
+                                                                rel={item.external ? "noopener noreferrer" : undefined}
+                                                                download={item.download}
+                                                                className="text-[#FCFFF0] font-medium group-hover:text-[#1ED696] transition-colors flex items-center gap-1"
+                                                            >
+                                                                {item.text}
+                                                                {item.external && (
+                                                                    <svg className="w-3 h-3 opacity-70" viewBox="0 0 24 24" fill="currentColor">
+                                                                        <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z" />
+                                                                    </svg>
+                                                                )}
+                                                            </a>
+                                                        )}
+                                                    </div>
+                                                </motion.div>
+                                            ))}
+                                        {/* Remove the extra closing div here */}
                                     </div>
-                                </motion.div>
-                                
-                                <motion.div 
-                                    variants={itemVariants}
-                                    className='relative group'
-                                >
-                                    <input
-                                        type="text"
-                                        id="subject"
-                                        name="subject"
-                                        placeholder=" "
-                                        className="peer w-full bg-[#0a0a0a] border border-[#1A936F]/30 text-[#FCFFF0] rounded-lg p-2 pt-4 focus:outline-none focus:border-[#1ED696] transition-all"
-                                    />
-                                    <label 
-                                        htmlFor="subject" 
-                                        className="absolute text-xs text-[#8FE7C3] top-1 left-3 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-sm peer-focus:top-1 peer-focus:text-xs"
-                                    >
-                                        Subject
-                                    </label>
-                                </motion.div>
-                                
-                                <motion.div 
-                                    variants={itemVariants}
-                                    className='relative group'
-                                >
-                                    <textarea
-                                        id="message"
-                                        name="message"
-                                        rows="3"
-                                        placeholder=" "
-                                        className="peer w-full bg-[#0a0a0a] border border-[#1A936F]/30 text-[#FCFFF0] rounded-lg p-2 pt-4 focus:outline-none focus:border-[#1ED696] transition-all resize-none"
-                                        required
-                                    />
-                                    <label 
-                                        htmlFor="message" 
-                                        className="absolute text-xs text-[#8FE7C3] top-1 left-3 transition-all peer-placeholder-shown:top-6 peer-placeholder-shown:text-sm peer-focus:top-1 peer-focus:text-xs"
-                                    >
-                                        Message
-                                    </label>
-                                </motion.div>
-                                
-                                <motion.div 
-                                    variants={itemVariants}
-                                    className='flex justify-between items-center pt-1'
-                                >
-                                    <div className="text-sm">
-                                        {formStatus === 'success' && (
-                                            <motion.span 
-                                                initial={{ scale: 0.8, opacity: 0 }}
-                                                animate={{ scale: 1, opacity: 1 }}
-                                                className="text-green-500"
-                                            >
-                                                Message sent successfully! ✓
-                                            </motion.span>
-                                        )}
-                                        {formStatus === 'error' && (
-                                            <motion.span 
-                                                initial={{ scale: 0.8, opacity: 0 }}
-                                                animate={{ scale: 1, opacity: 1 }}
-                                                className="text-red-500"
-                                            >
-                                                Error sending message ✗
-                                            </motion.span>
-                                        )}
-                                    </div>
-                                    
-                                    <Button
-                                        type="submit"
-                                        className="bg-[#1A936F] hover:bg-[#1ED696] text-[#FCFFF0] font-medium flex items-center gap-2 py-2 px-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-[0_5px_15px_rgba(30,214,150,0.4)]"
-                                        disabled={formStatus === 'sending'}
-                                        ripple={true}
-                                    >
-                                        {formStatus === 'sending' ? (
-                                            <>Sending<motion.span 
-                                                animate={{ rotate: 360 }}
-                                                transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-                                                className="inline-block"
-                                            >
-                                                <FaRegPaperPlane size={14} />
-                                            </motion.span></>
-                                        ) : (
-                                            <>Send<FaPaperPlane size={14} /></>
-                                        )}
-                                    </Button>
-                                </motion.div>
-                            </form>
-                        </motion.div>
-                    )}
-                    
-                    {/* Contact Info Tab */}
-                    {activeTab === 'info' && (
-                        <motion.div 
-                            key="info"
-                            custom={direction}
-                            variants={tabVariants}
-                            initial="enter"
-                            animate="center"
-                            exit="exit"
-                            className="p-6 grid grid-cols-1 md:grid-cols-2 gap-4"
-                        >
-                            <div className="flex flex-col gap-4">
-                                {[
-                                    { 
-                                        icon: <SiGmail className="text-[#8FE7C3]" size={20} />,
-                                        text: "foxdeath100@gmail.com",
-                                        href: "mailto:foxdeath100@gmail.com"
-                                    },
-                                    {
-                                        icon: <FaPhone className="text-[#8FE7C3]" size={18} />,
-                                        text: "+213 540 430 098",
-                                        href: "tel:+213540430098"
-                                    },
-                                    {
-                                        icon: <FaDownload className="text-[#8FE7C3]" size={18} />,
-                                        text: "Download Resume/CV",
-                                        href: "/cv.pdf",
-                                        download: true
-                                    }
-                                ].map((item, index) => (
-                                    <motion.div 
-                                        key={index}
-                                        variants={itemVariants}
-                                        className="flex items-center gap-3 group"
-                                        whileHover={{ x: 5 }}
-                                    >
-                                        <motion.div 
-                                            className="w-10 h-10 rounded-full bg-[#1A936F]/20 flex items-center justify-center group-hover:bg-[#1A936F]/30 transition-all"
-                                            whileHover={{ scale: 1.1 }}
-                                            transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                                        >
-                                            {item.icon}
-                                        </motion.div>
-                                        <a 
-                                            href={item.href} 
-                                            download={item.download}
-                                            className="text-[#FCFFF0] hover:text-[#1ED696] transition-all duration-300"
-                                        >
-                                            {item.text}
-                                        </a>
-                                    </motion.div>
-                                ))}
-                            </div>
-                            
-                            <div className="flex flex-col gap-4">
-                                {[
-                                    {
-                                        icon: <FaGithub className="text-[#8FE7C3]" size={20} />,
-                                        text: "github.com/0asaca0rum0",
-                                        href: "https://github.com/0asaca0rum0",
-                                        external: true
-                                    },
-                                    {
-                                        icon: <FaTelegramPlane className="text-[#8FE7C3]" size={20} />,
-                                        text: "@karasuma_renya",
-                                        href: "https://t.me/karasuma_renya",
-                                        external: true
-                                    },
-                                    {
-                                        icon: <FaUser className="text-[#8FE7C3]" size={18} />,
-                                        text: "Elmasri Ahmed",
-                                        isSpan: true
-                                    }
-                                ].map((item, index) => (
-                                    <motion.div 
-                                        key={index}
-                                        variants={itemVariants}
-                                        className="flex items-center gap-3 group"
-                                        whileHover={{ x: 5 }}
-                                    >
-                                        <motion.div 
-                                            className="w-10 h-10 rounded-full bg-[#1A936F]/20 flex items-center justify-center group-hover:bg-[#1A936F]/30 transition-all"
-                                            whileHover={{ scale: 1.1 }}
-                                            transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                                        >
-                                            {item.icon}
-                                        </motion.div>
-                                        {item.isSpan ? (
-                                            <span className="text-[#FCFFF0]">{item.text}</span>
-                                        ) : (
-                                            <a 
-                                                href={item.href} 
-                                                target={item.external ? "_blank" : undefined}
-                                                rel={item.external ? "noopener noreferrer" : undefined}
-                                                className="text-[#FCFFF0] hover:text-[#1ED696] transition-all duration-300"
-                                            >
-                                                {item.text}
-                                            </a>
-                                        )}
-                                    </motion.div>
-                                ))}
-                            </div>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-            </motion.div>
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </motion.div>
+            </div>
         </motion.section>
     );
+};
+
+// Animation variants
+const pageVariants = {
+    enter: (direction) => ({
+        x: direction > 0 ? 50 : -50,
+        opacity: 0
+    }),
+    center: {
+        x: 0,
+        opacity: 1,
+        transition: { 
+            duration: 0.3,
+            when: "beforeChildren",
+            staggerChildren: 0.1
+        }
+    },
+    exit: (direction) => ({
+        x: direction < 0 ? 50 : -50,
+        opacity: 0,
+        transition: { 
+            duration: 0.2,
+            when: "afterChildren",
+            staggerChildren: 0.05,
+            staggerDirection: -1
+        }
+    })
+};
+
+const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { duration: 0.3 } },
+    exit: { y: -10, opacity: 0, transition: { duration: 0.2 } }
 };
 
 export default Contact;

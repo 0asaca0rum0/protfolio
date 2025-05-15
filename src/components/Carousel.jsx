@@ -118,178 +118,165 @@ const getLevelColor = (tech) => {
 };
 
 const OrbitalTechCard = ({
-	tech,
-	isDarkMode,
-	rotation,
-	distance,
-	isFocused,
-	isTransitioning,
-	onClick,
+    tech,
+    isDarkMode,
+    rotation,
+    distance,
+    isFocused,
+    isTransitioning,
+    onClick,
 }) => {
-	const orbitRadius = distance;
-	const spacingFactor = 2; // Keep this value
-	
-	// Modify the position calculation to focus the active card in center
-    // To move the center of the circle to the left, subtract a fixed offset from positionX.
-    // Responsive offset based on screen width
-    let offset = 100;
+    const orbitRadius = distance;
+    const spacingFactor = 2;
 
+    let offset = 100;
     const positionX = Math.cos(rotation) * orbitRadius * spacingFactor - offset;
     const positionZ = Math.sin(rotation) * orbitRadius * spacingFactor;
-	
-	// Keep existing scale/opacity/zIndex calculations
-	const scale = isFocused
-		? 1
-		: 0.65 + ((positionZ + orbitRadius) / (2 * orbitRadius)) * 0.15;
 
-	// More dramatic opacity difference for better depth perception
-	const opacity = isFocused
-		? 1
-		: 0.5 + ((positionZ + orbitRadius) / (2 * orbitRadius)) * 0.4;
+    const scale = isFocused
+        ? 1
+        : 0.65 + ((positionZ + orbitRadius) / (2 * orbitRadius)) * 0.15;
+    const opacity = 1; // Remove transparency
+    const zIndex = isFocused ? 100 : Math.floor((positionZ + orbitRadius) * 5);
 
-	// Increased z-index contrast to prevent conflicts
-	const zIndex = isFocused ? 100 : Math.floor((positionZ + orbitRadius) * 5);
-
-	return (
-		<motion.div
-			className="absolute left-1/2 top-1/2"
-			style={{
-				x: positionX,
-				zIndex,
-				transform: `translate(-50%, -50%) translateZ(${positionZ}px) scale(${scale})`,
-				opacity,
-				transition: isTransitioning ? 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease' : 'none',
-			}}
-			whileHover={{ scale: isTransitioning ? scale : scale * 1.05 }}
-			onClick={onClick}
-		>
-			<div
-				className={`
-                bg-[#121212] backdrop-blur-sm border rounded-xl overflow-hidden 
-                transition-all duration-300 w-[180px] h-[220px] md:w-[210px] md:h-[250px] 
-                flex flex-col shadow-lg
-                ${
-									isFocused
-										? "border-[#1ED696] shadow-[0_0_32px_rgba(30,214,150,0.25)]"
-										: "border-[#1A936F]/20"
-								}
-            `}
-			>
-				<div className="relative flex flex-col items-center justify-center h-full p-4 space-y-3">
-					{" "}
-					{/* Changed to justify-between for better spacing if needed */}
-					{isFocused && (
-						<div className="absolute inset-0 pointer-events-none">
-							<div className="absolute top-1/2 left-1/2 w-[220px] h-[220px] -translate-x-1/2 -translate-y-1/2">
-								<div className="absolute inset-0 border border-[#1ED696]/20 rounded-full animate-spin-slow"></div>
-								<div className="absolute inset-3 border border-[#1ED696]/10 rounded-full animate-spin-slow-reverse"></div>
-							</div>
-						</div>
-					)}
-					<div className="relative mb-2 mt-1 text-center">
-						{" "}
-						{/* Added text-center for icon alignment */}
-						<div
-							className={`absolute inset-0 blur-lg rounded-full ${
-								isFocused ? "bg-[#1ED696]/10" : "bg-[#1A936F]/10"
-							}`}
-						></div>
-						<motion.div
-							className="relative z-10 inline-block" // Added inline-block
-							style={{ color: isDarkMode ? tech.darkColor : tech.lightColor }}
-						>
-							<tech.icon size={isFocused ? 40 : 32} />
-						</motion.div>
-					</div>
-					<h3
-						className={`text-base font-semibold text-center ${
-							isFocused ? "text-[#1ED696]" : "text-[#FAF3DD]"
-						}`}
-					>
-						{tech.name}
-					</h3>
-					<div className="w-full mt-auto">
-						{isFocused ? (
-							<div className="relative w-16 h-16 mx-auto mb-2">
-								<svg className="w-full h-full" viewBox="0 0 100 100">
-									<circle
-										cx="50"
-										cy="50"
-										r="40"
-										fill="none"
-										stroke="#232323"
-										strokeWidth="8"
-									/>
-									<motion.circle
-										cx="50"
-										cy="50"
-										r="40"
-										fill="none"
-										stroke={
-											tech.customColor ||
-											(tech.learning ? "#F29111" : "#1ED696")
-										}
-										strokeWidth="8"
-										strokeLinecap="round"
-										initial={{ pathLength: 0 }}
-										animate={{ pathLength: tech.level / 100 }}
-										transition={{ duration: 1.2, ease: "easeOut" }}
-										style={{
-											transformOrigin: "center",
-											rotate: "-90deg",
-											strokeDasharray: "251.2", // Circumference of a circle with r=40 (2 * PI * 40)
-											// strokeDashoffset is implicitly animated by pathLength
-										}}
-									/>
-									<text
-										x="50%"
-										y="50%"
-										textAnchor="middle"
-										dy=".3em"
-										className="text-base font-bold fill-[#FCFFF0]"
-									>
-										{tech.level}%
-									</text>
-								</svg>
-							</div>
-						) : (
-							<div className="space-y-2">
-								<div className="w-full h-1 bg-[#232323] rounded-full overflow-hidden">
-									<motion.div
-										className="h-full rounded-full"
-										style={{
-											background: tech.customColor || getLevelColor(tech),
-										}}
-										initial={{ width: 0 }}
-										animate={{ width: `${tech.level}%` }}
-										transition={{ duration: 0.7 }}
-									/>
-								</div>
-								<div className="flex justify-between items-center text-xs">
-									<span
-										className={
-											tech.learning ? "text-[#F29111]" : "text-[#8FE7C3]"
-										}
-									>
-										{tech.learning
-											? "Learning"
-											: tech.level >= 90
-											? "Expert"
-											: tech.level >= 75
-											? "Advanced"
-											: "Intermediate"}
-									</span>
-									<span className="bg-[#232323] px-1.5 py-0.5 rounded-full text-white/80">
-										{tech.level}%
-									</span>
-								</div>
-							</div>
-						)}
-					</div>
-				</div>
-			</div>
-		</motion.div>
-	);
+    return (
+        <motion.div
+            className="absolute left-1/2 top-1/2"
+            style={{
+                x: positionX,
+                zIndex,
+                transform: `translate(-50%, -50%) translateZ(${positionZ}px) scale(${scale})`,
+                opacity,
+                transition: isTransitioning
+                    ? 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease'
+                    : 'none',
+            }}
+            whileHover={{ scale: isTransitioning ? scale : scale * 1.05 }}
+            onClick={onClick}
+        >
+            <div
+                className={`
+                    bg-gradient-to-br from-[#101c1b] to-[#0A0A0A]
+                    border rounded-2xl overflow-hidden
+                    transition-all duration-300 w-[180px] h-[220px] md:w-[210px] md:h-[250px]
+                    flex flex-col shadow-xl
+                    ${isFocused
+                        ? "border-[#1ED696] shadow-[0_0_32px_rgba(30,214,150,0.25)] ring-2 ring-[#1ED696]/30"
+                        : "border-[#1A936F]/20"}
+                `}
+            >
+                <div className="relative flex flex-col items-center justify-center h-full p-4 space-y-3">
+                    {isFocused && (
+                        <div className="absolute inset-0 pointer-events-none">
+                            <div className="absolute top-1/2 left-1/2 w-[220px] h-[220px] -translate-x-1/2 -translate-y-1/2">
+                                <div className="absolute inset-0 border border-[#1ED696]/20 rounded-full animate-spin-slow"></div>
+                                <div className="absolute inset-3 border border-[#1ED696]/10 rounded-full animate-spin-slow-reverse"></div>
+                            </div>
+                        </div>
+                    )}
+                    <div className="relative mb-2 mt-1 text-center">
+                        <div
+                            className={`absolute inset-0 blur-xl rounded-full ${
+                                isFocused ? "bg-[#1ED696]" : "bg-[#1A936F]"
+                            }`}
+                        ></div>
+                        <motion.div
+                            className="relative z-10 inline-block drop-shadow-[0_2px_12px_rgba(30,214,150,0.25)]"
+                            style={{ color: isDarkMode ? tech.darkColor : tech.lightColor }}
+                        >
+                            <tech.icon size={isFocused ? 44 : 34} />
+                        </motion.div>
+                    </div>
+                    <h3
+                        className={`text-base font-semibold text-center tracking-wide ${
+                            isFocused
+                                ? "text-[#1ED696] drop-shadow-[0_1px_4px_rgba(30,214,150,0.15)]"
+                                : "text-[#FAF3DD]"
+                        }`}
+                    >
+                        {tech.name}
+                    </h3>
+                    <div className="w-full mt-auto">
+                        {isFocused ? (
+                            <div className="relative w-16 h-16 mx-auto mb-2">
+                                <svg className="w-full h-full" viewBox="0 0 100 100">
+                                    <circle
+                                        cx="50"
+                                        cy="50"
+                                        r="40"
+                                        fill="none"
+                                        stroke="#181c1b"
+                                        strokeWidth="8"
+                                    />
+                                    <motion.circle
+                                        cx="50"
+                                        cy="50"
+                                        r="40"
+                                        fill="none"
+                                        stroke={
+                                            tech.customColor ||
+                                            (tech.learning ? "#F29111" : "#1ED696")
+                                        }
+                                        strokeWidth="8"
+                                        strokeLinecap="round"
+                                        initial={{ pathLength: 0 }}
+                                        animate={{ pathLength: tech.level / 100 }}
+                                        transition={{ duration: 1.2, ease: "easeOut" }}
+                                        style={{
+                                            transformOrigin: "center",
+                                            rotate: "-90deg",
+                                            strokeDasharray: "251.2",
+                                        }}
+                                    />
+                                    <text
+                                        x="50%"
+                                        y="50%"
+                                        textAnchor="middle"
+                                        dy=".3em"
+                                        className="text-base font-bold fill-[#FCFFF0]"
+                                    >
+                                        {tech.level}%
+                                    </text>
+                                </svg>
+                            </div>
+                        ) : (
+                            <div className="space-y-2">
+                                <div className="w-full h-1.5 bg-[#181c1b] rounded-full overflow-hidden">
+                                    <motion.div
+                                        className="h-full rounded-full"
+                                        style={{
+                                            background: tech.customColor || getLevelColor(tech),
+                                        }}
+                                        initial={{ width: 0 }}
+                                        animate={{ width: `${tech.level}%` }}
+                                        transition={{ duration: 0.7 }}
+                                    />
+                                </div>
+                                <div className="flex justify-between items-center text-xs">
+                                    <span
+                                        className={
+                                            tech.learning ? "text-[#F29111]" : "text-[#8FE7C3]"
+                                        }
+                                    >
+                                        {tech.learning
+                                            ? "Learning"
+                                            : tech.level >= 90
+                                            ? "Expert"
+                                            : tech.level >= 75
+                                            ? "Advanced"
+                                            : "Intermediate"}
+                                    </span>
+                                    <span className="bg-[#181c1b] px-1.5 py-0.5 rounded-full text-white">
+                                        {tech.level}%
+                                    </span>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
+        </motion.div>
+    );
 };
 
 const OrbitalTechShowcase = () => {
