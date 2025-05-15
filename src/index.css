@@ -375,3 +375,28 @@ body, html {
 .transform-style-preserve-3d {
   transform-style: preserve-3d;
 }
+
+/* Add CSS animation for icon spinning instead of using JS in production */
+@keyframes slow-spin {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+.animate-slow-spin {
+  animation: slow-spin 3s linear infinite;
+}
+
+/* Add CSS animations for icon spinning and orbit animations */
+@keyframes icon-spin {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
+}
+
+.animate-icon-spin {
+  animation: icon-spin 3s linear infinite;
+  backface-visibility: hidden;
+}

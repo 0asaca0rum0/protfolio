@@ -1,14 +1,17 @@
+import React, { Suspense, lazy } from 'react';
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
-import Projects from './components/projects';
-import Carousel from './components/Carousel';
 import Contact from './components/contact';
 import FloatingNav from './components/FloatingNav';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaProjectDiagram, FaCode } from 'react-icons/fa';
 import { BiMailSend } from 'react-icons/bi';
 import './index.css';
+
+// Lazy load components
+const Projects = lazy(() => import('./components/projects'));
+const Carousel = lazy(() => import('./components/Carousel'));
 
 // Component to handle animated routes
 const AnimatedRoutes = ({ isMobile }) => {

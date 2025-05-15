@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+// Split icon imports into dynamic imports
 import {
 	FaReact,
 	FaNodeJs,
 	FaServer,
 	FaLinux,
 	FaPython,
-	FaChevronLeft,
-	FaChevronRight,
+    FaChevronCircleRight,
+    FaChevronCircleLeft,
 } from "react-icons/fa";
 import { TbBrandNextjs, TbBrandMysql } from "react-icons/tb";
 import { SiTailwindcss, SiNginx, SiOpenai, SiNvidia } from "react-icons/si";
@@ -132,11 +133,7 @@ const OrbitalTechCard = ({
     // To move the center of the circle to the left, subtract a fixed offset from positionX.
     // Responsive offset based on screen width
     let offset = 100;
-    if (window.innerWidth < 480) offset = 30;
-    else if (window.innerWidth < 640) offset = 50;
-    else if (window.innerWidth < 768) offset = 70;
-    else if (window.innerWidth < 1024) offset = 90;
-    else offset = 100;
+
     const positionX = Math.cos(rotation) * orbitRadius * spacingFactor - offset;
     const positionZ = Math.sin(rotation) * orbitRadius * spacingFactor;
 	
@@ -403,113 +400,162 @@ const OrbitalTechShowcase = () => {
 	const goPrev = () =>
 		goToTech((currentIndex - 1 + techList.length) % techList.length);
 
-	return (
-		<section className="w-full my-10  font-['Comfortaa'] bg-gradient-to-b from-[#0A0A0A]/80 to-[#0A0A0A]/30  overflow-clip">
-			{/* Added overflow-hidden to section */}
-			<div className="relative -my-5 max-w-lg mx-auto text-center px-2">
-				{/* ... (header motion elements unchanged) ... */}
-				<motion.div
-					className="h-px bg-gradient-to-r from-transparent via-[#1ED696]/40 to-transparent mb-4"
-					initial={{ width: 0 }}
-					animate={{ width: "100%" }}
-					transition={{ duration: 1.2 }}
-				/>
-				<motion.h2
-					className="text-2xl md:text-3xl font-bold mb-3"
-					initial={{ opacity: 0, y: -10 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ delay: 0.3 }}
-				>
-					<span className="text-gradient bg-clip-text text-transparent bg-gradient-to-r from-[#1A936F] to-[#1ED696]">
-						Technology Orbit
-					</span>
-				</motion.h2>
-				<motion.p
-					className="text-[#8FE7C3]/80 text-sm md:text-base leading-relaxed"
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					transition={{ delay: 0.5 }}
-				>
-					Explore my technology ecosystem — click any tech to focus
-				</motion.p>
-				<motion.div
-					className="h-px bg-gradient-to-r from-transparent via-[#1ED696]/40 to-transparent mt-4"
-					initial={{ width: 0 }}
-					animate={{ width: "80%" }}
-					transition={{ duration: 1.2, delay: 0.2 }}
-				/>
-			</div>
-			<div className="relative max-w-4xl mx-auto flex flex-col justify-center items-center">
-				{/* Center the orbit and arrows */}
-				<div className="relative w-full h-[400px] sm:h-[450px] md:h-[500px] flex items-center justify-center">
-					{/* Navigation arrows */}
+    return (
+        <section className="w-full my-10  font-['Comfortaa'] bg-gradient-to-b from-[#0A0A0A]/80 to-[#0A0A0A]/30  overflow-clip">
+            {/* Added overflow-hidden to section */}
+            <div className="relative -my-5 max-w-lg mx-auto text-center px-2">
+                {/* ... (header motion elements unchanged) ... */}
+                <motion.div
+                    className="h-px bg-gradient-to-r from-transparent via-[#1ED696]/40 to-transparent mb-4"
+                    initial={{ width: 0 }}
+                    animate={{ width: "100%" }}
+                    transition={{ duration: 1.2 }}
+                />
+                <motion.h2
+                    className="text-2xl md:text-3xl font-bold mb-3"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                >
+                    <span className="text-gradient bg-clip-text text-transparent bg-gradient-to-r from-[#1A936F] to-[#1ED696]">
+                        Technology Orbit
+                    </span>
+                </motion.h2>
+                <motion.p
+                    className="text-[#8FE7C3]/80 text-sm md:text-base leading-relaxed"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.5 }}
+                >
+                    Explore my technology ecosystem — click any tech to focus
+                </motion.p>
+                <motion.div
+                    className="h-px bg-gradient-to-r from-transparent via-[#1ED696]/40 to-transparent mt-4"
+                    initial={{ width: 0 }}
+                    animate={{ width: "80%" }}
+                    transition={{ duration: 1.2, delay: 0.2 }}
+                />
+            </div>
+            <div className="relative max-w-4xl mx-auto flex flex-col justify-center items-center">
+                {/* Center the orbit and arrows */}
+                <div className="relative w-full h-[400px] sm:h-[450px] md:h-[500px] flex items-center justify-center">
+                    {/* Navigation arrows */}
+                    <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4 z-50 pointer-events-none">
+                        <button
+                            onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                if (!isTransitioning) goNext();
+                            }}
+                            className="pointer-events-auto p-2.5 rounded-full bg-[#181c1b]/90 border border-[#1A936F]/20 
+                                text-[#8FE7C3] hover:text-[#1ED696] hover:border-[#1ED696]/40 transition-all shadow-lg"
+                        >
+                            <FaChevronCircleLeft size={18} className="" />
+                        </button>
+                        <button
+                            onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation(); 
+                                if (!isTransitioning) goPrev();
+                            }}
+                            className="pointer-events-auto p-2.5 rounded-full bg-[#181c1b]/90 border border-[#1A936F]/20 
+                                text-[#8FE7C3] hover:text-[#1ED696] hover:border-[#1ED696]/40 transition-all shadow-lg"
+                        >
+                            <FaChevronCircleRight size={18} className="" />
+                        </button>
+                    </div>
 
-					{/* orbit container: Ensure this height is adequate for cards + perspective*/}
-					<div
-						className="mx-auto w-full h-full relative perspective-[1000px] transform-style-preserve-3d"
-						style={{ perspectiveOrigin: "center center" }}
-						onMouseDown={() => isTransitioning ? null : setIsAutoRotating(false)}
-						onTouchStart={() => isTransitioning ? null : setIsAutoRotating(false)}
-						onMouseUp={() => isTransitioning ? null : setTimeout(() => setIsAutoRotating(true), 2000)}
-						onTouchEnd={() => isTransitioning ? null : setTimeout(() => setIsAutoRotating(true), 2000)}
-					>
-						{/* orbital rings */}
-						<div className="absolute w-full h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rotate-x-70 opacity-15 pointer-events-none">
-							<div className="absolute w-[90%] h-[90%] top-[5%] left-[5%] border border-[#1ED696]/10 rounded-full"></div>
-							<div className="absolute w-[72%] h-[72%] top-[14%] left-[14%] border border-[#1ED696]/20 rounded-full"></div>
-							<div className="absolute w-[54%] h-[54%] top-[23%] left-[23%] border border-[#1ED696]/30 rounded-full"></div>
-							<div className="absolute w-[36%] h-[36%] top-[32%] left-[32%] border border-[#1ED696]/40 rounded-full"></div>
-							<div className="absolute w-[18%] h-[18%] top-[41%] left-[41%] border border-[#1ED696]/50 rounded-full"></div>
-						</div>
-						{/* Render cards inside a centered container */}
-						<div className="absolute inset-0 origin-center">
-							{techList.reverse().map((tech, i) => (
-								<OrbitalTechCard
-									key={tech.name}
-									tech={tech}
-									isDarkMode={isDarkMode}
-									rotation={techPositions[i].angle}
-									distance={orbitRadius}
-									isFocused={techPositions[i].isFocused}
-									isTransitioning={isTransitioning}
-									onClick={() => !isTransitioning && goToTech(i)}
-								/>
-							))}
-						</div>
-					</div>
-				</div>
-				
-				{/* Update navigation buttons to respect transitions */}
-				<div className="flex justify-center items-center mt-8 gap-2">
-					{techList.map((tech, i) => (
-						<button
-							key={i}
-							onClick={() => !isTransitioning && goToTech(i)}
-							disabled={isTransitioning}
-							className={`transition-all duration-300 rounded-full ${
-								i === currentIndex
-									? "w-6 h-1.5 bg-[#1ED696]"
-									: "w-2 h-1.5 bg-[#1A936F]/40 hover:bg-[#1A936F]/70"
-							}`}
-							aria-label={`Navigate to ${tech.name}`}
-						/>
-					))}
-				</div>
+                    {/* orbit container: Ensure this height is adequate for cards + perspective*/}
+                    <div
+                        className="mx-auto w-full h-full relative perspective-[1000px] transform-style-preserve-3d"
+                        style={{ perspectiveOrigin: "center center" }}
+                        onMouseDown={(e) => {
+                            e.stopPropagation();
+                            if (!isTransitioning) setIsAutoRotating(false);
+                        }}
+                        onTouchStart={(e) => {
+                            e.stopPropagation();
+                            if (!isTransitioning) setIsAutoRotating(false);
+                        }}
+                        onMouseUp={(e) => {
+                            e.stopPropagation();
+                            if (!isTransitioning) setTimeout(() => setIsAutoRotating(true), 2000);
+                        }}
+                        onTouchEnd={(e) => {
+                            e.stopPropagation();
+                            if (!isTransitioning) setTimeout(() => setIsAutoRotating(true), 2000);
+                        }}
+                    >
+                        {/* orbital rings */}
+                        <div className="absolute w-full h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rotate-x-70 opacity-15 pointer-events-none">
+                            <div className="absolute w-[90%] h-[90%] top-[5%] left-[5%] border border-[#1ED696]/10 rounded-full"></div>
+                            <div className="absolute w-[72%] h-[72%] top-[14%] left-[14%] border border-[#1ED696]/20 rounded-full"></div>
+                            <div className="absolute w-[54%] h-[54%] top-[23%] left-[23%] border border-[#1ED696]/30 rounded-full"></div>
+                            <div className="absolute w-[36%] h-[36%] top-[32%] left-[32%] border border-[#1ED696]/40 rounded-full"></div>
+                            <div className="absolute w-[18%] h-[18%] top-[41%] left-[41%] border border-[#1ED696]/50 rounded-full"></div>
+                        </div>
+                        {/* Render cards inside a centered container */}
+                        <div className="absolute inset-0 origin-center">
+                            {/* FIX: Don't use reverse() directly in render as it mutates the array */}
+                            {[...techList].map((tech, i) => (
+                                <OrbitalTechCard
+                                    key={tech.name}
+                                    tech={tech}
+                                    isDarkMode={isDarkMode}
+                                    rotation={techPositions[i].angle}
+                                    distance={orbitRadius}
+                                    isFocused={techPositions[i].isFocused}
+                                    isTransitioning={isTransitioning}
+                                    onClick={(e) => {
+                                        if (e) {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                        }
+                                        if (!isTransitioning) goToTech(i);
+                                    }}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </div>
+                
+                {/* Update navigation buttons to respect transitions */}
+                <div className="flex justify-center items-center mt-8 gap-2">
+                    {techList.map((tech, i) => (
+                        <button
+                            key={i}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                if (!isTransitioning) goToTech(i);
+                            }}
+                            disabled={isTransitioning}
+                            className={`transition-all duration-300 rounded-full ${
+                                i === currentIndex
+                                    ? "w-6 h-1.5 bg-[#1ED696]"
+                                    : "w-2 h-1.5 bg-[#1A936F]/40 hover:bg-[#1A936F]/70"
+                            }`}
+                            aria-label={`Navigate to ${tech.name}`}
+                        >
+                            <span className="sr-only">Navigate to {tech.name}</span>
+                        </button>
+                    )).reverse() /* Reverse the order of the pagination buttons */}
+                </div>
 
-				<div className="text-center mt-3">
-					<motion.div
-						key={currentIndex}
-						initial={{ opacity: 0, y: 10 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.3 }}
-						className="text-[#1ED696] font-medium text-sm md:text-base"
-					>
-						{techList[currentIndex]?.name || ""}
-					</motion.div>
-				</div>
-			</div>
-		</section>
-	);
+                <div className="text-center mt-3">
+                    <motion.div
+                        key={currentIndex}
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="text-[#1ED696] font-medium text-sm md:text-base"
+                    >
+                        {techList[currentIndex]?.name || ""}
+                    </motion.div>
+                </div>
+            </div>
+        </section>
+    );
 };
 
 export default OrbitalTechShowcase;
