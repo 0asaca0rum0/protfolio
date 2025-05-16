@@ -30,14 +30,26 @@ const FloatingNav = ({ items, isMobile, showSidebar, toggleSidebar }) => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 font-['Comfortaa']">
+    <div
+      className="sticky z-50 font-['Comfortaa']"
+      style={{
+        position: 'sticky',
+        right: '2rem',
+        bottom: '1rem',
+        marginLeft: 'auto',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-end',
+        width: 'fit-content',
+      }}
+    >
       <motion.button
         className="bg-[#1A936F]/10 hover:bg-[#1A936F]/20 border border-[#1A936F]/30 text-white px-3 py-3.5 rounded-full shadow-lg flex items-center justify-center backdrop-blur-sm transition-all"
         onClick={toggleMenu}
         whileTap={{ scale: 0.95 }}
-        whileHover={{ 
+        whileHover={{
           scale: 1.05,
-          boxShadow: "0 0 15px rgba(30, 214, 150, 0.5)" 
+          boxShadow: "0 0 15px rgba(30, 214, 150, 0.5)"
         }}
       >
         <div className="w-9 h-9 rounded-full bg-[#1A936F]/20 flex items-center justify-center">
@@ -81,8 +93,8 @@ const FloatingNav = ({ items, isMobile, showSidebar, toggleSidebar }) => {
                   whileHover={{ x: 5 }}
                 >
                   <span className="p-1.5 bg-[#1A936F]/20 rounded-full">
-                    {showSidebar ? 
-                      <FaLaptopCode size={16} className="text-[#8FE7C3]" /> : 
+                    {showSidebar ?
+                      <FaLaptopCode size={16} className="text-[#8FE7C3]" /> :
                       <FaUser size={16} className="text-[#8FE7C3]" />
                     }
                   </span>
@@ -105,15 +117,15 @@ const FloatingNav = ({ items, isMobile, showSidebar, toggleSidebar }) => {
                 >
                   {({ isActive }) => (
                     <>
-                      <motion.span 
+                      <motion.span
                         className={`p-1.5 ${
-                          isActive 
-                            ? "bg-[#1A936F]/50" 
+                          isActive
+                            ? "bg-[#1A936F]/50"
                             : "bg-[#1A936F]/20"
                         } rounded-full`}
                         whileHover={{ scale: 1.1 }}
                       >
-                        {React.cloneElement(item.icon, { 
+                        {React.cloneElement(item.icon, {
                           className: "text-[#8FE7C3]",
                           size: 16
                         })}

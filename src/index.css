@@ -57,6 +57,12 @@ body, html {
   flex-direction: column;
 }
 
+/* Add padding to the body to account for the fixed header */
+body {
+  padding-top: 0;
+  transition: padding-top 0.3s ease;
+}
+
 /* Modern dark scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -107,6 +113,7 @@ body, html {
   padding: 1.5rem;
   border: 1px solid rgba(30, 214, 150, 0.1);
   box-shadow: var(--shadow-default);
+  padding-top: 1rem; /* Adjusted for header */
 }
 
 .project-card {
@@ -204,8 +211,8 @@ body, html {
   .mobile-sidebar {
     width: 100%;
     min-height: calc(100vh - 1.5rem);
-    overflow-y: auto;
-    max-height: none;
+    overflow-y: hidden;
+    max-height: 1000px;
     animation: fadeIn 0.3s ease-in-out;
   }
   
@@ -216,6 +223,7 @@ body, html {
     display: flex;
     flex-direction: column;
     animation: fadeIn 0.3s ease-in-out;
+    overflow-y: auto; /* Enable scrolling for content */
   }
   
   /* Special handling for project cards on mobile */
@@ -400,4 +408,96 @@ body, html {
 .animate-icon-spin {
   animation: icon-spin 3s linear infinite;
   backface-visibility: hidden;
+}
+/* Professional thin scrollbar */
+::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(20, 20, 20, 0.2);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(26, 147, 111, 0.6);
+  border-radius: 3px;
+  transition: all var(--transition-quick);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+  width: 4px;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Add these for better mobile scrolling */
+.overflow-x-auto {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.overflow-x-auto::-webkit-scrollbar {
+  display: none;
+}
+
+/* Add touch action to enable better swipe on mobile */
+.touch-pan-y {
+  touch-action: pan-y;
+}
+
+/* Fix for mobile content views */
+.mobile-content {
+  width: 100%;
+  height: calc(100vh - 1.5rem);
+  margin-left: 0;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.3s ease-in-out;
+  overflow-y: auto; /* Enable scrolling for content */
+}
+
+/* Add these styles to fix scrolling and hide scrollbars */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(26, 147, 111, 0.3);
+  border-radius: 2px;
+}
+
+/* Add these styles to support full-width sidebar on mobile */
+@media (max-width: 767px) {
+  .sidebar {
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    border-right: none !important;
+    margin-top: 4rem !important;
+
+  }
+  
+  .mobile-sidebar {
+    width: 100%;
+    min-height: calc(100vh - 1.5rem);
+    overflow-y: hidden;
+    max-height: 800px;
+    animation: fadeIn 0.3s ease-in-out;
+  }
 }

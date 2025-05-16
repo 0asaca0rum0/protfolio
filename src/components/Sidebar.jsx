@@ -30,7 +30,7 @@ export default function Sidebar({ className, onCollapse }) {
       {isCollapsed ? (
         <motion.aside
           key="collapsed"
-          className={`flex flex-col relative ${className} md:w-18 md:min-w-[4.5rem] w-18 min-w-[4.5rem] p-0 backdrop-blur-md bg-[#0A0A0A]/80 border-r border-[#1ED696]/10 shadow-[0_0_15px_rgba(26,147,111,0.05),inset_0_0_20px_rgba(0,0,0,0.2)]`}
+          className={` flex flex-col relative ${className} md:w-18 md:min-w-[4.5rem] w-18 min-w-[4.5rem] p-0 backdrop-blur-md bg-[#0A0A0A]/80 border-r border-[#1ED696]/10 shadow-[0_0_15px_rgba(26,147,111,0.05),inset_0_0_20px_rgba(0,0,0,0.2)]`}
           initial={{ width: "280px", opacity: 0 }}
           animate={{ 
             width: "72px", 
@@ -389,7 +389,7 @@ export default function Sidebar({ className, onCollapse }) {
           
           {/* Footer with pulsing effect */}
           <motion.div
-            className="mt-auto border-t border-[#1A936F]/10 py-3 px-6"
+            className=" border-t border-[#1A936F]/10 py-3 px-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
