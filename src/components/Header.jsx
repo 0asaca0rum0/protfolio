@@ -138,7 +138,7 @@ const Header = ({ items, isMobile, showSidebar, toggleSidebar }) => {
   ];
   
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4">
+    <div className="sticky top-0 left-0 right-0 z-50 flex justify-center pt-4">
       <motion.header
         ref={headerRef}
         className={`font-['Comfortaa'] px-5 md:px-8 transition-all duration-300 rounded-full max-w-[94%] w-auto mx-auto ${

@@ -180,9 +180,9 @@ export default function Projects() {
     }, [activeCategory]);
 
     return (
-        <div className="w-full h-full flex flex-col items-center justify-center font-['Comfortaa'] py-8">
+        <div className="w-full h-full flex flex-col items-center justify-center font-['Comfortaa'] ">
             <motion.h2 
-                className="text-xl md:text-2xl lg:text-3xl font-bold mb-8 text-[#FAF3DD]"
+                className="text-xl md:text-2xl lg:text-3xl font-bold mb-4 text-[#FAF3DD]"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
@@ -192,7 +192,7 @@ export default function Projects() {
 
             {/* Redesigned Category Filter with improved spacing */}
             <motion.div 
-                className="w-full max-w-sm md:max-w-md lg:max-w-lg px-6 mb-10"
+                className="w-full max-w-sm md:max-w-md lg:max-w-lg px-4 mb-6"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
@@ -229,7 +229,7 @@ export default function Projects() {
                                     buttonRefs.current[category.value] = el;
                                 }}
                                 onClick={() => setActiveCategory(category.value)}
-                                className={`relative z-10 py-2.5 px-5 text-center text-sm font-medium transition-all duration-300 rounded-full flex-1 touch-feedback ${
+                                className={`relative z-10 py-2 px-4 text-center text-sm font-medium transition-all duration-300 rounded-full flex-1 touch-feedback ${
                                     activeCategory === category.value 
                                         ? 'text-white font-semibold' 
                                         : 'text-[#8FE7C3]/80 hover:text-[#8FE7C3]'
@@ -242,7 +242,7 @@ export default function Projects() {
                 </div>
                 
                 {/* Enhanced Stats Indicator with improved animation */}
-                <div className="flex justify-center mt-4 text-xs text-[#FCFFF0]/50">
+                <div className="flex justify-center mt-3 text-xs text-[#FCFFF0]/50">
                     <motion.span
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -257,7 +257,7 @@ export default function Projects() {
             <div className="w-full flex flex-col items-center">
                 {/* Card Container with better height based on card content */}
                 <div 
-                    className="relative w-full mx-auto max-w-[290px] md:max-w-[320px] lg:max-w-[340px] h-[320px] md:h-[350px] lg:h-[370px]"
+                    className="relative w-full mx-auto max-w-[280px] md:max-w-[300px] lg:max-w-[320px] h-[300px] md:h-[310px] lg:h-[330px]"
                 >
                     {/* Current active card with smoother slide animations */}
                     <motion.div

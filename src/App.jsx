@@ -127,7 +127,6 @@ function App() {
             animate={{ 
               marginLeft: !isMobile && sidebarCollapsed ? "5rem" : !isMobile ? "1.5rem" : "0",
               width: !isMobile && sidebarCollapsed ? "calc(100% - 6.5rem)" : !isMobile ? "calc(100% - 23rem)" : "100%",
-              marginTop: "4rem"
             }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
           >
