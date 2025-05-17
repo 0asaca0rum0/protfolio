@@ -89,9 +89,8 @@ export default function Projects() {
 
     const categories = [
         { label: "All", value: "all" },
-        { label: "Web", value: "Web App" },
+        { label: "Web Apps", value: "Web App" },
         { label: "Mobile", value: "Mobile App" },
-        { label: "Desktop", value: "Desktop App" },
         { label: "AI", value: "AI" },
     ];
 
@@ -181,84 +180,86 @@ export default function Projects() {
     }, [activeCategory]);
 
     return (
-        <div className="w-full h-full flex flex-col items-center justify-center font-['Comfortaa'] py-6">
+        <div className="w-full h-full flex flex-col items-center justify-center font-['Comfortaa'] py-8">
             <motion.h2 
-                className="text-lg md:text-xl lg:text-2xl font-bold mb-4 text-[#FAF3DD]"
+                className="text-xl md:text-2xl lg:text-3xl font-bold mb-8 text-[#FAF3DD]"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
                 Projects
             </motion.h2>
 
-            {/* Improved Category Filter */}
+            {/* Redesigned Category Filter with improved spacing */}
             <motion.div 
-                className="w-full max-w-xs md:max-w-sm lg:max-w-md px-4 mb-5"
+                className="w-full max-w-sm md:max-w-md lg:max-w-lg px-6 mb-10"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
+                transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             >                
-                {/* Fixed Filter Container */}
+                {/* Modern Filter Container with better spacing */}
                 <div 
                     ref={containerRef}
-                    className="relative overflow-x-auto scrollbar-thin overflow-y-hidden rounded-lg bg-[#111111] border border-[#1A936F]/20 shadow-inner p-1 flex"
-                    style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                    className="relative bg-[#0F0F0F] rounded-full border border-[#1A936F]/20 shadow-lg p-1.5 flex justify-center"
                 >
-                    <style>
-                        {`
-                        .category-container::-webkit-scrollbar {
-                            display: none;
-                        }
-                        `}
-                    </style>
-                    
-                    {/* The indicator will now follow properly */}
+                    {/* Improved animated indicator with smoother animation */}
                     {indicatorDimensions.width > 0 && (
                         <motion.div 
-                            className="absolute top-1 bottom-1 rounded-md bg-gradient-to-r from-[#114E3C] to-[#1A936F]"
+                            className="absolute top-1.5 bottom-1.5 rounded-full bg-gradient-to-r from-[#114E3C] to-[#1A936F] shadow-[0_2px_8px_rgba(26,147,111,0.25)]"
                             initial={false}
                             animate={{
                                 width: indicatorDimensions.width,
                                 left: indicatorDimensions.left
                             }}
-                            transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                            transition={{ 
+                                type: "spring", 
+                                stiffness: 350, 
+                                damping: 32,
+                                mass: 1.2
+                            }}
                         />
                     )}
                     
-                    {/* Evenly spaced category buttons */}
-                    {categories.map((category) => (
-                        <button
-                            key={category.value}
-                            ref={(el) => {
-                                buttonRefs.current[category.value] = el;
-                            }}
-                            onClick={() => setActiveCategory(category.value)}
-                            className={`relative z-10 py-2 px-4 mx-0.5 text-center text-xs font-medium whitespace-nowrap transition-colors
-                                ${activeCategory === category.value 
-                                    ? 'text-white' 
-                                    : 'text-[#8FE7C3]/80 hover:text-[#8FE7C3]'
+                    {/* Evenly distributed category buttons with better typography and touch feedback */}
+                    <div className="flex w-full justify-between">
+                        {categories.map((category) => (
+                            <button
+                                key={category.value}
+                                ref={(el) => {
+                                    buttonRefs.current[category.value] = el;
+                                }}
+                                onClick={() => setActiveCategory(category.value)}
+                                className={`relative z-10 py-2.5 px-5 text-center text-sm font-medium transition-all duration-300 rounded-full flex-1 touch-feedback ${
+                                    activeCategory === category.value 
+                                        ? 'text-white font-semibold' 
+                                        : 'text-[#8FE7C3]/80 hover:text-[#8FE7C3]'
                                 }`}
-                        >
-                            {category.label}
-                        </button>
-                    ))}
+                            >
+                                {category.label}
+                            </button>
+                        ))}
+                    </div>
                 </div>
                 
-                {/* Stats Indicator */}
-                <div className="flex justify-center mt-2 text-[10px] text-[#FCFFF0]/50">
-                    <span>
+                {/* Enhanced Stats Indicator with improved animation */}
+                <div className="flex justify-center mt-4 text-xs text-[#FCFFF0]/50">
+                    <motion.span
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.4, duration: 0.8 }}
+                    >
                         Showing <span className="text-[#1ED696] font-medium">{filteredProjects.length}</span> of {projects.length} projects
-                    </span>
+                    </motion.span>
                 </div>
             </motion.div>
 
-            {/* Simplified Card Stack without problematic drag handlers */}
+            {/* Card Stack with improved spacing and animation */}
             <div className="w-full flex flex-col items-center">
-                {/* Card Container */}
+                {/* Card Container with better height based on card content */}
                 <div 
-                    className="relative w-full mx-auto max-w-[280px] md:max-w-[310px] lg:max-w-[330px] h-[300px] md:h-[330px] lg:h-[350px]"
+                    className="relative w-full mx-auto max-w-[290px] md:max-w-[320px] lg:max-w-[340px] h-[320px] md:h-[350px] lg:h-[370px]"
                 >
-                    {/* Current active card with slide animations */}
+                    {/* Current active card with smoother slide animations */}
                     <motion.div
                         className="w-full h-full"
                         initial={{ opacity: 1, x: 0 }}
@@ -266,7 +267,10 @@ export default function Projects() {
                             opacity: slideDirection ? 0 : 1,
                             x: slideDirection === "left" ? -100 : slideDirection === "right" ? 100 : 0
                         }}
-                        transition={{ duration: 0.2 }}
+                        transition={{ 
+                            duration: 0.3, 
+                            ease: slideDirection ? [0.8, 0, 1, 1] : [0, 0, 0.2, 1]
+                        }}
                     >
                         {filteredProjects.map((project, idx) => {
                             // Only render the current active card
@@ -301,26 +305,46 @@ export default function Projects() {
                     })}
                 </div>
                 
-                {/* Touch navigation hint */}
-                <div className="flex justify-center gap-2 items-center mt-2 sm:hidden">
-                    <FaChevronLeft size={10} className="text-[#1A936F]/60" />
-                    <span className="text-[10px] text-[#8FE7C3]/60">Tap sides to navigate</span>
-                    <FaChevronRight size={10} className="text-[#1A936F]/60" />
-                </div>
+                {/* Touch navigation hint - improved styling and animation */}
+                <motion.div 
+                    className="flex justify-center gap-3 items-center mt-4 sm:hidden"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.8, duration: 0.4 }}
+                >
+                    <motion.div
+                        animate={{ x: [-2, 0, -2] }}
+                        transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+                    >
+                        <FaChevronLeft size={10} className="text-[#1ED696]/70" />
+                    </motion.div>
+                    <span className="text-xs text-[#8FE7C3]/70 font-light">Tap sides to navigate</span>
+                    <motion.div
+                        animate={{ x: [2, 0, 2] }}
+                        transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+                    >
+                        <FaChevronRight size={10} className="text-[#1ED696]/70" />
+                    </motion.div>
+                </motion.div>
                 
-                {/* Improved navigation controls */}
-                <div className="relative w-full max-w-xs md:max-w-sm lg:max-w-md flex flex-col items-center mt-4">
-                    {/* Progress Bar */}
-                    <div className="w-full h-0.5 bg-[#111111] rounded-full overflow-hidden mb-4">
+                {/* Improved navigation controls with better spacing */}
+                <div className="relative w-full max-w-xs md:max-w-sm lg:max-w-md flex flex-col items-center mt-8">
+                    {/* Enhanced Progress Bar with smoother animation */}
+                    <div className="w-full h-1.5 bg-[#0F0F0F] rounded-full overflow-hidden mb-6 shadow-inner">
                         <motion.div 
-                            className="h-full bg-gradient-to-r from-[#1A936F] to-[#1ED696]"
+                            className="h-full bg-gradient-to-r from-[#1A936F] to-[#1ED696] shadow-[0_0_6px_rgba(30,214,150,0.3)]"
                             initial={{ width: '0%' }}
                             animate={{ 
                                 width: filteredProjects.length > 1 
                                     ? `${(currentIndex / (filteredProjects.length - 1)) * 100}%` 
                                     : '100%'
                             }}
-                            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                            transition={{ 
+                                type: "spring", 
+                                stiffness: 260, 
+                                damping: 30,
+                                mass: 1 
+                            }}
                         />
                     </div>
                     
@@ -338,23 +362,24 @@ export default function Projects() {
                         </div>
                     </div>
                     
-                    {/* Navigation Buttons (no changes) */}
-                    <div className="w-full flex items-center justify-between gap-2">
+                    {/* Improved Navigation Buttons with better spacing and press feedback */}
+                    <div className="w-full flex items-center justify-between gap-6">
                         {/* Previous Button */}
                         <motion.button 
                             onClick={prevCard}
-                            className="group flex items-center justify-center gap-1 py-2.5 px-4 rounded-md bg-[#111111] border border-[#1A936F]/20 text-[#8FE7C3]/90 hover:bg-[#1A936F]/10 transition-colors min-w-[60px]"
-                            whileTap={{ scale: 0.95 }}
+                            className="group flex items-center justify-center gap-2 py-3 px-5 rounded-lg bg-[#0F0F0F] border border-[#1A936F]/20 text-[#8FE7C3] hover:bg-[#1A936F]/10 transition-colors min-w-[80px] shadow-md touch-feedback"
+                            whileHover={{ x: -3, transition: { duration: 0.2 } }}
+                            whileTap={{ scale: 0.95, transition: { duration: 0.1 } }}
                             title="Previous project"
                             disabled={filteredProjects.length <= 1}
                         >
-                            <FaChevronLeft className="text-xs" />
-                            <span className="text-[9px] hidden sm:inline truncate max-w-[40px] ml-1">
+                            <FaChevronLeft className="text-xs group-hover:text-[#1ED696]" />
+                            <span className="text-sm hidden sm:inline truncate max-w-[50px] font-medium">
                                 Prev
                             </span>
                         </motion.button>
                         
-                        {/* Project Counter */}
+                        {/* Project Counter - Improved typography */}
                         <div className="flex-1 text-center">
                             <motion.div 
                                 key={currentIndex}
@@ -362,13 +387,13 @@ export default function Projects() {
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -5 }}
                                 transition={{ duration: 0.2 }}
-                                className="text-xs text-[#FCFFF0]/70"
+                                className="text-sm text-[#FCFFF0]/80"
                             >
-                                <span className="text-[#1ED696] font-medium">{currentIndex + 1}</span>
-                                <span className="mx-0.5">/</span>
+                                <span className="text-[#1ED696] font-semibold">{currentIndex + 1}</span>
+                                <span className="mx-1">/</span>
                                 <span>{filteredProjects.length}</span>
-                                <span className="hidden sm:inline ml-1 text-[#FCFFF0]/40">•</span>
-                                <span className="hidden sm:inline ml-1 font-medium text-[#FCFFF0]/80 text-[10px]">
+                                <span className="hidden sm:inline ml-2 text-[#FCFFF0]/40">•</span>
+                                <span className="hidden sm:inline ml-2 font-medium text-[#1A936F] text-xs">
                                     {filteredProjects[currentIndex]?.category}
                                 </span>
                             </motion.div>
@@ -377,21 +402,22 @@ export default function Projects() {
                         {/* Next Button */}
                         <motion.button 
                             onClick={nextCard}
-                            className="group flex items-center justify-center gap-1 py-2.5 px-4 rounded-md bg-[#111111] border border-[#1A936F]/20 text-[#8FE7C3]/90 hover:bg-[#1A936F]/10 transition-colors min-w-[60px]"
-                            whileTap={{ scale: 0.95 }}
+                            className="group flex items-center justify-center gap-2 py-3 px-5 rounded-lg bg-[#0F0F0F] border border-[#1A936F]/20 text-[#8FE7C3] hover:bg-[#1A936F]/10 transition-colors min-w-[80px] shadow-md touch-feedback"
+                            whileHover={{ x: 3, transition: { duration: 0.2 } }}
+                            whileTap={{ scale: 0.95, transition: { duration: 0.1 } }}
                             title="Next project"
                             disabled={filteredProjects.length <= 1}
                         >
-                            <span className="text-[9px] hidden sm:inline truncate max-w-[40px] mr-1">
+                            <span className="text-sm hidden sm:inline truncate max-w-[50px] font-medium">
                                 Next
                             </span>
-                            <FaChevronRight className="text-xs" />
+                            <FaChevronRight className="text-xs group-hover:text-[#1ED696]" />
                         </motion.button>
                     </div>
                     
-                    {/* Dots Navigation */}
+                    {/* Improved Dots Navigation with better spacing */}
                     {filteredProjects.length <= 8 && filteredProjects.length > 1 && (
-                        <div className="flex justify-center gap-2 mt-4">
+                        <div className="flex justify-center gap-4 mt-7">
                             {filteredProjects.map((_, idx) => (
                                 <SmartNavDot 
                                     key={idx} 
@@ -407,21 +433,21 @@ export default function Projects() {
     );
 }
 
-// Smart Navigation Dot Component - Enlarged for mobile
+// Enhanced Navigation Dot with smoother animation
 const SmartNavDot = ({ isActive, onClick }) => (
     <motion.button
         onClick={onClick}
-        className={`rounded-full transition-all ${
+        className={`rounded-full transition-all shadow-md ${
             isActive 
-                ? "bg-[#1ED696] w-3 h-3" 
-                : "bg-[#1A936F]/30 w-2.5 h-2.5 hover:bg-[#1A936F]/60"
+                ? "bg-[#1ED696] w-3.5 h-3.5" 
+                : "bg-[#1A936F]/30 w-3 h-3 hover:bg-[#1A936F]/60"
         }`}
-        whileHover={{ scale: 1.2 }}
-        whileTap={{ scale: 0.8 }}
+        whileHover={{ scale: 1.3, transition: { duration: 0.2 } }}
+        whileTap={{ scale: 0.7, transition: { duration: 0.1 } }}
         initial={false}
         animate={isActive ? { 
             scale: [1, 1.2, 1],
-            transition: { duration: 0.6, repeat: 0 }
+            transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
         } : {}}
     />
 );

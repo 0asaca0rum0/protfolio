@@ -9,9 +9,13 @@ module.exports = withMT({
 
     		animation: {
     			'spin-slow': 'spin 3s linear infinite',
+    			'spin-slow-reverse': 'spin 4s linear infinite reverse',
     			wiggle: 'shake 1s ease-in-out infinite',
     			'pulse-x': 'pulseX 1.5s infinite',
-    			'pulse-x-reverse': 'pulseXReverse 1.5s infinite'
+    			'pulse-x-reverse': 'pulseXReverse 1.5s infinite',
+    			float: 'float 4s ease-in-out infinite',
+    			breathe: 'breathe 4s ease-in-out infinite',
+    			'subtle-glow': 'subtle-glow 3s ease-in-out infinite',
     		},
     		keyframes: {
     			pulseX: {
@@ -29,10 +33,40 @@ module.exports = withMT({
     				'50%': {
     					transform: 'translateX(-3px)'
     				}
+    			},
+    			float: {
+    				'0%, 100%': {
+    					transform: 'translateY(0)'
+    				},
+    				'50%': {
+    					transform: 'translateY(-5px)'
+    				}
+    			},
+    			breathe: {
+    				'0%, 100%': {
+    					transform: 'scale(1)'
+    				},
+    				'50%': {
+    					transform: 'scale(1.03)'
+    				}
+    			},
+    			'subtle-glow': {
+    				'0%, 100%': {
+    					opacity: 0.3,
+    					filter: 'blur(8px)'
+    				},
+    				'50%': {
+    					opacity: 0.7,
+    					filter: 'blur(10px)'
+    				}
     			}
     		},
     		spacing: {
-    			'18': '4.5rem'
+    			'18': '4.5rem',
+    			'4.5': '1.125rem',  // Added
+    			'7.5': '1.875rem',  // Added
+    			'13': '3.25rem',    // Added
+    			'22': '5.5rem',     // Added
     		},
     		screens: {
     			xs: '480px'

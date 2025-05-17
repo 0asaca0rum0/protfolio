@@ -138,205 +138,207 @@ const Header = ({ items, isMobile, showSidebar, toggleSidebar }) => {
   ];
   
   return (
-    <motion.header
-      ref={headerRef}
-      className={`fixed top-0 left-0 right-0 z-50 font-['Comfortaa'] px-4 md:px-6 transition-all duration-300 ${
-        scrolled 
-          ? 'py-2.5 bg-[#0A0A0A] shadow-lg border-b border-[#1A936F]/10' 
-          : 'py-4 bg-[#0A0A0A]'
-      }`}
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ 
-        y: headerVisible ? 0 : -100, 
-        opacity: headerVisible ? 1 : 0,
-        transition: {
-          duration: headerVisible ? 0.3 : 0.2,
-          ease: "easeOut"
-        }
-      }}
-    >
-      <div className="max-w-6xl mx-auto flex justify-between items-center">
-        {/* Logo */}
-        <motion.div 
-          className="flex items-center"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <NavLink to="/" className="flex items-center gap-2">
-            <div className="relative">
-              <motion.div 
-                className="absolute -inset-1 bg-gradient-to-r from-[#114E3C]/50 to-[#1ED696]/50 rounded-full opacity-50 blur-sm"
-                animate={{ 
-                  scale: [1, 1.2, 1],
-                  opacity: [0.4, 0.6, 0.4],
-                }}
-                transition={{ duration: 3, repeat: Infinity }}
-              />
-              <div className="w-8 h-8 bg-[#131313] rounded-full border-2 border-[#1ED696] flex items-center justify-center relative z-10">
-                <span className="text-[#1ED696] text-lg font-bold">E</span>
-              </div>
-            </div>
-            <span className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#FAF3DD] to-[#FCFFF0]">Elmasri</span>
-          </NavLink>
-        </motion.div>
-        
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-1">
-          <nav className="relative flex items-center">
-            {/* Indicator for active link */}
-            {activeIndicator.width > 0 && (
-              <motion.div 
-                className="absolute h-0.5 -bottom-1 bg-gradient-to-r from-[#1A936F] to-[#1ED696] rounded-full"
-                initial={false}
-                animate={{ 
-                  left: activeIndicator.left,
-                  width: activeIndicator.width 
-                }}
-                transition={{ type: "spring", stiffness: 350, damping: 30 }}
-              />
-            )}
-            
-            {items.map((item) => (
-              <NavLink
-                key={item.name}
-                to={item.path}
-                className={({ isActive }) =>
-                  `nav-link relative px-4 py-2 text-sm transition-colors ${
-                    isActive 
-                      ? 'text-[#1ED696]' 
-                      : 'text-[#FCFFF0]/80 hover:text-[#FCFFF0]'
-                  }`
-                }
-              >
-                {item.label}
-              </NavLink>
-            ))}
-          </nav>
-          
-          {/* CV Button */}
-          <motion.button
-            onClick={handleDownloadCV}
-            className="ml-3 px-4 py-1.5 bg-gradient-to-r from-[#114E3C] to-[#1A936F] hover:from-[#1A936F] hover:to-[#1ED696] rounded-md text-sm text-[#FCFFF0] flex items-center gap-2 transition-all"
+    <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4">
+      <motion.header
+        ref={headerRef}
+        className={`font-['Comfortaa'] px-5 md:px-8 transition-all duration-300 rounded-full max-w-[94%] w-auto mx-auto ${
+          scrolled 
+            ? 'py-2 bg-[#0A0A0A] shadow-lg border border-[#1A936F]/20' 
+            : 'py-3 bg-[#0A0A0A] border border-[#1A936F]/10'
+        }`}
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ 
+          y: headerVisible ? 0 : -100, 
+          opacity: headerVisible ? 1 : 0,
+          transition: {
+            duration: headerVisible ? 0.3 : 0.2,
+            ease: "easeOut"
+          }
+        }}
+      >
+        <div className="flex justify-between items-center">
+          {/* Logo */}
+          <motion.div 
+            className="flex items-center"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <TbFileCv />
-            <span>Resume</span>
-          </motion.button>
-        </div>
-        
-        {/* Mobile Menu Button */}
-        <div className="flex md:hidden items-center gap-2">
-          {isMobile && (
-            <motion.button
-              onClick={toggleSidebar}
-              className={`p-2 rounded-full ${
-                showSidebar 
-                  ? 'bg-[#1A936F]/20 text-[#1ED696]' 
-                  : 'bg-[#1A936F]/10 text-[#8FE7C3]'
-              } transition-all`}
-              whileTap={{ scale: 0.9 }}
-              aria-label="Toggle Sidebar"
-            >
-              {showSidebar ? <FaLaptopCode size={18} /> : <FaUser size={18} />}
-            </motion.button>
-          )}
-          
-          <motion.button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="menu-button p-2 bg-[#1A936F]/10 hover:bg-[#1A936F]/20 rounded-full text-[#8FE7C3] transition-colors"
-            whileTap={{ scale: 0.9 }}
-            aria-label="Toggle Menu"
-          >
-            {isMenuOpen ? <IoClose size={20} /> : <HiMenuAlt3 size={20} />}
-          </motion.button>
-        </div>
-        
-        {/* Mobile Menu */}
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
-              className="mobile-menu absolute top-full right-4 w-56 mt-2 bg-[#131313] border border-[#1A936F]/20 rounded-lg shadow-xl overflow-hidden z-50"
-              initial={{ opacity: 0, y: -10, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -10, scale: 0.95 }}
-              transition={{ duration: 0.2 }}
-            >
-              <div className="p-2.5 flex flex-col gap-1.5">
-                {/* Conditional rendering of navigation items based on sidebar visibility */}
-                {(isMobile && showSidebar ? contentNavItems : visibleItems).map((item, index) => (
-                  <MobileNavLink
-                    key={item.name}
-                    to={item.path}
-                    icon={item.icon}
-                    label={item.label}
-                    onClick={() => {
-                      setIsMenuOpen(false);
-                      // If showing sidebar and clicked a content item, toggle sidebar off
-                      if (isMobile && showSidebar) {
-                        toggleSidebar();
-                      }
-                    }}
-                    delay={0.05 * index}
-                  />
-                ))}
-                
-                {/* Download CV button */}
-                <motion.button
-                  onClick={handleDownloadCV}
-                  className="flex items-center gap-3 px-4 py-2.5 rounded-md bg-gradient-to-r from-[#114E3C] to-[#1A936F] hover:from-[#1A936F] hover:to-[#1ED696] text-[#FCFFF0] transition-all w-full text-left mt-1"
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.05 * (isMobile && showSidebar ? contentNavItems.length : visibleItems.length) }}
-                  whileTap={{ scale: 0.97 }}
-                >
-                  <span className="p-1.5 bg-[#0a0a0a]/20 rounded-full">
-                    <TbFileCv size={16} className="text-[#8FE7C3]" />
-                  </span>
-                  <span className="text-sm">Download Resume</span>
-                </motion.button>
-              </div>
-              
-              <motion.div 
-                className="h-0.5 w-full bg-gradient-to-r from-transparent via-[#1ED696]/20 to-transparent"
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ delay: 0.2 }}
-              />
-              
-              {/* Toggle button: Show "View Content" or "View Profile" based on current state */}
-              {isMobile && (
-                <motion.button
-                  onClick={() => {
-                    toggleSidebar();
-                    setIsMenuOpen(false);
+            <NavLink to="/" className="flex items-center gap-2">
+              <div className="relative">
+                <motion.div 
+                  className="absolute -inset-1 bg-gradient-to-r from-[#114E3C]/50 to-[#1ED696]/50 rounded-full opacity-50 blur-sm"
+                  animate={{ 
+                    scale: [1, 1.2, 1],
+                    opacity: [0.4, 0.6, 0.4],
                   }}
-                  className="flex items-center gap-3 px-4 py-3 w-full hover:bg-[#1A936F]/10 text-[#FCFFF0]/80 transition-all"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                >
-                  <span className="p-1.5 bg-[#1A936F]/20 rounded-full">
-                    {showSidebar ? <FaLaptopCode size={16} className="text-[#8FE7C3]" /> : <FaUser size={16} className="text-[#8FE7C3]" />}
-                  </span>
-                  <span className="text-sm">{showSidebar ? "View Content" : "View Profile"}</span>
-                </motion.button>
+                  transition={{ duration: 3, repeat: Infinity }}
+                />
+                <div className="w-8 h-8 bg-[#131313] rounded-full border-2 border-[#1ED696] flex items-center justify-center relative z-10">
+                  <span className="text-[#1ED696] text-lg font-bold">E</span>
+                </div>
+              </div>
+              <span className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#FAF3DD] to-[#FCFFF0]">Elmasri</span>
+            </NavLink>
+          </motion.div>
+          
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-1">
+            <nav className="relative flex items-center">
+              {/* Indicator for active link */}
+              {activeIndicator.width > 0 && (
+                <motion.div 
+                  className="absolute h-0.5 -bottom-1 bg-gradient-to-r from-[#1A936F] to-[#1ED696] rounded-full"
+                  initial={false}
+                  animate={{ 
+                    left: activeIndicator.left,
+                    width: activeIndicator.width 
+                  }}
+                  transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                />
               )}
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-      
-      {/* Decorative line at bottom */}
+              
+              {items.map((item) => (
+                <NavLink
+                  key={item.name}
+                  to={item.path}
+                  className={({ isActive }) =>
+                    `nav-link relative px-4 py-2 text-sm transition-colors ${
+                      isActive 
+                        ? 'text-[#1ED696]' 
+                        : 'text-[#FCFFF0]/80 hover:text-[#FCFFF0]'
+                    }`
+                  }
+                >
+                  {item.label}
+                </NavLink>
+              ))}
+            </nav>
+            
+            {/* CV Button */}
+            <motion.button
+              onClick={handleDownloadCV}
+              className="ml-3 px-4 py-1.5 bg-gradient-to-r from-[#114E3C] to-[#1A936F] hover:from-[#1A936F] hover:to-[#1ED696] rounded-md text-sm text-[#FCFFF0] flex items-center gap-2 transition-all"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <TbFileCv />
+              <span>Resume</span>
+            </motion.button>
+          </div>
+          
+          {/* Mobile Menu Button */}
+          <div className="flex md:hidden items-center gap-2">
+            {isMobile && (
+              <motion.button
+                onClick={toggleSidebar}
+                className={`p-2 rounded-full ${
+                  showSidebar 
+                    ? 'bg-[#1A936F]/20 text-[#1ED696]' 
+                    : 'bg-[#1A936F]/10 text-[#8FE7C3]'
+                } transition-all`}
+                whileTap={{ scale: 0.9 }}
+                aria-label="Toggle Sidebar"
+              >
+                {showSidebar ? <FaLaptopCode size={18} /> : <FaUser size={18} />}
+              </motion.button>
+            )}
+            
+            <motion.button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="menu-button p-2 bg-[#1A936F]/10 hover:bg-[#1A936F]/20 rounded-full text-[#8FE7C3] transition-colors"
+              whileTap={{ scale: 0.9 }}
+              aria-label="Toggle Menu"
+            >
+              {isMenuOpen ? <IoClose size={20} /> : <HiMenuAlt3 size={20} />}
+            </motion.button>
+          </div>
+          
+          {/* Mobile Menu with adjusted position */}
+          <AnimatePresence>
+            {isMenuOpen && (
+              <motion.div
+                className="mobile-menu absolute top-full right-0 w-56 mt-2 bg-[#131313] border border-[#1A936F]/20 rounded-lg shadow-xl overflow-hidden z-50"
+                initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+              >
+                <div className="p-2.5 flex flex-col gap-1.5">
+                  {/* Conditional rendering of navigation items based on sidebar visibility */}
+                  {(isMobile && showSidebar ? contentNavItems : visibleItems).map((item, index) => (
+                    <MobileNavLink
+                      key={item.name}
+                      to={item.path}
+                      icon={item.icon}
+                      label={item.label}
+                      onClick={() => {
+                        setIsMenuOpen(false);
+                        // If showing sidebar and clicked a content item, toggle sidebar off
+                        if (isMobile && showSidebar) {
+                          toggleSidebar();
+                        }
+                      }}
+                      delay={0.05 * index}
+                    />
+                  ))}
+                  
+                  {/* Download CV button */}
+                  <motion.button
+                    onClick={handleDownloadCV}
+                    className="flex items-center gap-3 px-4 py-2.5 rounded-md bg-gradient-to-r from-[#114E3C] to-[#1A936F] hover:from-[#1A936F] hover:to-[#1ED696] text-[#FCFFF0] transition-all w-full text-left mt-1"
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.05 * (isMobile && showSidebar ? contentNavItems.length : visibleItems.length) }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    <span className="p-1.5 bg-[#0a0a0a]/20 rounded-full">
+                      <TbFileCv size={16} className="text-[#8FE7C3]" />
+                    </span>
+                    <span className="text-sm">Download Resume</span>
+                  </motion.button>
+                </div>
+                
+                <motion.div 
+                  className="h-0.5 w-full bg-gradient-to-r from-transparent via-[#1ED696]/20 to-transparent"
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ delay: 0.2 }}
+                />
+                
+                {/* Toggle button: Show "View Content" or "View Profile" based on current state */}
+                {isMobile && (
+                  <motion.button
+                    onClick={() => {
+                      toggleSidebar();
+                      setIsMenuOpen(false);
+                    }}
+                    className="flex items-center gap-3 px-4 py-3 w-full hover:bg-[#1A936F]/10 text-[#FCFFF0]/80 transition-all"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                  >
+                    <span className="p-1.5 bg-[#1A936F]/20 rounded-full">
+                      {showSidebar ? <FaLaptopCode size={16} className="text-[#8FE7C3]" /> : <FaUser size={16} className="text-[#8FE7C3]" />}
+                    </span>
+                    <span className="text-sm">{showSidebar ? "View Content" : "View Profile"}</span>
+                  </motion.button>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </motion.header>
+
+      {/* Subtle floating effect for the header */}
       <motion.div
-        className={`absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#1ED696]/30 to-transparent ${
-          scrolled ? 'opacity-0' : 'opacity-100'
-        } transition-opacity`}
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={{ duration: 0.8, delay: 0.5 }}
+        className="absolute -inset-1 bg-gradient-to-r from-[#1A936F]/5 to-[#1ED696]/5 rounded-full opacity-0 blur-xl pointer-events-none"
+        animate={{ 
+          opacity: [0.1, 0.2, 0.1],
+          scale: [0.98, 1.02, 0.98],
+        }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
       />
-    </motion.header>
+    </div>
   );
 };
 
