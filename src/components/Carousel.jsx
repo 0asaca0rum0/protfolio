@@ -169,7 +169,6 @@ const OrbitalTechCard = ({
                     {isFocused && (
                         <div className="absolute inset-0 pointer-events-none">
                             <div className="absolute top-1/2 left-1/2 w-[220px] h-[220px] -translate-x-1/2 -translate-y-1/2">
-                                <div className="absolute inset-0 border border-[#1ED696]/20 rounded-full animate-spin-slow"></div>
                                 <div className="absolute inset-3 border border-[#1ED696]/10 rounded-full animate-spin-slow-reverse"></div>
                             </div>
                         </div>
@@ -388,18 +387,17 @@ const OrbitalTechShowcase = () => {
 		goToTech((currentIndex - 1 + techList.length) % techList.length);
 
     return (
-        <section className="w-full my-10  font-['Comfortaa'] bg-gradient-to-b from-[#0A0A0A]/80 to-[#0A0A0A]/30  overflow-clip">
-            {/* Added overflow-hidden to section */}
-            <div className="relative -my-5 max-w-lg mx-auto text-center px-2">
-                {/* ... (header motion elements unchanged) ... */}
+        <section className="w-full font-['Comfortaa'] bg-gradient-to-b from-[#0A0A0A]/80 to-[#0A0A0A]/30 overflow-hidden h-full">
+            {/* Reduced vertical spacing */}
+            <div className="relative max-w-lg mx-auto text-center px-2">
                 <motion.div
-                    className="h-px bg-gradient-to-r from-transparent via-[#1ED696]/40 to-transparent mb-4"
+                    className="h-px bg-gradient-to-r from-transparent via-[#1ED696]/40 to-transparent mb-2"
                     initial={{ width: 0 }}
                     animate={{ width: "100%" }}
                     transition={{ duration: 1.2 }}
                 />
                 <motion.h2
-                    className="text-2xl md:text-3xl font-bold mb-3"
+                    className="text-xl md:text-2xl font-bold mb-2"
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
@@ -409,7 +407,7 @@ const OrbitalTechShowcase = () => {
                     </span>
                 </motion.h2>
                 <motion.p
-                    className="text-[#8FE7C3]/80 text-sm md:text-base leading-relaxed"
+                    className="text-[#8FE7C3]/80 text-xs md:text-sm leading-relaxed"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.5 }}
@@ -417,16 +415,17 @@ const OrbitalTechShowcase = () => {
                     Explore my technology ecosystem — click any tech to focus
                 </motion.p>
                 <motion.div
-                    className="h-px bg-gradient-to-r from-transparent via-[#1ED696]/40 to-transparent mt-4"
+                    className="h-px bg-gradient-to-r from-transparent via-[#1ED696]/40 to-transparent mt-2"
                     initial={{ width: 0 }}
                     animate={{ width: "80%" }}
                     transition={{ duration: 1.2, delay: 0.2 }}
                 />
             </div>
+            
+            {/* Adjusted orbit container with reduced height */}
             <div className="relative max-w-4xl mx-auto flex flex-col justify-center items-center">
-                {/* Center the orbit and arrows */}
-                <div className="relative w-full h-[400px] sm:h-[450px] md:h-[500px] flex items-center justify-center">
-                    {/* Navigation arrows */}
+                <div className="relative w-full h-[320px] sm:h-[360px] md:h-[400px] flex items-center justify-center">
+                    {/* Navigation arrows - positioned higher to reduce overall height */}
                     <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4 z-50 pointer-events-none">
                         <button
                             onClick={(e) => {
@@ -452,7 +451,7 @@ const OrbitalTechShowcase = () => {
                         </button>
                     </div>
 
-                    {/* orbit container: Ensure this height is adequate for cards + perspective*/}
+                    {/* Orbit container with adjusted positioning */}
                     <div
                         className="mx-auto w-full h-full relative perspective-[1000px] transform-style-preserve-3d"
                         style={{ perspectiveOrigin: "center center" }}
@@ -470,19 +469,19 @@ const OrbitalTechShowcase = () => {
                         }}
                         onTouchEnd={(e) => {
                             e.stopPropagation();
-                            if (!isTransitioning) setTimeout(() => setIsAutoRotating(true), 2000);
-                        }}
-                    >
-                        {/* orbital rings */}
-                        <div className="absolute w-full h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rotate-x-70 opacity-15 pointer-events-none">
-                            <div className="absolute w-[90%] h-[90%] top-[5%] left-[5%] border border-[#1ED696]/10 rounded-full"></div>
-                            <div className="absolute w-[72%] h-[72%] top-[14%] left-[14%] border border-[#1ED696]/20 rounded-full"></div>
-                            <div className="absolute w-[54%] h-[54%] top-[23%] left-[23%] border border-[#1ED696]/30 rounded-full"></div>
-                            <div className="absolute w-[36%] h-[36%] top-[32%] left-[32%] border border-[#1ED696]/40 rounded-full"></div>
-                            <div className="absolute w-[18%] h-[18%] top-[41%] left-[41%] border border-[#1ED696]/50 rounded-full"></div>
-                        </div>
-                        {/* Render cards inside a centered container */}
-                        <div className="absolute inset-0 origin-center">
+                             setTimeout(() => setIsAutoRotating(true), 2000);
+                                                    }}
+                                                >
+                                                    {/* Orbital rings - positioned more compactly */}
+                                                    <div className="absolute w-full h-full top-1/2 left-[40%] -translate-x-1/2 -translate-y-1/2 rotate-x-70 opacity-25 pointer-events-none">
+                                                        <div className="absolute w-[90%] h-[90%] top-[5%] left-[5%] border-2 border-[#4DFFC7]/20 rounded-full shadow-[0_0_10px_rgba(77,255,199,0.1)]"></div>
+                                                        <div className="absolute w-[72%] h-[72%] top-[14%] left-[14%] border-2 border-[#4DFFC7]/35 rounded-full shadow-[0_0_10px_rgba(77,255,199,0.15)]"></div>
+                                                        <div className="absolute w-[54%] h-[54%] top-[23%] left-[23%] border-2 border-[#4DFFC7]/50 rounded-full shadow-[0_0_10px_rgba(77,255,199,0.2)]"></div>
+                                                        <div className="absolute w-[36%] h-[36%] top-[32%] left-[32%] border-2 border-[#4DFFC7]/65 rounded-full shadow-[0_0_10px_rgba(77,255,199,0.25)]"></div>
+                                                        <div className="absolute w-[18%] h-[18%] top-[41%] left-[41%] border-2 border-[#4DFFC7]/80 rounded-full shadow-[0_0_10px_rgba(77,255,199,0.3)]"></div>
+                                                    </div>
+                                                    {/* Render cards inside a centered container with adjusted positioning */}
+                        <div className="absolute inset-0 origin-center -mt-[20%] -p-[15%] flex items-center justify-center">
                             {/* FIX: Don't use reverse() directly in render as it mutates the array */}
                             {[...techList].map((tech, i) => (
                                 <OrbitalTechCard
@@ -506,8 +505,8 @@ const OrbitalTechShowcase = () => {
                     </div>
                 </div>
                 
-                {/* Update navigation buttons to respect transitions */}
-                <div className="flex justify-center items-center mt-8 gap-2">
+                {/* Reduce spacing for navigation controls */}
+                <div className="flex justify-center items-center mt-4 gap-2">
                     {techList.map((tech, i) => (
                         <button
                             key={i}
@@ -529,13 +528,13 @@ const OrbitalTechShowcase = () => {
                     )).reverse() /* Reverse the order of the pagination buttons */}
                 </div>
 
-                <div className="text-center mt-3">
+                <div className="text-center mt-1">
                     <motion.div
                         key={currentIndex}
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="text-[#1ED696] font-medium text-sm md:text-base"
+                        className="text-[#1ED696] font-medium text-xs md:text-sm"
                     >
                         {techList[currentIndex]?.name || ""}
                     </motion.div>

@@ -177,7 +177,7 @@ const Header = ({ items, isMobile, showSidebar, toggleSidebar }) => {
                   <span className="text-[#1ED696] text-lg font-bold">E</span>
                 </div>
               </div>
-              <span className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#FAF3DD] to-[#FCFFF0]">Elmasri</span>
+              <span className=" md:block  md:text-lg font-bold bg-clip-text text-transparent md:bg-gradient-to-r md:from-[#FAF3DD] md:to-[#FCFFF0]">Elmasri</span>
             </NavLink>
           </motion.div>
           
