@@ -20,6 +20,13 @@ export default function Projects() {
             techstack: ['Next 13', "Node.js", "Express"],
             link: "https://fri7a.pages.dev",
             category: "Web App",
+        },       {
+            title: "internship Docs LS2N",
+            description: "Documentation of my internship at LS2N laboratory, where I worked on signal processing and embedded systems, with a focus on computer vision applications.",
+            image: "docs.png",
+            techstack: ['python', "Signal proccessing", "embedded systems","Computer Vision"],
+            link: "https://github.com/0asaca0rum0/writings-ls2n-str",
+            category: "AI",
         },
         {
             title: "E-commerce (bilwafi)",
@@ -204,7 +211,7 @@ export default function Projects() {
             <div className="w-full flex flex-col items-center">
                 {/* Card Container with better height based on card content */}
                 <div
-                    className="relative w-full mx-auto max-w-[280px] md:max-w-[300px] lg:max-w-[320px] h-[300px] md:h-[310px] lg:h-[330px] m-1"
+                    className="relative w-full mx-auto max-w-[280px] md:max-w-[300px] lg:max-w-[320px] h-[300px] md:h-[310px] lg:h-[330px] m-6"
                 >
                     {/* Current active card with smoother slide animations */}
                     <AnimatePresence
