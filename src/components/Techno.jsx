@@ -289,16 +289,16 @@ const Techno = () => {
   }, [filter]);
   
   return (
-    <section className="w-full py-12 font-['Comfortaa'] bg-gradient-to-b from-[#0A0A0A]/80 to-[#0A0A0A]/30">
-      <div className="max-w-lg mx-auto px-6">
+    <section className="w-full py-6 sm:py-8 font-['Comfortaa'] bg-transparent">
+      <div className="max-w-lg mx-auto px-4 sm:px-6">
         <motion.div
-          className="text-center mb-10"
+          className="text-center mb-6 sm:mb-8"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
           <motion.div
-            className="h-px bg-gradient-to-r from-transparent via-[#1ED696]/40 to-transparent mb-6"
+            className="h-px bg-gradient-to-r from-transparent via-[#1ED696]/40 to-transparent mb-4 sm:mb-5"
             initial={{ width: 0 }}
             animate={{ width: "100%" }}
             transition={{ duration: 1.6, ease: "easeOut" }}
@@ -320,7 +320,7 @@ const Techno = () => {
         </motion.div>
         
         {/* Improved Category Filter with better spacing */}
-        <div className="flex justify-center mb-10">
+        <div className="flex justify-center mb-6 sm:mb-8">
           <div 
             ref={containerRef}
             className="bg-[#131313] border border-[#1A936F]/20 rounded-full p-1.5 inline-flex relative shadow-lg"
@@ -359,7 +359,7 @@ const Techno = () => {
         </div>
         
         {/* Tech Grid with better spacing */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
           {filteredTechs.map((tech, index) => (
             <motion.div
               key={tech.name}
@@ -373,8 +373,8 @@ const Techno = () => {
         </div>
         
         {/* Counter with subtle animation */}
-        <motion.div 
-          className="text-center mt-10 text-sm text-[#FCFFF0]/50"
+        <motion.div
+          className="text-center mt-6 sm:mt-8 text-sm text-[#FCFFF0]/50"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7, duration: 0.6 }}

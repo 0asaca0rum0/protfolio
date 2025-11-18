@@ -1,7 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { FaGithub, FaExternalLinkAlt, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useState, useMemo } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Projects() {
     const projects = [
@@ -96,195 +96,143 @@ export default function Projects() {
 
     const [activeCategory, setActiveCategory] = useState("all");
     const [currentIndex, setCurrentIndex] = useState(0);
-    const containerRef = useRef(null);
-    const buttonRefs = useRef({});
-    const [indicatorDimensions, setIndicatorDimensions] = useState({
-        width: 0,
-        left: 0
-    });
     
-    // Remove problematic drag controls
+    // Track direction to drive slide animations
     const [slideDirection, setSlideDirection] = useState(null);
     
     // Filter projects based on active category
-    const filteredProjects = activeCategory === "all" 
-        ? projects 
+    const filteredProjects = activeCategory === "all"
+        ? projects
         : projects.filter(project => project.category === activeCategory);
 
-    // Simplified card navigation without drag controls
+    // Derived values to avoid repetition
+    const totalProjects = filteredProjects.length;
+    const hasProjects = totalProjects > 0;
+    const currentProject = hasProjects ? filteredProjects[currentIndex] : null;
+
+    // Card navigation driven by slideDirection (no timeouts)
     const nextCard = () => {
-        if (filteredProjects.length <= 1) return;
-        
+        if (totalProjects <= 1) return;
+
         setSlideDirection("left");
-        setTimeout(() => {
-            setCurrentIndex((prevIndex) => 
-                prevIndex === filteredProjects.length - 1 ? 0 : prevIndex + 1
-            );
-            setSlideDirection(null);
-        }, 200);
+        setCurrentIndex((prevIndex) => {
+            const lastIndex = totalProjects - 1;
+            return prevIndex === lastIndex ? 0 : prevIndex + 1;
+        });
     };
 
     const prevCard = () => {
-        if (filteredProjects.length <= 1) return;
-        
+        if (totalProjects <= 1) return;
+
         setSlideDirection("right");
-        setTimeout(() => {
-            setCurrentIndex((prevIndex) => 
-                prevIndex === 0 ? filteredProjects.length - 1 : prevIndex - 1
-            );
-            setSlideDirection(null);
-        }, 200);
+        setCurrentIndex((prevIndex) => {
+            const lastIndex = totalProjects - 1;
+            return prevIndex === 0 ? lastIndex : prevIndex - 1;
+        });
     };
 
-    // Update indicator position for category filter
-    useEffect(() => {
-        const updateIndicator = () => {
-            const activeButton = buttonRefs.current[activeCategory];
-            const containerPosition = containerRef.current?.getBoundingClientRect();
-            
-            if (activeButton && containerPosition) {
-                const buttonPosition = activeButton.getBoundingClientRect();
-                
-                setIndicatorDimensions({
-                    width: buttonPosition.width,
-                    left: buttonPosition.left - containerPosition.left
-                });
-            }
-        };
-        
-        // Delay the update to ensure DOM is ready
-        const timeoutId = setTimeout(updateIndicator, 10);
-        
-        window.addEventListener('resize', updateIndicator);
-        return () => {
-            window.removeEventListener('resize', updateIndicator);
-            clearTimeout(timeoutId);
-        };
-    }, [activeCategory]);
-
-    // Scroll active button into view when changing categories
-    useEffect(() => {
-        const activeButton = buttonRefs.current[activeCategory];
-        if (activeButton) {
-            activeButton.scrollIntoView({
-                behavior: 'smooth',
-                block: 'nearest',
-                inline: 'center'
-            });
-        }
-    }, [activeCategory]);
-
-    // When category changes, reset to first card
+    // When category changes, reset to first card and clear any slide direction
     useEffect(() => {
         setCurrentIndex(0);
+        setSlideDirection(null);
     }, [activeCategory]);
 
+    const slideVariants = {
+        enter: (direction) => ({
+            x: direction === "left" ? 40 : -40,
+            opacity: 0,
+            scale: 0.98,
+        }),
+        center: {
+            x: 0,
+            opacity: 1,
+            scale: 1,
+        },
+        exit: (direction) => ({
+            x: direction === "left" ? -40 : 40,
+            opacity: 0,
+            scale: 0.98,
+        }),
+    };
+
     return (
-        <div className="w-full h-full flex flex-col items-center justify-center font-['Comfortaa'] ">
-            <motion.h2 
-                className="text-xl md:text-2xl lg:text-3xl font-bold mb-4 text-[#FAF3DD]"
-                initial={{ opacity: 0, y: 20 }}
+        <div className="w-full flex flex-col items-center font-['Comfortaa'] gap-6 sm:gap-8 lg:gap-10 ">
+            <motion.h2
+                className="text-xl md:text-2xl lg:text-3xl font-bold text-[#FAF3DD] text-center sm:text-left px-4"
+                initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             >
                 Projects
             </motion.h2>
 
-            {/* Redesigned Category Filter with improved spacing */}
-            <motion.div 
-                className="w-full max-w-sm md:max-w-md lg:max-w-lg px-4 mb-6"
-                initial={{ opacity: 0, y: 20 }}
+            {/* Category Filter with creative glassmorphic design */}
+            <motion.div
+                className="w-full flex flex-col items-center gap-4"
+                initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            >                
-                {/* Modern Filter Container with better spacing */}
-                <div 
-                    ref={containerRef}
-                    className="relative bg-[#0F0F0F] rounded-full border border-[#1A936F]/20 shadow-lg p-1.5 flex justify-center"
+                transition={{ duration: 0.45, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+            >
+                {/* Modern Filter Container with glassmorphic style */}
+                <div
+                    className="flex justify-center gap-3"
                 >
-                    {/* Improved animated indicator with smoother animation */}
-                    {indicatorDimensions.width > 0 && (
-                        <motion.div 
-                            className="absolute top-1.5 bottom-1.5 rounded-full bg-gradient-to-r from-[#114E3C] to-[#1A936F] shadow-[0_2px_8px_rgba(26,147,111,0.25)]"
-                            initial={false}
-                            animate={{
-                                width: indicatorDimensions.width,
-                                left: indicatorDimensions.left
-                            }}
-                            transition={{ 
-                                type: "spring", 
-                                stiffness: 350, 
-                                damping: 32,
-                                mass: 1.2
-                            }}
-                        />
-                    )}
-                    
-                    {/* Evenly distributed category buttons with better typography and touch feedback */}
-                    <div className="flex w-full justify-between">
-                        {categories.map((category) => (
-                            <button
-                                key={category.value}
-                                ref={(el) => {
-                                    buttonRefs.current[category.value] = el;
-                                }}
-                                onClick={() => setActiveCategory(category.value)}
-                                className={`relative z-10 py-2 px-4 text-center text-sm font-medium transition-all duration-300 rounded-full flex-1 touch-feedback ${
-                                    activeCategory === category.value 
-                                        ? 'text-white font-semibold' 
-                                        : 'text-[#8FE7C3]/80 hover:text-[#8FE7C3]'
-                                }`}
-                            >
-                                {category.label}
-                            </button>
-                        ))}
-                    </div>
+                    {/* Evenly distributed category buttons with creative styling */}
+                    {categories.map((category) => (
+                        <motion.button
+                            key={category.value}
+                            onClick={() => setActiveCategory(category.value)}
+                            className={`relative py-2.5 px-6 text-center text-sm font-medium transition-all duration-300 rounded-xl touch-feedback ${
+                                activeCategory === category.value
+                                    ? 'text-[#1ED696] font-semibold bg-[#1A936F]/15 border border-[#1A936F]/40'
+                                    : 'text-[#8FE7C3]/70 hover:text-[#8FE7C3] border border-transparent'
+                            }`}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            {category.label}
+                     
+                        </motion.button>
+                    ))}
                 </div>
                 
                 {/* Enhanced Stats Indicator with improved animation */}
-                <div className="flex justify-center mt-3 text-xs text-[#FCFFF0]/50">
-                    <motion.span
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.4, duration: 0.8 }}
-                    >
-                        Showing <span className="text-[#1ED696] font-medium">{filteredProjects.length}</span> of {projects.length} projects
-                    </motion.span>
-                </div>
+                {/* Removed - stats shown in counter */}
             </motion.div>
 
             {/* Card Stack with improved spacing and animation */}
             <div className="w-full flex flex-col items-center">
                 {/* Card Container with better height based on card content */}
-                <div 
-                    className="relative w-full mx-auto max-w-[280px] md:max-w-[300px] lg:max-w-[320px] h-[300px] md:h-[310px] lg:h-[330px]"
+                <div
+                    className="relative w-full mx-auto max-w-[280px] md:max-w-[300px] lg:max-w-[320px] h-[300px] md:h-[310px] lg:h-[330px] m-1"
                 >
                     {/* Current active card with smoother slide animations */}
-                    <motion.div
-                        className="w-full h-full"
-                        initial={{ opacity: 1, x: 0 }}
-                        animate={{ 
-                            opacity: slideDirection ? 0 : 1,
-                            x: slideDirection === "left" ? -100 : slideDirection === "right" ? 100 : 0
-                        }}
-                        transition={{ 
-                            duration: 0.3, 
-                            ease: slideDirection ? [0.8, 0, 1, 1] : [0, 0, 0.2, 1]
-                        }}
+                    <AnimatePresence
+                        mode="wait"
+                        initial={false}
+                        custom={slideDirection || "left"}
                     >
-                        {filteredProjects.map((project, idx) => {
-                            // Only render the current active card
-                            if (idx !== currentIndex) return null;
-                            
-                            return (
+                        {hasProjects && (
+                            <motion.div
+                                key={currentProject?.title ?? currentIndex}
+                                className="w-full h-full"
+                                variants={slideVariants}
+                                custom={slideDirection || "left"}
+                                initial="enter"
+                                animate="center"
+                                exit="exit"
+                                transition={{
+                                    duration: 0.35,
+                                    ease: [0.22, 1, 0.36, 1],
+                                }}
+                            >
                                 <AnimatedCard
-                                    key={`${project.title}-${idx}`}
-                                    project={project}
+                                    project={currentProject}
                                     isActive={true}
                                 />
-                            );
-                        })}
-                    </motion.div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
 
                     {/* Background cards (no change) */}
                     {filteredProjects.map((project, idx) => {
@@ -331,19 +279,19 @@ export default function Projects() {
                 <div className="relative w-full max-w-xs md:max-w-sm lg:max-w-md flex flex-col items-center mt-8">
                     {/* Enhanced Progress Bar with smoother animation */}
                     <div className="w-full h-1.5 bg-[#0F0F0F] rounded-full overflow-hidden mb-6 shadow-inner">
-                        <motion.div 
+                        <motion.div
                             className="h-full bg-gradient-to-r from-[#1A936F] to-[#1ED696] shadow-[0_0_6px_rgba(30,214,150,0.3)]"
                             initial={{ width: '0%' }}
-                            animate={{ 
-                                width: filteredProjects.length > 1 
-                                    ? `${(currentIndex / (filteredProjects.length - 1)) * 100}%` 
-                                    : '100%'
+                            animate={{
+                                width: totalProjects > 0
+                                    ? `${((currentIndex + 1) / totalProjects) * 100}%`
+                                    : '0%'
                             }}
-                            transition={{ 
-                                type: "spring", 
-                                stiffness: 260, 
+                            transition={{
+                                type: "spring",
+                                stiffness: 260,
                                 damping: 30,
-                                mass: 1 
+                                mass: 1
                             }}
                         />
                     </div>
@@ -364,24 +312,15 @@ export default function Projects() {
                     
                     {/* Improved Navigation Buttons with better spacing and press feedback */}
                     <div className="w-full flex items-center justify-between gap-6">
-                        {/* Previous Button */}
-                        <motion.button 
+                        <ProjectNavButton
+                            variant="prev"
                             onClick={prevCard}
-                            className="group flex items-center justify-center gap-2 py-3 px-5 rounded-lg bg-[#0F0F0F] border border-[#1A936F]/20 text-[#8FE7C3] hover:bg-[#1A936F]/10 transition-colors min-w-[80px] shadow-md touch-feedback"
-                            whileHover={{ x: -3, transition: { duration: 0.2 } }}
-                            whileTap={{ scale: 0.95, transition: { duration: 0.1 } }}
-                            title="Previous project"
-                            disabled={filteredProjects.length <= 1}
-                        >
-                            <FaChevronLeft className="text-xs group-hover:text-[#1ED696]" />
-                            <span className="text-sm hidden sm:inline truncate max-w-[50px] font-medium">
-                                Prev
-                            </span>
-                        </motion.button>
-                        
+                            disabled={totalProjects <= 1}
+                        />
+
                         {/* Project Counter - Improved typography */}
                         <div className="flex-1 text-center">
-                            <motion.div 
+                            <motion.div
                                 key={currentIndex}
                                 initial={{ opacity: 0, y: 5 }}
                                 animate={{ opacity: 1, y: 0 }}
@@ -391,66 +330,58 @@ export default function Projects() {
                             >
                                 <span className="text-[#1ED696] font-semibold">{currentIndex + 1}</span>
                                 <span className="mx-1">/</span>
-                                <span>{filteredProjects.length}</span>
-                                <span className="hidden sm:inline ml-2 text-[#FCFFF0]/40">•</span>
-                                <span className="hidden sm:inline ml-2 font-medium text-[#1A936F] text-xs">
-                                    {filteredProjects[currentIndex]?.category}
-                                </span>
+                                <span>{totalProjects}</span>
                             </motion.div>
                         </div>
-                        
-                        {/* Next Button */}
-                        <motion.button 
+
+                        <ProjectNavButton
+                            variant="next"
                             onClick={nextCard}
-                            className="group flex items-center justify-center gap-2 py-3 px-5 rounded-lg bg-[#0F0F0F] border border-[#1A936F]/20 text-[#8FE7C3] hover:bg-[#1A936F]/10 transition-colors min-w-[80px] shadow-md touch-feedback"
-                            whileHover={{ x: 3, transition: { duration: 0.2 } }}
-                            whileTap={{ scale: 0.95, transition: { duration: 0.1 } }}
-                            title="Next project"
-                            disabled={filteredProjects.length <= 1}
-                        >
-                            <span className="text-sm hidden sm:inline truncate max-w-[50px] font-medium">
-                                Next
-                            </span>
-                            <FaChevronRight className="text-xs group-hover:text-[#1ED696]" />
-                        </motion.button>
+                            disabled={totalProjects <= 1}
+                        />
                     </div>
                     
-                    {/* Improved Dots Navigation with better spacing */}
-                    {filteredProjects.length <= 8 && filteredProjects.length > 1 && (
-                        <div className="flex justify-center gap-4 mt-7">
-                            {filteredProjects.map((_, idx) => (
-                                <SmartNavDot 
-                                    key={idx} 
-                                    isActive={idx === currentIndex}
-                                    onClick={() => setCurrentIndex(idx)}
-                                />
-                            ))}
-                        </div>
-                    )}
+                    {/* Dots Navigation - Hidden */}
                 </div>
             </div>
         </div>
     );
 }
 
-// Enhanced Navigation Dot with smoother animation
-const SmartNavDot = ({ isActive, onClick }) => (
-    <motion.button
-        onClick={onClick}
-        className={`rounded-full transition-all shadow-md ${
-            isActive 
-                ? "bg-[#1ED696] w-3.5 h-3.5" 
-                : "bg-[#1A936F]/30 w-3 h-3 hover:bg-[#1A936F]/60"
-        }`}
-        whileHover={{ scale: 1.3, transition: { duration: 0.2 } }}
-        whileTap={{ scale: 0.7, transition: { duration: 0.1 } }}
-        initial={false}
-        animate={isActive ? { 
-            scale: [1, 1.2, 1],
-            transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
-        } : {}}
-    />
-);
+function ProjectNavButton({ variant, onClick, disabled }) {
+   const isPrev = variant === "prev";
+   const label = isPrev ? "Prev" : "Next";
+   const title = isPrev ? "Previous project" : "Next project";
+   const hoverX = isPrev ? -3 : 3;
+
+   return (
+       <motion.button
+           onClick={onClick}
+           className="group flex items-center justify-center gap-2 py-3 px-5 rounded-lg bg-[#0F0F0F] border border-[#1A936F]/20 text-[#8FE7C3] hover:bg-[#1A936F]/10 transition-colors min-w-[80px] shadow-md touch-feedback disabled:opacity-50 disabled:cursor-not-allowed"
+           whileHover={{ x: hoverX, transition: { duration: 0.2 } }}
+           whileTap={{ scale: 0.95, transition: { duration: 0.1 } }}
+           title={title}
+           disabled={disabled}
+       >
+           {isPrev && (
+               <>
+                   <FaChevronLeft className="text-xs group-hover:text-[#1ED696]" />
+                   <span className="text-sm hidden sm:inline truncate max-w-[50px] font-medium">
+                       {label}
+                   </span>
+               </>
+           )}
+           {!isPrev && (
+               <>
+                   <span className="text-sm hidden sm:inline truncate max-w-[50px] font-medium">
+                       {label}
+                   </span>
+                   <FaChevronRight className="text-xs group-hover:text-[#1ED696]" />
+               </>
+           )}
+       </motion.button>
+   );
+}
 
 function AnimatedCard({ project, position = 0, isActive }) {
     const [isExpanded, setIsExpanded] = useState(false);
@@ -493,73 +424,83 @@ function AnimatedCard({ project, position = 0, isActive }) {
 
     return (
         <motion.div
-            className="bg-[#131313] border border-[#1A936F]/30 rounded-lg overflow-hidden w-full shadow-lg group"
-            initial={{ opacity: 0, y: 50 }}
+            className="relative rounded-xl overflow-hidden w-full bg-gradient-to-b from-[#04110C] via-[#050A14] to-[#050708] border border-white/5 shadow-[0_10px_28px_rgba(0,0,0,0.55)] group"
+            initial={false}
             animate={cardStyle}
-            transition={{ type: "spring", stiffness: 200, damping: 20, duration: 0.4 }}
-            whileHover={isActive ? { scale: 1.02, y: -4 } : {}}
+            transition={{ type: "spring", stiffness: 230, damping: 24 }}
+            whileHover={isActive ? { scale: 1.01 } : {}}
             style={{ pointerEvents: isActive ? "auto" : "none" }}
         >
-            {/* Card content */}
-            <div className="relative aspect-video overflow-hidden">
-                <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                {isActive && (
-                    <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300">
-                        <div className="flex gap-3.5">
-                            <a
-                                href="https://github.com/0asaca0rum0"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="p-2.5 bg-[#1A936F] text-white rounded-full hover:bg-[#1ED696] transition-colors"
-                            >
-                                <FaGithub size={18} />
-                            </a>
-                            {project.link && (
+            {/* Gradient and accent layers */}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#1A936F]/22 via-transparent to-[#1ED696]/12" />
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#1ED696]/80 to-transparent" />
+            <div className="relative">
+                {/* Card content */}
+                <div className="relative aspect-video overflow-hidden">
+                    <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover transition-transform duration-400 group-hover:scale-102"
+                    />
+                    {isActive && (
+                        <div className="absolute inset-0 bg-black/45 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-250">
+                            <div className="flex gap-3.5">
                                 <a
-                                    href={project.link}
+                                    href="https://github.com/0asaca0rum0"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="p-2.5 bg-[#1A936F] text-white rounded-full hover:bg-[#1ED696] transition-colors"
                                 >
-                                    <FaExternalLinkAlt size={18} />
+                                    <FaGithub size={18} />
                                 </a>
-                            )}
+                                {project.link && (
+                                    <a
+                                        href={project.link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="p-2.5 bg-[#1A936F] text-white rounded-full hover:bg-[#1ED696] transition-colors"
+                                    >
+                                        <FaExternalLinkAlt size={18} />
+                                    </a>
+                                )}
+                            </div>
                         </div>
-                    </div>
-                )}
-            </div>
+                    )}
+                </div>
 
-            <div className="p-3.5 flex flex-col">
-                <h3 className="text-sm md:text-base font-bold mb-1.5 text-[#FAF3DD] group-hover:text-[#1ED696] transition-colors">
-                    {project.title}
-                </h3>
-                <p
-                    onClick={() => setIsExpanded((prev) => !prev)}
-                    className={`text-xs leading-relaxed text-[#FCFFF0]/80 transition-all duration-300 cursor-pointer ${
-                        !isExpanded && "line-clamp-2"
-                    }`}
-                >
-                    {project.description}
-                </p>
-                <button
-                    onClick={() => setIsExpanded((prev) => !prev)}
-                    className="self-start mt-1.5 text-[10px] text-[#1ED696] hover:underline font-medium"
-                >
-                    {isExpanded ? "Show less" : "Read more"}
-                </button>
-                <div className="flex flex-wrap gap-1.5 mt-2.5">
-                    {project.techstack.map((tech, i) => (
-                        <span
-                            key={i}
-                            className="bg-[#1A936F]/10 text-[#8FE7C3] text-[9px] px-2 py-0.5 rounded-full"
-                        >
-                            {tech}
+                <div className="p-3.5 flex flex-col">
+                    <div className="flex items-center mb-2">
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-[#1A936F]/10 text-[10px] uppercase tracking-[0.18em] text-[#8FE7C3]/80">
+                            {project.category}
                         </span>
-                    ))}
+                    </div>
+                    <h3 className="text-[13px] md:text-[15px] font-semibold mb-1.5 text-[#FDFCF7] group-hover:text-[#1ED696] tracking-tight transition-colors">
+                        {project.title}
+                    </h3>
+                    <p
+                        onClick={() => setIsExpanded((prev) => !prev)}
+                        className={`text-xs leading-relaxed text-[#D1FAE5]/80 transition-all duration-300 cursor-pointer ${
+                            !isExpanded && "line-clamp-2"
+                        }`}
+                    >
+                        {project.description}
+                    </p>
+                    <button
+                        onClick={() => setIsExpanded((prev) => !prev)}
+                        className="self-start mt-1.5 text-[10px] text-[#34D399] hover:underline font-medium"
+                    >
+                        {isExpanded ? "Show less" : "Read more"}
+                    </button>
+                    <div className="flex flex-wrap gap-1.5 mt-2.5">
+                        {project.techstack.map((tech, i) => (
+                            <span
+                                key={i}
+                                className="bg-[#071B14] border border-[#1A936F]/30 text-[#C4F3DA] text-[9px] px-2.5 py-0.5 rounded-full tracking-wide"
+                            >
+                                {tech}
+                            </span>
+                        ))}
+                    </div>
                 </div>
             </div>
         </motion.div>

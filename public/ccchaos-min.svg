@@ -2,42 +2,145 @@
     <rect width="100%" height="100%" fill="none" />
 
     <defs>
-        <!-- Minimalist line patterns -->
-        <line id="l1" x1="0" y1="0" x2="0" y2="200" stroke-width="0.25"
-            stroke-dasharray="1 2 3 2 1 5" />
-        <line id="l2" x1="0" y1="0" x2="0" y2="200" stroke-width="0.25" stroke-dasharray="4 1 2 3" />
-        <line id="l3" x1="0" y1="0" x2="0" y2="200" stroke-width="0.25" stroke-dasharray="2 4 1 3" />
-        <line id="l4" x1="0" y1="0" x2="0" y2="200" stroke-width="0.25" stroke-dasharray="3 1 4 2" />
+        <!-- Line gradients for theme-colored, softly fading strokes -->
+        <linearGradient id="lineGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#1ED696" stop-opacity="0.65" />
+            <stop offset="40%" stop-color="#12BFA0" stop-opacity="0.75" />
+            <stop offset="100%" stop-color="#0E8A5F" stop-opacity="0.45" />
+        </linearGradient>
+        <linearGradient id="lineGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#8FE7C3" stop-opacity="0.55" />
+            <stop offset="50%" stop-color="#1A936F" stop-opacity="0.70" />
+            <stop offset="100%" stop-color="#0E8A5F" stop-opacity="0.40" />
+        </linearGradient>
+        <linearGradient id="lineGradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#5FE0B5" stop-opacity="0.60" />
+            <stop offset="50%" stop-color="#35C997" stop-opacity="0.72" />
+            <stop offset="100%" stop-color="#15A577" stop-opacity="0.42" />
+        </linearGradient>
+        <linearGradient id="lineGradient4" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#A8F5DC" stop-opacity="0.50" />
+            <stop offset="50%" stop-color="#3ED4A8" stop-opacity="0.68" />
+            <stop offset="100%" stop-color="#1A936F" stop-opacity="0.38" />
+        </linearGradient>
 
-        <g id="lineGroup">
-            <!-- Each line moves up the screen and reappears seamlessly -->
-            <use href="#l1" stroke="#a8d8ea" opacity="0.9">
-                <animateTransform attributeName="transform" type="translate"
-                    from="0 0" to="0 -100" dur="15s" repeatCount="indefinite" />
+        <!-- Circular arc patterns with randomness -->
+        <path id="arc1" 
+            d="M 75,75 m -35,0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" 
+            fill="none"
+            stroke-width="0.35"
+            stroke-linecap="round"
+            stroke-dasharray="3 11 1 17 2 9 1 14" />
+        
+        <path id="arc2" 
+            d="M 75,75 m -48,3 a 48,45 0 1,1 96,0 a 48,45 0 1,1 -96,0" 
+            fill="none"
+            stroke-width="0.35"
+            stroke-linecap="round"
+            stroke-dasharray="2 13 4 7 1 19 3 8" />
+        
+        <path id="arc3" 
+            d="M 75,75 m -60,-2 a 60,62 0 1,1 120,0 a 60,62 0 1,1 -120,0" 
+            fill="none"
+            stroke-width="0.35"
+            stroke-linecap="round"
+            stroke-dasharray="5 15 1 9 3 18 2 11" />
+        
+        <path id="arc4" 
+            d="M 75,75 m -28,1 a 28,29 0 1,1 56,0 a 28,29 0 1,1 -56,0" 
+            fill="none"
+            stroke-width="0.35"
+            stroke-linecap="round"
+            stroke-dasharray="4 10 2 21 1 7 3 13" />
+
+        <path id="arc5" 
+            d="M 75,75 m -42,-1 a 42,43 0 1,1 84,0 a 42,43 0 1,1 -84,0" 
+            fill="none"
+            stroke-width="0.35"
+            stroke-linecap="round"
+            stroke-dasharray="3 14 2 8 1 16 4 11" />
+        
+        <path id="arc6" 
+            d="M 75,75 m -55,2 a 55,53 0 1,1 110,0 a 55,53 0 1,1 -110,0" 
+            fill="none"
+            stroke-width="0.35"
+            stroke-linecap="round"
+            stroke-dasharray="2 12 3 9 1 18 2 14" />
+
+        <g id="arcGroup">
+            <!-- Innermost circle - fastest, clockwise -->
+            <use href="#arc4" stroke="url(#lineGradient1)" opacity="0.7">
+                <animateTransform
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 75 75"
+                    to="360 75 75"
+                    dur="120s"
+                    repeatCount="indefinite" />
             </use>
-            <use href="#l2" stroke="#aa96da" opacity="0.8">
-                <animateTransform attributeName="transform" type="translate"
-                    from="0 0" to="0 -100" dur="17s" repeatCount="indefinite" />
+            
+            <!-- Second circle - medium speed, counter-clockwise -->
+            <use href="#arc1" stroke="url(#lineGradient3)" opacity="0.65">
+                <animateTransform
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 75 75"
+                    to="-360 75 75"
+                    dur="180s"
+                    repeatCount="indefinite" />
             </use>
-            <use href="#l3" stroke="#c7ceea" opacity="0.8">
-                <animateTransform attributeName="transform" type="translate"
-                    from="0 0" to="0 -100" dur="19s" repeatCount="indefinite" />
+            
+            <!-- Third circle - slower, clockwise -->
+            <use href="#arc5" stroke="url(#lineGradient2)" opacity="0.6">
+                <animateTransform
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 75 75"
+                    to="360 75 75"
+                    dur="240s"
+                    repeatCount="indefinite" />
             </use>
-            <use href="#l4" stroke="#97c1a9" opacity="0.9">
-                <animateTransform attributeName="transform" type="translate"
-                    from="0 0" to="0 -100" dur="21s" repeatCount="indefinite" />
+            
+            <!-- Fourth circle - very slow, counter-clockwise -->
+            <use href="#arc2" stroke="url(#lineGradient4)" opacity="0.55">
+                <animateTransform
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 75 75"
+                    to="-360 75 75"
+                    dur="300s"
+                    repeatCount="indefinite" />
+            </use>
+            
+            <!-- Fifth circle - slower still, clockwise -->
+            <use href="#arc6" stroke="url(#lineGradient3)" opacity="0.5">
+                <animateTransform
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 75 75"
+                    to="360 75 75"
+                    dur="360s"
+                    repeatCount="indefinite" />
+            </use>
+            
+            <!-- Outermost circle - slowest, counter-clockwise -->
+            <use href="#arc3" stroke="url(#lineGradient1)" opacity="0.45">
+                <animateTransform
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 75 75"
+                    to="-360 75 75"
+                    dur="420s"
+                    repeatCount="indefinite" />
             </use>
         </g>
     </defs>
 
-    <!-- Line group placed at different x-positions to avoid overlap -->
-    <use href="#lineGroup" x="5" />
-    <use href="#lineGroup" x="15" />
-    <use href="#lineGroup" x="25" />
-    <use href="#lineGroup" x="35" />
-    <use href="#lineGroup" x="45" />
-    <use href="#lineGroup" x="55" />
-    <use href="#lineGroup" x="65" />
-    <use href="#lineGroup" x="75" />
-    <use href="#lineGroup" x="85" />
+    <!-- Primary circular patterns -->
+    <use href="#arcGroup" />
+    
+    <!-- Secondary layer with reduced opacity for depth -->
+    <g opacity="0.4">
+        <use href="#arcGroup" transform="rotate(30 75 75)" />
+    </g>
 </svg>

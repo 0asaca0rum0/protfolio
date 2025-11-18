@@ -1,547 +1,255 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
-// Split icon imports into dynamic imports
 import {
-	FaReact,
-	FaNodeJs,
-	FaServer,
-	FaLinux,
-	FaPython,
-    FaChevronCircleRight,
-    FaChevronCircleLeft,
+  FaReact,
+  FaNodeJs,
+  FaServer,
+  FaLinux,
+  FaPython,
 } from "react-icons/fa";
 import { TbBrandNextjs, TbBrandMysql } from "react-icons/tb";
 import { SiTailwindcss, SiNginx, SiOpenai, SiNvidia } from "react-icons/si";
 import { BiLogoGoLang } from "react-icons/bi";
 
-// --- Tech list data (unchanged) ---
+/**
+ * Tech data
+ */
 const techList = [
-	{
-		name: "React",
-		icon: FaReact,
-		lightColor: "#61DAFB",
-		darkColor: "#00D8FF",
-		level: 90,
-	},
-	{
-		name: "Next.js",
-		icon: TbBrandNextjs,
-		lightColor: "#000000",
-		darkColor: "#FFFFFF",
-		level: 85,
-	},
-	{
-		name: "Tailwind CSS",
-		icon: SiTailwindcss,
-		lightColor: "#38BDF8",
-		darkColor: "#06B6D4",
-		level: 95,
-	},
-	{
-		name: "Node.js",
-		icon: FaNodeJs,
-		lightColor: "#68A063",
-		darkColor: "#8CC84B",
-		level: 80,
-	},
-	{
-		name: "Express",
-		icon: FaServer,
-		lightColor: "#808080",
-		darkColor: "#CCCCCC",
-		level: 75,
-	},
-	{
-		name: "MySQL",
-		icon: TbBrandMysql,
-		lightColor: "#00758F",
-		darkColor: "#F29111",
-		level: 70,
-	},
-	{
-		name: "Nginx",
-		icon: SiNginx,
-		lightColor: "#009639",
-		darkColor: "#00FF00",
-		level: 65,
-	},
-	{
-		name: "Linux",
-		icon: FaLinux,
-		lightColor: "#FCC624",
-		darkColor: "#FFFFFF",
-		level: 85,
-	},
-	{
-		name: "Python",
-		icon: FaPython,
-		lightColor: "#3776AB",
-		darkColor: "#3776AB",
-		level: 80,
-	},
-	{
-		name: "Go",
-		icon: BiLogoGoLang,
-		lightColor: "#00ADD8",
-		darkColor: "#00ADD8",
-		level: 40,
-		customColor: "#FFDD00",
-	},
-	{
-		name: "NLP (Learning)",
-		icon: SiOpenai,
-		lightColor: "#10A37F",
-		darkColor: "#10A37F",
-		level: 30,
-		learning: true,
-	},
-	{
-		name: "Image Processing (Learning)",
-		icon: SiNvidia,
-		lightColor: "#76B900",
-		darkColor: "#76B900",
-		level: 25,
-		learning: true,
-	},
+  {
+    name: "React",
+    icon: FaReact,
+    lightColor: "#61DAFB",
+    darkColor: "#00D8FF",
+    level: 90,
+    learning: false,
+  },
+  {
+    name: "Next.js",
+    icon: TbBrandNextjs,
+    lightColor: "#000000",
+    darkColor: "#FFFFFF",
+    level: 85,
+    learning: false,
+  },
+  {
+    name: "Tailwind CSS",
+    icon: SiTailwindcss,
+    lightColor: "#38BDF8",
+    darkColor: "#06B6D4",
+    level: 95,
+    learning: false,
+  },
+  {
+    name: "Node.js",
+    icon: FaNodeJs,
+    lightColor: "#68A063",
+    darkColor: "#8CC84B",
+    level: 80,
+    learning: false,
+  },
+  {
+    name: "Express",
+    icon: FaServer,
+    lightColor: "#808080",
+    darkColor: "#CCCCCC",
+    level: 75,
+    learning: false,
+  },
+  {
+    name: "MySQL",
+    icon: TbBrandMysql,
+    lightColor: "#00758F",
+    darkColor: "#F29111",
+    level: 70,
+    learning: false,
+  },
+  {
+    name: "Nginx",
+    icon: SiNginx,
+    lightColor: "#009639",
+    darkColor: "#00FF00",
+    level: 65,
+    learning: false,
+  },
+  {
+    name: "Linux",
+    icon: FaLinux,
+    lightColor: "#FCC624",
+    darkColor: "#FFFFFF",
+    level: 85,
+    learning: false,
+  },
+  {
+    name: "Python",
+    icon: FaPython,
+    lightColor: "#3776AB",
+    darkColor: "#3776AB",
+    level: 80,
+    learning: false,
+  },
+  {
+    name: "Go",
+    icon: BiLogoGoLang,
+    lightColor: "#00ADD8",
+    darkColor: "#00ADD8",
+    level: 40,
+    learning: false,
+    customColor: "#FFDD00",
+  },
+  {
+    name: "NLP",
+    icon: SiOpenai,
+    lightColor: "#10A37F",
+    darkColor: "#10A37F",
+    level: 30,
+    learning: false,
+  },
+  {
+    name: "Image Processing",
+    icon: SiNvidia,
+    lightColor: "#76B900",
+    darkColor: "#76B900",
+    level: 25,
+    learning: false,
+  },
 ];
 
-// --- getLevelColor function (unchanged) ---
+const getLevelLabel = (tech) => {
+  if (tech.learning) return "Learning";
+  if (tech.level >= 90) return "Expert";
+  if (tech.level >= 75) return "Advanced";
+  return "Intermediate";
+};
+
 const getLevelColor = (tech) => {
-	if (tech.learning) return "linear-gradient(90deg, #F29111 0%, #FFB347 100%)";
-	if (tech.level >= 90)
-		return "linear-gradient(90deg, #0E8A5F 0%, #1ED696 100%)";
-	if (tech.level >= 70)
-		return "linear-gradient(90deg, #114E3C 0%, #1A936F 100%)";
-	if (tech.level >= 40)
-		return "linear-gradient(90deg, #2B4B3E 0%, #5D9B84 100%)";
-	return "linear-gradient(90deg, #31403B 0%, #588C7E 100%)";
+  if (tech.learning) {
+    // learning stays orange
+    return "linear-gradient(90deg, #F29111 0%, #FFB347 100%)";
+  }
+  if (tech.level >= 90) {
+    // expert - bright green
+    return "linear-gradient(90deg, #0E8A5F 0%, #1ED696 100%)";
+  }
+  if (tech.level >= 75) {
+    // advanced - deep green
+    return "linear-gradient(90deg, #114E3C 0%, #1A936F 100%)";
+  }
+  // intermediate (below 75 and not learning) - yellow bar
+  return "linear-gradient(90deg, #FBBF24 0%, #FACC15 100%)";
 };
 
-const OrbitalTechCard = ({
-    tech,
-    isDarkMode,
-    rotation,
-    distance,
-    isFocused,
-    isTransitioning,
-    onClick,
-}) => {
-    const orbitRadius = distance;
-    const spacingFactor = 2;
+const TechCard = ({ tech }) => {
+  const Icon = tech.icon;
+  const levelLabel = getLevelLabel(tech);
 
-    let offset = 100;
-    const positionX = Math.cos(rotation) * orbitRadius * spacingFactor - offset;
-    const positionZ = Math.sin(rotation) * orbitRadius * spacingFactor;
+  return (
+    <motion.div
+      className="relative w-full rounded-2xl overflow-hidden bg-gradient-to-br from-[#0a0f0d] to-[#050807] border border-[#16A472]/30 shadow-lg hover:shadow-[0_8px_32px_rgba(31,225,167,0.15)] transition-shadow duration-300"
+      whileHover={{ y: -6, scale: 1.02 }}
+      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+    >
+      {/* Subtle glow effect */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(31,225,167,0.08),transparent_50%)] opacity-60" />
 
-    const scale = isFocused
-        ? 1
-        : 0.65 + ((positionZ + orbitRadius) / (2 * orbitRadius)) * 0.15;
-    const opacity = 1; // Remove transparency
-    const zIndex = isFocused ? 100 : Math.floor((positionZ + orbitRadius) * 5);
+      <div className="relative z-10 p-5 sm:p-6 flex flex-col gap-4 sm:gap-5">
+        {/* Icon + Title Row */}
+        <div className="flex items-center gap-3 sm:gap-4">
+          {/* Icon with refined glow */}
+          <div className="relative flex-shrink-0">
+            <div className="absolute inset-0 blur-lg rounded-full bg-[#1FE1A7]/20" />
+            <div className="relative flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-black/90 to-black/70 border border-[#1FE1A7]/40 shadow-inner">
+              <Icon size={22} className="text-[#1FE1A7]" strokeWidth={1} />
+            </div>
+          </div>
 
-    return (
-        <motion.div
-            className="absolute left-1/2 top-1/2"
-            style={{
-                x: positionX,
-                zIndex,
-                transform: `translate(-50%, -50%) translateZ(${positionZ}px) scale(${scale})`,
-                opacity,
-                transition: isTransitioning
-                    ? 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease'
-                    : 'none',
-            }}
-            whileHover={{ scale: isTransitioning ? scale : scale * 1.05 }}
-            onClick={onClick}
-        >
-            <div
-                className={`
-                    bg-gradient-to-br from-[#101c1b] to-[#0A0A0A]
-                    border rounded-2xl overflow-hidden
-                    transition-all duration-300 w-[180px] h-[220px] md:w-[210px] md:h-[250px]
-                    flex flex-col shadow-xl
-                    ${isFocused
-                        ? "border-[#1ED696] shadow-[0_0_32px_rgba(30,214,150,0.25)] ring-2 ring-[#1ED696]/30"
-                        : "border-[#1A936F]/20"}
-                `}
+          {/* Title and Level */}
+          <div className="flex-1 min-w-0">
+            <h3 className="text-base sm:text-lg font-semibold text-[#F7FFF8] truncate mb-0.5">
+              {tech.name}
+            </h3>
+            <p className="text-[10px] sm:text-[11px] uppercase tracking-wider font-medium text-[#7DE5BE]/90">
+              {levelLabel}
+            </p>
+          </div>
+
+          {/* Percentage Badge */}
+          <div className="flex-shrink-0 px-2.5 py-1 rounded-lg bg-black/60 border border-[#1FE1A7]/20 backdrop-blur-sm">
+            <span className="text-xs sm:text-sm font-semibold text-[#1FE1A7]">
+              {tech.level}%
+            </span>
+          </div>
+        </div>
+
+        {/* Progress Bar */}
+        <div className="space-y-2">
+          <div className="w-full h-2 rounded-full bg-black/60 overflow-hidden border border-[#16A472]/20 shadow-inner">
+            <motion.div
+              className="h-full rounded-full relative"
+              style={{
+                background: tech.customColor || getLevelColor(tech),
+              }}
+              initial={{ width: 0 }}
+              animate={{ width: `${tech.level}%` }}
+              transition={{ duration: 1, ease: [0.4, 0, 0.2, 1], delay: 0.1 }}
             >
-                <div className="relative flex flex-col items-center justify-center h-full p-4 space-y-3">
-                    {isFocused && (
-                        <div className="absolute inset-0 pointer-events-none">
-                            <div className="absolute top-1/2 left-1/2 w-[220px] h-[220px] -translate-x-1/2 -translate-y-1/2">
-                                <div className="absolute inset-3 border border-[#1ED696]/10 rounded-full animate-spin-slow-reverse"></div>
-                            </div>
-                        </div>
-                    )}
-                    <div className="relative mb-2 mt-1 text-center">
-                        <div
-                            className={`absolute inset-0 blur-xl rounded-full ${
-                                isFocused ? "bg-[#1ED696]" : "bg-[#1A936F]"
-                            }`}
-                        ></div>
-                        <motion.div
-                            className="relative z-10 inline-block drop-shadow-[0_2px_12px_rgba(30,214,150,0.25)]"
-                            style={{ color: isDarkMode ? tech.darkColor : tech.lightColor }}
-                        >
-                            <tech.icon size={isFocused ? 44 : 34} />
-                        </motion.div>
-                    </div>
-                    <h3
-                        className={`text-base font-semibold text-center tracking-wide ${
-                            isFocused
-                                ? "text-[#1ED696] drop-shadow-[0_1px_4px_rgba(30,214,150,0.15)]"
-                                : "text-[#FAF3DD]"
-                        }`}
-                    >
-                        {tech.name}
-                    </h3>
-                    <div className="w-full mt-auto">
-                        {isFocused ? (
-                            <div className="relative w-16 h-16 mx-auto mb-2">
-                                <svg className="w-full h-full" viewBox="0 0 100 100">
-                                    <circle
-                                        cx="50"
-                                        cy="50"
-                                        r="40"
-                                        fill="none"
-                                        stroke="#181c1b"
-                                        strokeWidth="8"
-                                    />
-                                    <motion.circle
-                                        cx="50"
-                                        cy="50"
-                                        r="40"
-                                        fill="none"
-                                        stroke={
-                                            tech.customColor ||
-                                            (tech.learning ? "#F29111" : "#1ED696")
-                                        }
-                                        strokeWidth="8"
-                                        strokeLinecap="round"
-                                        initial={{ pathLength: 0 }}
-                                        animate={{ pathLength: tech.level / 100 }}
-                                        transition={{ duration: 1.2, ease: "easeOut" }}
-                                        style={{
-                                            transformOrigin: "center",
-                                            rotate: "-90deg",
-                                            strokeDasharray: "251.2",
-                                        }}
-                                    />
-                                    <text
-                                        x="50%"
-                                        y="50%"
-                                        textAnchor="middle"
-                                        dy=".3em"
-                                        className="text-base font-bold fill-[#FCFFF0]"
-                                    >
-                                        {tech.level}%
-                                    </text>
-                                </svg>
-                            </div>
-                        ) : (
-                            <div className="space-y-2">
-                                <div className="w-full h-1.5 bg-[#181c1b] rounded-full overflow-hidden">
-                                    <motion.div
-                                        className="h-full rounded-full"
-                                        style={{
-                                            background: tech.customColor || getLevelColor(tech),
-                                        }}
-                                        initial={{ width: 0 }}
-                                        animate={{ width: `${tech.level}%` }}
-                                        transition={{ duration: 0.7 }}
-                                    />
-                                </div>
-                                <div className="flex justify-between items-center text-xs">
-                                    <span
-                                        className={
-                                            tech.learning ? "text-[#F29111]" : "text-[#8FE7C3]"
-                                        }
-                                    >
-                                        {tech.learning
-                                            ? "Learning"
-                                            : tech.level >= 90
-                                            ? "Expert"
-                                            : tech.level >= 75
-                                            ? "Advanced"
-                                            : "Intermediate"}
-                                    </span>
-                                    <span className="bg-[#181c1b] px-1.5 py-0.5 rounded-full text-white">
-                                        {tech.level}%
-                                    </span>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </div>
+              {/* Shimmer effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
+            </motion.div>
+          </div>
+        </div>
+      </div>
+
+      {/* Hover border glow */}
+      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none border border-[#1FE1A7]/40" />
+    </motion.div>
+  );
+};
+
+const TechGrid = () => {
+  return (
+   <section className="w-full font-['Comfortaa'] bg-transparent">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 space-y-8 sm:space-y-10 -mt-12 sm:-mt-16">
+        {/* Heading */}
+        <div className="text-center space-y-2 sm:space-y-3 max-w-2xl mx-auto">
+          <motion.h2
+            className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#1FE1A7] tracking-tight"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            Technology Orbit
+          </motion.h2>
+          <motion.p
+            className="text-sm sm:text-base text-[#8FE7C3]/80 leading-relaxed"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+          >
+            Explore my technology ecosystem — each card shows experience level
+          </motion.p>
+        </div>
+
+        {/* Grid */}
+        <motion.div 
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          {techList.map((tech, index) => (
+            <motion.div
+              key={tech.name}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.05 * index }}
+            >
+              <TechCard tech={tech} />
+            </motion.div>
+          ))}
         </motion.div>
-    );
+      </div>
+    </section>
+  );
 };
 
-const OrbitalTechShowcase = () => {
-	const [currentIndex, setCurrentIndex] = useState(0);
-	const [isDarkMode, setIsDarkMode] = useState(true);
-	const [rotationAngle, setRotationAngle] = useState(0);
-	const [isAutoRotating, setIsAutoRotating] = useState(true);
-	const [orbitRadius, setOrbitRadius] = useState(300);
-	// Add this new state for animation
-	const [isTransitioning, setIsTransitioning] = useState(false);
-	
-	useEffect(() => {
-		const match = window.matchMedia("(prefers-color-scheme: dark)");
-		setIsDarkMode(match.matches);
-		const listener = (e) => setIsDarkMode(e.matches);
-		match.addEventListener("change", listener);
-		return () => match.removeEventListener("change", listener);
-	}, []);
-
-	useEffect(() => {
-		const handleResize = () => {
-			const w = window.innerWidth;
-			// Increased all radius values for better spacing
-			if (w < 480) setOrbitRadius(120);      // Was 120
-			else if (w < 640) setOrbitRadius(160); // Was 160
-			else if (w < 768) setOrbitRadius(200); // Was 200
-			else if (w < 1024) setOrbitRadius(240); // Was 240
-			else setOrbitRadius(280);              // Was 280
-		};
-		handleResize();
-		window.addEventListener("resize", handleResize);
-		return () => window.removeEventListener("resize", handleResize);
-	}, []);
-
-	// Modified auto-rotation effect with smooth transitions
-	useEffect(() => {
-		let animationFrame;
-		const autoRotate = () => {
-			if (isAutoRotating && !isTransitioning) {
-				setRotationAngle(prev => (prev + 0.002) % (Math.PI * 2));
-				animationFrame = requestAnimationFrame(autoRotate);
-			}
-		};
-		if (isAutoRotating && !isTransitioning) {
-			animationFrame = requestAnimationFrame(autoRotate);
-		}
-		return () => cancelAnimationFrame(animationFrame);
-	}, [isAutoRotating, isTransitioning]);
-
-	// Positions remain the same
-	const techPositions = techList.map((_, i) => {
-		const angle = rotationAngle + (i * (Math.PI * 2)) / techList.length;
-		return { angle, isFocused: i === currentIndex };
-	});
-
-	// Smooth transition to a tech card
-	const goToTech = (index) => {
-		if (isTransitioning || index === currentIndex) return;
-		
-		setIsAutoRotating(false);
-		setIsTransitioning(true);
-		
-		// Calculate current and target angles
-		const currentAngle = rotationAngle;
-		const targetAngle = -(index * (Math.PI * 2)) / techList.length + Math.PI / 2;
-		
-		// Determine shortest path to rotate (clockwise or counterclockwise)
-		let deltaAngle = (targetAngle - currentAngle) % (Math.PI * 2);
-		if (deltaAngle > Math.PI) deltaAngle -= Math.PI * 2;
-		if (deltaAngle < -Math.PI) deltaAngle += Math.PI * 2;
-		
-		// Animation variables
-		const duration = 800; // ms
-		const startTime = Date.now();
-		
-		// Animate rotation
-		const animateRotation = () => {
-			const elapsed = Date.now() - startTime;
-			const progress = Math.min(elapsed / duration, 1);
-			
-			// Easing function for smoother animation (ease-out)
-			const easeProgress = 1 - Math.pow(1 - progress, 3);
-			
-			// Calculate new angle
-			const newAngle = currentAngle + deltaAngle * easeProgress;
-			setRotationAngle(newAngle);
-			
-			if (progress < 1) {
-				requestAnimationFrame(animateRotation);
-			} else {
-				// Animation complete
-				setCurrentIndex(index);
-				setIsTransitioning(false);
-				setTimeout(() => setIsAutoRotating(true), 3000);
-			}
-		};
-		
-		requestAnimationFrame(animateRotation);
-	};
-
-	// Initialize rotation so that the first card is at the front
-	useEffect(() => {
-		goToTech(0);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []); // Run once on mount
-
-	const goNext = () => goToTech((currentIndex + 1) % techList.length);
-	const goPrev = () =>
-		goToTech((currentIndex - 1 + techList.length) % techList.length);
-
-    return (
-        <section className="w-full font-['Comfortaa'] bg-gradient-to-b from-[#0A0A0A]/80 to-[#0A0A0A]/30 overflow-hidden h-full">
-            {/* Reduced vertical spacing */}
-            <div className="relative max-w-lg mx-auto text-center px-2">
-                <motion.div
-                    className="h-px bg-gradient-to-r from-transparent via-[#1ED696]/40 to-transparent mb-2"
-                    initial={{ width: 0 }}
-                    animate={{ width: "100%" }}
-                    transition={{ duration: 1.2 }}
-                />
-                <motion.h2
-                    className="text-xl md:text-2xl font-bold mb-2"
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                >
-                    <span className="text-gradient bg-clip-text text-transparent bg-gradient-to-r from-[#1A936F] to-[#1ED696]">
-                        Technology Orbit
-                    </span>
-                </motion.h2>
-                <motion.p
-                    className="text-[#8FE7C3]/80 text-xs md:text-sm leading-relaxed"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.5 }}
-                >
-                    Explore my technology ecosystem — click any tech to focus
-                </motion.p>
-                <motion.div
-                    className="h-px bg-gradient-to-r from-transparent via-[#1ED696]/40 to-transparent mt-2"
-                    initial={{ width: 0 }}
-                    animate={{ width: "80%" }}
-                    transition={{ duration: 1.2, delay: 0.2 }}
-                />
-            </div>
-            
-            {/* Adjusted orbit container with reduced height */}
-            <div className="relative max-w-4xl mx-auto flex flex-col justify-center items-center">
-                <div className="relative w-full h-[320px] sm:h-[360px] md:h-[400px] flex items-center justify-center">
-                    {/* Navigation arrows - positioned higher to reduce overall height */}
-                    <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4 z-50 pointer-events-none">
-                        <button
-                            onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                if (!isTransitioning) goNext();
-                            }}
-                            className="pointer-events-auto p-2.5 rounded-full bg-[#181c1b]/90 border border-[#1A936F]/20 
-                                text-[#8FE7C3] hover:text-[#1ED696] hover:border-[#1ED696]/40 transition-all shadow-lg"
-                        >
-                            <FaChevronCircleLeft size={18} className="" />
-                        </button>
-                        <button
-                            onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation(); 
-                                if (!isTransitioning) goPrev();
-                            }}
-                            className="pointer-events-auto p-2.5 rounded-full bg-[#181c1b]/90 border border-[#1A936F]/20 
-                                text-[#8FE7C3] hover:text-[#1ED696] hover:border-[#1ED696]/40 transition-all shadow-lg"
-                        >
-                            <FaChevronCircleRight size={18} className="" />
-                        </button>
-                    </div>
-
-                    {/* Orbit container with adjusted positioning */}
-                    <div
-                        className="mx-auto w-full h-full relative perspective-[1000px] transform-style-preserve-3d"
-                        style={{ perspectiveOrigin: "center center" }}
-                        onMouseDown={(e) => {
-                            e.stopPropagation();
-                            if (!isTransitioning) setIsAutoRotating(false);
-                        }}
-                        onTouchStart={(e) => {
-                            e.stopPropagation();
-                            if (!isTransitioning) setIsAutoRotating(false);
-                        }}
-                        onMouseUp={(e) => {
-                            e.stopPropagation();
-                            if (!isTransitioning) setTimeout(() => setIsAutoRotating(true), 2000);
-                        }}
-                        onTouchEnd={(e) => {
-                            e.stopPropagation();
-                             setTimeout(() => setIsAutoRotating(true), 2000);
-                                                    }}
-                                                >
-                                                    {/* Orbital rings - positioned more compactly */}
-                                                    <div className="absolute w-full h-full top-1/2 left-[40%] -translate-x-1/2 -translate-y-1/2 rotate-x-70 opacity-25 pointer-events-none">
-                                                        <div className="absolute w-[90%] h-[90%] top-[5%] left-[5%] border-2 border-[#4DFFC7]/20 rounded-full shadow-[0_0_10px_rgba(77,255,199,0.1)]"></div>
-                                                        <div className="absolute w-[72%] h-[72%] top-[14%] left-[14%] border-2 border-[#4DFFC7]/35 rounded-full shadow-[0_0_10px_rgba(77,255,199,0.15)]"></div>
-                                                        <div className="absolute w-[54%] h-[54%] top-[23%] left-[23%] border-2 border-[#4DFFC7]/50 rounded-full shadow-[0_0_10px_rgba(77,255,199,0.2)]"></div>
-                                                        <div className="absolute w-[36%] h-[36%] top-[32%] left-[32%] border-2 border-[#4DFFC7]/65 rounded-full shadow-[0_0_10px_rgba(77,255,199,0.25)]"></div>
-                                                        <div className="absolute w-[18%] h-[18%] top-[41%] left-[41%] border-2 border-[#4DFFC7]/80 rounded-full shadow-[0_0_10px_rgba(77,255,199,0.3)]"></div>
-                                                    </div>
-                                                    {/* Render cards inside a centered container with adjusted positioning */}
-                        <div className="absolute inset-0 origin-center -mt-[20%] -p-[15%] flex items-center justify-center">
-                            {/* FIX: Don't use reverse() directly in render as it mutates the array */}
-                            {[...techList].map((tech, i) => (
-                                <OrbitalTechCard
-                                    key={tech.name}
-                                    tech={tech}
-                                    isDarkMode={isDarkMode}
-                                    rotation={techPositions[i].angle}
-                                    distance={orbitRadius}
-                                    isFocused={techPositions[i].isFocused}
-                                    isTransitioning={isTransitioning}
-                                    onClick={(e) => {
-                                        if (e) {
-                                            e.preventDefault();
-                                            e.stopPropagation();
-                                        }
-                                        if (!isTransitioning) goToTech(i);
-                                    }}
-                                />
-                            ))}
-                        </div>
-                    </div>
-                </div>
-                
-                {/* Reduce spacing for navigation controls */}
-                <div className="flex justify-center items-center mt-4 gap-2">
-                    {techList.map((tech, i) => (
-                        <button
-                            key={i}
-                            onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                if (!isTransitioning) goToTech(i);
-                            }}
-                            disabled={isTransitioning}
-                            className={`transition-all duration-300 rounded-full ${
-                                i === currentIndex
-                                    ? "w-6 h-1.5 bg-[#1ED696]"
-                                    : "w-2 h-1.5 bg-[#1A936F]/40 hover:bg-[#1A936F]/70"
-                            }`}
-                            aria-label={`Navigate to ${tech.name}`}
-                        >
-                            <span className="sr-only">Navigate to {tech.name}</span>
-                        </button>
-                    )).reverse() /* Reverse the order of the pagination buttons */}
-                </div>
-
-                <div className="text-center mt-1">
-                    <motion.div
-                        key={currentIndex}
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="text-[#1ED696] font-medium text-xs md:text-sm"
-                    >
-                        {techList[currentIndex]?.name || ""}
-                    </motion.div>
-                </div>
-            </div>
-        </section>
-    );
-};
-
-export default OrbitalTechShowcase;
+export default TechGrid;

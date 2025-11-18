@@ -36,7 +36,7 @@ const Card = memo(({ project }) => {
     const handleLikeToggle = () => setIsLiked(!isLiked);
     
     return (
-        <div className="group min-w-80 sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl h-[550px] md:h-[450px] lg:h-[500px] rounded-xl shadow-lg overflow-hidden relative hover:bg-black hover:bg-opacity-15 transition-all">
+        <div className="group min-w-80 sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl h-[550px] md:h-[450px] lg:h-[500px] rounded-xl shadow-lg overflow-hidden relative hover:bg-black/20 transition-all">
             <img
                 alt="Website Project"
                 className="object-cover object-center w-full h-full absolute inset-0"
@@ -44,20 +44,24 @@ const Card = memo(({ project }) => {
                 src={project.image}
             />
 
-            <div className="absolute inset-0 bg-black bg-opacity-10">
-                <button 
-                    onClick={handleModalToggle} 
-                    className="absolute top-2 right-2 bg-white/20 hover:bg-white/80 backdrop-blur-sm rounded-full p-2 transition-all duration-300"
+            {/* Glass overlay layer */}
+            <div className="absolute inset-0 bg-gradient-to-br from-[#020405]/80 via-[#020908]/45 to-[#050708]/75 backdrop-blur-[10px] transition-all duration-500">
+                <button
+                    onClick={handleModalToggle}
+                    className="absolute top-3 right-3 bg-black/35 hover:bg-black/65 border border-white/20 backdrop-blur-md rounded-full p-2.5 transition-all duration-300 shadow-[0_0_16px_rgba(0,0,0,0.6)]"
                     aria-label="Zoom image"
                 >
-                    <GoZoomIn size={24} className='text-black/70' />
+                    <GoZoomIn size={22} className='text-[#E5FFF5]' />
                 </button>
 
-                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 bg-gradient-to-t from-black/80 via-black/60 to-black/10 backdrop-filter backdrop-blur-md text-white transition-all duration-500 ease-in group-hover:max-h-full max-h-[16%] md:max-h-[20%] overflow-hidden">
+                {/* Glass info panel */}
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 bg-gradient-to-t from-[#020405]/96 via-[#020b08]/86 to-transparent border-t border-[#1ED696]/20 backdrop-blur-[18px] text-white transition-all duration-500 ease-in group-hover:max-h-full max-h-[18%] md:max-h-[22%] overflow-hidden">
                     <div className="flex justify-between items-center mb-2">
-                        <span className="text-lg text-white font-semibold">{project.title}</span>
-                        <button 
-                            onClick={handleLikeToggle} 
+                        <span className="text-lg text-white font-semibold drop-shadow-[0_1px_4px_rgba(0,0,0,0.7)]">
+                            {project.title}
+                        </span>
+                        <button
+                            onClick={handleLikeToggle}
                             className="transition-transform duration-300 hover:scale-110"
                             aria-label={isLiked ? "Unlike project" : "Like project"}
                         >
@@ -65,22 +69,22 @@ const Card = memo(({ project }) => {
                         </button>
                     </div>
                     
-                    <div className="flex items-center mb-3 text-yellow-400">
+                    <div className="flex items-center mb-3 text-yellow-400/90">
                         <BsStar className="w-5 h-5" />
                         <span className="ml-2 text-lg font-semibold">5.0</span>
                     </div>
                     
-                    <p className="text-sm mb-4 text-gray-200 transition-all duration-300">
+                    <p className="text-sm mb-4 text-gray-100/90 transition-all duration-300">
                         {project.description}
                     </p>
                     
                     {project.techstack && project.techstack.length > 0 && (
-                        <div className="flex flex-wrap w-full items-center gap-1 mb-4 p-2">
+                        <div className="flex flex-wrap w-full items-center gap-1 mb-4 p-2 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md">
                             {project.techstack.map((tech, index) => (
                                 techList[tech] && (
-                                    <Button 
-                                        key={index} 
-                                        className="bg-white/10 backdrop-blur rounded-full p-2 m-1 transition-all duration-300 hover:bg-white/20"
+                                    <Button
+                                        key={index}
+                                        className="bg-white/10 hover:bg-white/20 text-white/90 backdrop-blur rounded-full p-2 m-1 transition-all duration-300 border border-white/15"
                                         aria-label={`Technology: ${tech}`}
                                     >
                                         {techList[tech]}
@@ -91,16 +95,20 @@ const Card = memo(({ project }) => {
                     )}
                     
                     <div className='flex gap-3'>
-                        <Button 
-                            className="flex-1 py-2 px-4 text-sm font-medium flex items-center justify-center gap-2 bg-teal-500 hover:bg-teal-600 rounded-full transition-all duration-300"
+                        <Button
+                            className="flex-1 py-2 px-4 text-sm font-medium flex items-center justify-center gap-2 bg-[#1ED696]/90 hover:bg-[#1ED696] text-[#020405] rounded-full transition-all duration-300 shadow-[0_0_18px_rgba(30,214,150,0.45)]"
                             onClick={() => window.open("https://mail.google.com/mail/u/0/#inbox?compose=new", "_blank")}
                         >
                             Request <BiMailSend size={18} />
                         </Button>
                         
-                        <Button 
-                            className={`flex-1 py-2 px-4 text-sm font-medium flex items-center justify-center gap-2 ${project.link ? "bg-blue-500 hover:bg-blue-600" : "bg-gray-500"} rounded-full transition-all duration-300`}
-                            disabled={!project.link} 
+                        <Button
+                            className={`flex-1 py-2 px-4 text-sm font-medium flex items-center justify-center gap-2 rounded-full transition-all duration-300 ${
+                                project.link
+                                    ? "bg-[#0EA5E9]/90 hover:bg-[#0284C7] text-white shadow-[0_0_16px_rgba(14,165,233,0.45)]"
+                                    : "bg-gray-600/80 text-gray-200 cursor-not-allowed"
+                            }`}
+                            disabled={!project.link}
                             onClick={() => project.link && window.open(project.link, "_blank")}
                         >
                             View <CiLink size={18} />

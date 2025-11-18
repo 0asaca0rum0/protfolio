@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useState, useEffect } from 'react';
+import React, { Suspense, lazy, useState, useLayoutEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Contact from './components/contact';
@@ -36,26 +36,28 @@ const AnimatedRoutes = ({ isMobile }) => {
         className="w-full h-full"
       >
         <Suspense fallback={<LoadingFallback />}>
-          <Routes location={location}>
-            <Route path="/" element={<Navigate replace to="/projects" />} />
-            <Route 
-              path="/projects" 
-              element={
-                <div className={`${isMobile ? 'mobile-projects' : ''} w-full h-full`}>
-                  <Projects />
-                </div>
-              } 
-            />
-            <Route 
-              path="/tech" 
-              element={
-                isMobile ? <Techno /> : <Carousel />
-              } 
-            />
-            <Route path="/contact" element={<Contact />} />
-            {/* Add catch-all route for unknown paths */}
-            <Route path="*" element={<ErrorPage />} />
-          </Routes>
+          <div className="w-full max-w-5xl mx-auto space-y-6 pt-1 pb-6 sm:pt-2 sm:pb-8">
+            <Routes location={location}>
+              <Route path="/" element={<Navigate replace to="/projects" />} />
+              <Route
+                path="/projects"
+                element={
+                  <div className={`${isMobile ? 'mobile-projects' : ''} w-full h-full`}>
+                    <Projects />
+                  </div>
+                }
+              />
+              <Route
+                path="/tech"
+                element={
+                  isMobile ? <Techno /> : <Carousel />
+                }
+              />
+              <Route path="/contact" element={<Contact />} />
+              {/* Add catch-all route for unknown paths */}
+              <Route path="*" element={<ErrorPage />} />
+            </Routes>
+          </div>
         </Suspense>
       </motion.div>
     </AnimatePresence>
@@ -63,25 +65,37 @@ const AnimatedRoutes = ({ isMobile }) => {
 };
 
 function App() {
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  const [showSidebar, setShowSidebar] = useState(window.innerWidth < 768);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  // Keep breakpoint logic consistent with Sidebar/Header and CSS:
+  // treat widths < 768px as "mobile / small tablet" for route and layout decisions.
+  const getIsMobile = () => (typeof window !== 'undefined' ? window.innerWidth < 768 : false);
 
-  // Handle responsive breakpoints
-  useEffect(() => {
+  const [isMobile, setIsMobile] = useState(getIsMobile);
+  const [showSidebar, setShowSidebar] = useState(getIsMobile);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [headerHeight, setHeaderHeight] = useState(0);
+
+  // Handle responsive breakpoints and header height
+  useLayoutEffect(() => {
     const handleResize = () => {
+      // Update mobile state
       const mobile = window.innerWidth < 768;
       setIsMobile(mobile);
-      
-      // Set sidebar visibility when transitioning between mobile and desktop
+
+      // Update sidebar visibility
       if (mobile) {
-        setShowSidebar(true); // Make profile view default on mobile
-        setSidebarCollapsed(false); // Ensure sidebar is expanded on mobile
+        setShowSidebar(true);
+        setSidebarCollapsed(false);
       } else {
         setShowSidebar(false);
       }
+
+      // Update header height
+      const header = document.querySelector('header');
+      if (header) {
+        setHeaderHeight(header.offsetHeight);
+      }
     };
-    
+
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -105,34 +119,32 @@ function App() {
 
   return (
     <Router>
-      <Header 
-        items={navItems}
-        isMobile={isMobile}
-        showSidebar={showSidebar}
-        toggleSidebar={toggleSidebar}
-      />
-      
       <div className="main-container font-['Comfortaa']">
-        {(!isMobile || (isMobile && showSidebar)) && (
-          <Sidebar 
-            className={`${isMobile ? 'mobile-sidebar' : ''}`} 
-            onCollapse={handleSidebarCollapse}
-          />
-        )}
-        
-        {(!isMobile || (isMobile && !showSidebar)) && (
-          <motion.main 
-            className={`content-container ${isMobile ? 'mobile-content' : ''}`}
-            initial={false}
-            animate={{ 
-              marginLeft: !isMobile && sidebarCollapsed ? "5rem" : !isMobile ? "1.5rem" : "0",
-              width: !isMobile && sidebarCollapsed ? "calc(100% - 6.5rem)" : !isMobile ? "calc(100% - 23rem)" : "100%",
-            }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          >
-            <AnimatedRoutes isMobile={isMobile} />
-          </motion.main>
-        )}
+        <Header
+          items={navItems}
+          isMobile={isMobile}
+          showSidebar={showSidebar}
+          toggleSidebar={toggleSidebar}
+        />
+
+        <div className="flex flex-col md:flex-row md:gap-6 w-full h-full">
+          {(!isMobile || (isMobile && showSidebar)) && (
+            <Sidebar
+              className={`${isMobile ? 'mobile-sidebar' : ''}`}
+              onCollapse={handleSidebarCollapse}
+            />
+          )}
+          
+          {(!isMobile || (isMobile && !showSidebar)) && (
+            <motion.main
+              className={`content-container ${isMobile ? 'mobile-content' : ''}`}
+              style={{ paddingTop: headerHeight ? `${headerHeight + 24}px` : '5rem' }}
+              initial={false}
+            >
+              <AnimatedRoutes isMobile={isMobile} />
+            </motion.main>
+          )}
+        </div>
       </div>
     </Router>
   );
