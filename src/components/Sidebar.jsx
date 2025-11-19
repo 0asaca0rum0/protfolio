@@ -404,7 +404,7 @@ export default function Sidebar({ className, onCollapse }) {
                 {/* Job title with animated underline */}
                 <motion.div variants={itemVariant} className="relative mb-2">
                   <h2 className="text-xs sm:text-sm md:text-base font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#1A936F] to-[#1ED696] text-center md:text-left">
-                    Full Stack Developer & Server Engineer
+                    Full Stack  & AI Research Engineer
                   </h2>
                   <motion.div
                     className="h-[1px] w-0 bg-gradient-to-r from-[#1A936F]/50 to-[#1ED696]/50"
