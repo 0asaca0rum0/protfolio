@@ -47,7 +47,7 @@ const AnimatedRoutes = ({ isMobile }) => {
           path="/tech"
           element={
             <Suspense fallback={<PageLoader />}>
-              <Techno />
+              {isMobile ? <Techno /> : <Carousel />}
             </Suspense>
           }
         />
