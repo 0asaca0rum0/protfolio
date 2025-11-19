@@ -447,9 +447,10 @@ function AnimatedCard({ project, position = 0, isActive }) {
                 {/* Card content */}
                 <div className="relative aspect-video overflow-hidden">
                     <img
+                        loading="lazy"
                         src={project.image}
                         alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 "
                     />
                     {isActive && (
                         <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300 backdrop-blur-[2px]">

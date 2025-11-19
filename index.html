@@ -1,31 +1,44 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Elmasri's portfolio</title>
-    <link rel="preload" as="image" href="/self.webp" />
-    <!-- Force hardware acceleration for smoother animations -->
-    <style>
-      body {
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        transform: translateZ(0);
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elmasri's portfolio</title>
+  <link rel="preload" as="image" href="/self.webp" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap" rel="stylesheet" />
+  <!-- Force hardware acceleration for smoother animations -->
+  <style>
+    body {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      transform: translateZ(0);
+    }
+
+    /* Add CSS animation for consistent icon rotation in production */
+    @keyframes icon-spin {
+      from {
+        transform: rotateY(0deg);
       }
-      /* Add CSS animation for consistent icon rotation in production */
-      @keyframes icon-spin {
-        from { transform: rotateY(0deg); }
-        to { transform: rotateY(360deg); }
+
+      to {
+        transform: rotateY(360deg);
       }
-      .animate-icon-spin {
-        animation: icon-spin 3s linear infinite;
-        backface-visibility: hidden;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+    }
+
+    .animate-icon-spin {
+      animation: icon-spin 3s linear infinite;
+      backface-visibility: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>
