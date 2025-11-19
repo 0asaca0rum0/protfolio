@@ -223,7 +223,7 @@ const TechItem = ({ tech, x, y, z, onClick }) => {
       onClick={onClick}
     >
       <div
-        className="relative flex flex-col items-center gap-2 p-3 rounded-xl bg-[#0a0a0a]/80 backdrop-blur-md border border-[#1A936F]/30 hover:border-[#1ED696] hover:bg-black/90 transition-all duration-300 shadow-[0_0_15px_rgba(0,0,0,0.5)] animate-counter-orbit"
+        className="relative flex flex-col items-center gap-2 p-3 rounded-xl bg-[#0a0a0a]/90 border border-[#1A936F]/30 hover:border-[#1ED696] hover:bg-black transition-all duration-300 shadow-[0_0_10px_rgba(0,0,0,0.5)] animate-counter-orbit"
       >
         <Icon size={28} color={tech.color} />
         <span className="text-[10px] text-white font-medium opacity-0 group-hover:opacity-100 transition-opacity absolute -bottom-6 whitespace-nowrap bg-black/80 px-2 py-1 rounded">
