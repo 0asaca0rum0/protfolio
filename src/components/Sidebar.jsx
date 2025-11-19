@@ -75,7 +75,7 @@ export default function Sidebar({ className, onCollapse }) {
         {isCollapsed ? (
           <motion.aside
             key="collapsed"
-            className={`sidebar flex flex-col relative ${className} md:w-18 md:min-w-[4.5rem] w-18 min-w-[4.5rem] max-h-screen overflow-y-auto`}
+            className={`sidebar flex flex-col relative ${className} md:w-18 md:min-w-[4.5rem] w-18 min-w-[4.5rem] max-h-screen overflow-y-auto bg-[#0a0a0a]/90 border-r border-[#1A936F]/30 backdrop-blur-xl`}
             initial={{ width: "280px", opacity: 0 }}
             animate={{
               width: "72px",
@@ -89,7 +89,7 @@ export default function Sidebar({ className, onCollapse }) {
             }}
           >
             {/* Decorative elements */}
-            <motion.div 
+            <motion.div
               className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#1ED696]/30 to-transparent"
               animate={{
                 opacity: [0.3, 0.7, 0.3],
@@ -101,27 +101,27 @@ export default function Sidebar({ className, onCollapse }) {
               }}
               transition={{ duration: 3, repeat: Infinity }}
             />
-            
+
             <motion.div className="flex flex-col items-center w-full pt-8">
               {/* Profile image with floating animation */}
-              <motion.div 
+              <motion.div
                 className="relative cursor-pointer"
                 whileTap={{ scale: 0.9 }}
                 onClick={handleToggle}
                 animate={floatingAnimation}
               >
                 {/* Ambient glow */}
-                <motion.div 
+                <motion.div
                   className="absolute -inset-1.5 bg-gradient-to-br from-[#114E3C]/60 via-[#1ED696]/40 to-[#114E3C]/50 rounded-full blur-md"
-                  animate={{ 
+                  animate={{
                     scale: [1, 1.1, 1],
                     opacity: [0.4, 0.6, 0.4],
                   }}
                   transition={{ duration: 3, repeat: Infinity, repeatType: "reverse" }}
                 />
-                
+
                 {/* Orbiting dot */}
-                <motion.div 
+                <motion.div
                   className="absolute w-1.5 h-1.5 bg-[#1ED696] rounded-full shadow-[0_0_8px_rgba(30,214,150,0.8)]"
                   animate={{
                     x: [0, 8, 0, -8, 0],
@@ -133,18 +133,19 @@ export default function Sidebar({ className, onCollapse }) {
                     ease: "linear"
                   }}
                 />
-                
+
                 <div className="relative">
                   <div className="rounded-full border-2 border-[#1ED696] shadow-[0_0_15px_rgba(30,214,150,0.3)] overflow-hidden w-12 h-12">
                     <img
                       src="/self.webp"
                       alt="Ahmed Elmasri"
                       className="w-full h-full object-cover"
+                      fetchPriority="high"
                     />
                   </div>
-                  
+
                   {/* Menu icon overlay */}
-                  <motion.div 
+                  <motion.div
                     className="absolute inset-0 bg-[#000]/60 rounded-full flex items-center justify-center"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 0.7 }}
@@ -160,18 +161,18 @@ export default function Sidebar({ className, onCollapse }) {
                   </motion.div>
                 </div>
               </motion.div>
-              
+
               {/* Menu dots */}
               <div className="flex flex-col items-center gap-1.5 mt-8">
                 {[0, 1, 2].map(index => (
                   <motion.div
                     key={index}
                     className="w-1.5 h-1.5 bg-[#1A936F] rounded-full"
-                    animate={{ 
+                    animate={{
                       scale: [1, 1.3, 1],
                       opacity: [0.5, 1, 0.5],
                     }}
-                    transition={{ 
+                    transition={{
                       duration: 2,
                       delay: index * 0.3,
                       repeat: Infinity,
@@ -180,12 +181,12 @@ export default function Sidebar({ className, onCollapse }) {
                   />
                 ))}
               </div>
-              
+
               {/* Collapsed quick actions */}
               <div className="flex flex-col items-center gap-4 mt-10">
                 {/* small vertical glass bar to hint profile */}
                 <div className="h-20 w-[2px] bg-gradient-to-b from-[#1ED696]/40 via-[#1A936F]/20 to-transparent rounded-full" />
-    
+
                 {/* contact / social icons */}
                 <motion.a
                   href="https://github.com/0asaca0rum0"
@@ -197,7 +198,7 @@ export default function Sidebar({ className, onCollapse }) {
                 >
                   <FaGithub size={16} />
                 </motion.a>
-    
+
                 <motion.a
                   href="https://t.me/karasuma_renya"
                   target="_blank"
@@ -208,7 +209,7 @@ export default function Sidebar({ className, onCollapse }) {
                 >
                   <FaTelegramPlane size={16} />
                 </motion.a>
-    
+
                 <motion.a
                   href="tel:+33773225719"
                   className="w-9 h-9 rounded-full bg-[#050b09] border border-[#1A936F]/40 flex items-center justify-center text-[#8FE7C3] hover:text-[#1ED696] hover:border-[#1ED696]/60 shadow-md"
@@ -218,7 +219,7 @@ export default function Sidebar({ className, onCollapse }) {
                   <FaPhone size={15} />
                 </motion.a>
               </div>
-    
+
               {/* expand button */}
               <motion.button
                 className="mt-10 mb-4 bg-[#050b09] p-2 rounded-full border border-[#1A936F]/40 text-[#8FE7C3] hover:text-[#1ED696] shadow-md"
@@ -242,7 +243,7 @@ export default function Sidebar({ className, onCollapse }) {
         ) : (
           <motion.aside
             key="expanded"
-            className={`sidebar flex flex-col relative w-full md:w-auto max-h-screen overflow-y-auto backdrop-blur-md bg-gradient-to-b from-[#0A0A0A]/95 via-[#0A0A0A]/90 to-[#0A0A0A]/95 border-r border-[#1A936F]/20 shadow-[0_0_30px_rgba(26,147,111,0.05),inset_0_0_30px_rgba(0,0,0,0.3)] ${className}`}
+            className={`sidebar flex flex-col relative w-full md:w-auto max-h-screen overflow-y-auto backdrop-blur-xl bg-[#0a0a0a]/90 border-r border-[#1A936F]/30 shadow-[0_0_40px_rgba(0,0,0,0.6),inset_0_0_20px_rgba(26,147,111,0.1)] ${className}`}
             initial={{ width: isDesktop ? "72px" : "100%", x: isDesktop ? -30 : 0, opacity: 0 }}
             animate={{
               width: isDesktop ? "280px" : "100%",
@@ -263,7 +264,7 @@ export default function Sidebar({ className, onCollapse }) {
             }}
           >
             {/* Animated decorative elements */}
-            <motion.div 
+            <motion.div
               className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#1ED696]/30 to-transparent"
               animate={{
                 opacity: [0.3, 0.7, 0.3],
@@ -275,8 +276,8 @@ export default function Sidebar({ className, onCollapse }) {
               }}
               transition={{ duration: 3, repeat: Infinity }}
             />
-            
-            <motion.div 
+
+            <motion.div
               className="absolute -bottom-20 -right-20 w-40 h-40 rounded-full bg-gradient-to-br from-[#1A936F]/5 to-transparent blur-2xl"
               animate={{
                 scale: [1, 1.2, 1],
@@ -284,7 +285,7 @@ export default function Sidebar({ className, onCollapse }) {
               }}
               transition={{ duration: 8, repeat: Infinity }}
             />
-            
+
             <div className="p-3 relative">
               {/* Header section */}
               <div className="flex justify-between items-start mb-3">
@@ -294,26 +295,26 @@ export default function Sidebar({ className, onCollapse }) {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ type: "spring", stiffness: 400, damping: 20 }}
                 >
-                  <motion.div 
+                  <motion.div
                     className="relative"
                     animate={floatingAnimation}
                   >
                     {/* Enhanced ambient glow */}
-                    <motion.div 
+                    <motion.div
                       className="absolute -inset-3 bg-gradient-to-br from-[#114E3C]/40 via-[#1ED696]/20 to-[#114E3C]/30 rounded-full blur-xl"
-                      animate={{ 
+                      animate={{
                         scale: [1, 1.2, 1],
                         opacity: [0.3, 0.5, 0.3],
                       }}
                       transition={{ duration: 4, repeat: Infinity }}
                     />
-                    
+
                     {/* Micro-interaction for profile picture */}
                     <motion.img
                       src="/self.webp"
                       alt="Ahmed Elmasri"
                       className="rounded-full border-2 border-[#1ED696] shadow-[0_0_15px_rgba(30,214,150,0.3)] object-cover w-20 h-20 relative z-10 cursor-pointer"
-                      loading="lazy"
+                      fetchPriority="high"
                       width="80"
                       height="80"
                       decoding="async"
@@ -327,10 +328,10 @@ export default function Sidebar({ className, onCollapse }) {
                       whileTap={{ scale: 0.95 }}
                       onClick={handleImageClick}
                     />
-                    
+
                     {/* Animated orbit particles */}
                     {[45, 135, 225, 315].map((angle, i) => (
-                      <motion.div 
+                      <motion.div
                         key={i}
                         className="absolute w-1.5 h-1.5 bg-[#1ED696]/80 rounded-full shadow-[0_0_5px_rgba(30,214,150,0.8)]"
                         style={{
@@ -353,12 +354,12 @@ export default function Sidebar({ className, onCollapse }) {
                       />
                     ))}
                   </motion.div>
-                  
+
                   {/* Collapse button */}
                   <motion.button
                     className="absolute -right-4 top-0 bg-[#121212] p-1.5 rounded-full border border-[#1A936F]/40 text-[#8FE7C3] hover:text-[#1ED696] shadow-md"
-                    whileHover={{ 
-                      scale: 1.1, 
+                    whileHover={{
+                      scale: 1.1,
                       rotate: 90,
                       boxShadow: "0 0 10px rgba(30,214,150,0.2)"
                     }}
@@ -369,7 +370,7 @@ export default function Sidebar({ className, onCollapse }) {
                   </motion.button>
                 </motion.div>
               </div>
-              
+
               {/* Main content with staggered animations */}
               <motion.div
                 initial="hidden"
@@ -399,7 +400,7 @@ export default function Sidebar({ className, onCollapse }) {
                     transition={{ repeat: Infinity, duration: 2, repeatDelay: 5 }}
                   />
                 </motion.div>
-                
+
                 {/* Job title with animated underline */}
                 <motion.div variants={itemVariant} className="relative mb-2">
                   <h2 className="text-xs sm:text-sm md:text-base font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#1A936F] to-[#1ED696] text-center md:text-left">
@@ -411,7 +412,7 @@ export default function Sidebar({ className, onCollapse }) {
                     transition={{ duration: 2, repeat: Infinity, repeatDelay: 4 }}
                   />
                 </motion.div>
-                
+
                 {/* Enhanced bio text */}
                 <motion.p
                   variants={itemVariant}
@@ -419,19 +420,19 @@ export default function Sidebar({ className, onCollapse }) {
                 >
                   Computer Science & Engineering graduate specializing in Intelligent Systems. Experienced in Edge AI pipelines and deployment on STM32 microcontrollers. Strong background in Machine Learning, Deep Learning, and NLP. Skilled in React, Next.js, TypeScript, and modern development tools. Hands-on with TPUs, TensorFlow, and hardware-accelerated model optimization. Passionate developer building web, mobile, and embedded solutions for real-world problems.
                 </motion.p>
-                
+
                 {/* Contact section with interactive elements */}
                 <motion.div variants={itemVariant}>
                   {/* Section header with animated accent */}
                   <div className="flex items-center gap-2 mb-2 relative">
-                    <motion.div 
+                    <motion.div
                       className="flex items-center gap-2"
                       animate={{ x: [0, 3, 0] }}
                       transition={{ duration: 4, repeat: Infinity, repeatType: "reverse" }}
                     >
-                      <motion.span 
+                      <motion.span
                         className="h-5 w-1 bg-gradient-to-b from-[#1A936F] to-[#1ED696] rounded-full"
-                        animate={{ 
+                        animate={{
                           height: ["20px", "24px", "20px"],
                           background: [
                             "linear-gradient(to bottom, #1A936F, #1ED696)",
@@ -442,13 +443,13 @@ export default function Sidebar({ className, onCollapse }) {
                         transition={{ duration: 2, repeat: Infinity }}
                       />
                       <h3 className="text-base sm:text-lg font-semibold text-[#FAF3DD]">Tags</h3>
-                       {/* add contact info */}
+                      {/* add contact info */}
                     </motion.div>
 
-                    
-                    <motion.div 
+
+                    <motion.div
                       className="ml-auto h-[1px] flex-1 bg-gradient-to-r from-[#1A936F]/50 to-transparent"
-                      animate={{ 
+                      animate={{
                         opacity: [0.3, 0.7, 0.3],
                         width: ["20%", "40%", "20%"]
                       }}
@@ -456,8 +457,8 @@ export default function Sidebar({ className, onCollapse }) {
                     />
 
                   </div>
-                 
-                  
+
+
                   {/* Animated skill tags */}
                   <div className="flex flex-wrap gap-1">
                     {[
@@ -484,7 +485,7 @@ export default function Sidebar({ className, onCollapse }) {
                 </motion.div>
               </motion.div>
             </div>
-            
+
             {/* Footer with pulsing effect */}
             <motion.div
               className=" border-t border-[#1A936F]/10 py-3 px-6"
@@ -500,25 +501,25 @@ export default function Sidebar({ className, onCollapse }) {
                 >
                   <span>© 2023</span>
                   <span className="text-[#1ED696]/80">Elmasri</span>
-                  <motion.span 
+                  <motion.span
                     animate={{ opacity: [0.5, 1, 0.5] }}
                     transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
                   >
                     Portfolio
                   </motion.span>
                 </motion.div>
-                
+
                 {/* Subtle animation for footer */}
-                <motion.div 
+                <motion.div
                   className="absolute bottom-full left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#1A936F]/30 to-transparent"
-                  animate={{ 
+                  animate={{
                     opacity: [0, 1, 0],
                     x: ["-10%", "110%"]
                   }}
-                  transition={{ 
-                    duration: 3, 
-                    repeat: Infinity, 
-                    repeatDelay: 2 
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    repeatDelay: 2
                   }}
                 />
               </div>
@@ -593,10 +594,10 @@ export default function Sidebar({ className, onCollapse }) {
 // Contact item component with animated interaction
 const ContactItem = ({ icon, text, href, delay, type = "link" }) => {
   const [isHovered, setIsHovered] = useState(false);
-  
+
   const Component = type === "link" ? motion.a : motion.div;
   const props = type === "link" ? { href, target: "_blank", rel: "noopener noreferrer" } : {};
-  
+
   return (
     <Component
       {...props}
@@ -608,7 +609,7 @@ const ContactItem = ({ icon, text, href, delay, type = "link" }) => {
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay }}
     >
-      <motion.div 
+      <motion.div
         className="w-8 h-8 rounded-full bg-[#121212] flex items-center justify-center border border-[#1A936F]/30"
         animate={isHovered ? {
           borderColor: "rgba(30, 214, 150, 0.6)",
@@ -619,7 +620,7 @@ const ContactItem = ({ icon, text, href, delay, type = "link" }) => {
       >
         <motion.div
           className="text-[#8FE7C3]"
-          animate={isHovered ? { 
+          animate={isHovered ? {
             color: "#1ED696",
             scale: 1.15,
             rotate: [0, 10, -10, 0]
@@ -629,13 +630,13 @@ const ContactItem = ({ icon, text, href, delay, type = "link" }) => {
           {icon}
         </motion.div>
       </motion.div>
-      
+
       <div className="relative overflow-hidden">
         <span className={type === "link" ? "group-hover:text-[#1ED696] transition-colors" : ""}>
           {text}
         </span>
         {type === "link" && (
-          <motion.div 
+          <motion.div
             className="absolute bottom-0 left-0 h-[1px] bg-[#1ED696]"
             initial={{ width: 0 }}
             animate={isHovered ? { width: "100%" } : { width: 0 }}
@@ -643,10 +644,10 @@ const ContactItem = ({ icon, text, href, delay, type = "link" }) => {
           />
         )}
       </div>
-      
+
       {type === "link" && isHovered && (
         <motion.div
-          className="absolute right-0 ml-2 text-[#1ED696]" 
+          className="absolute right-0 ml-2 text-[#1ED696]"
           initial={{ opacity: 0, x: -5 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 5 }}
@@ -660,20 +661,20 @@ const ContactItem = ({ icon, text, href, delay, type = "link" }) => {
 
 // Skill tag with pulse and hover animation
 const SkillTag = ({ text, index }) => {
-   return (
-     <motion.div
-       className="bg-[#121212] border border-[#1A936F]/30 text-[#8FE7C3] text-[11px] px-2.5 py-1 rounded-full relative overflow-hidden"
-       initial={{ opacity: 0, scale: 0.8 }}
-       animate={{ opacity: 1, scale: 1 }}
-       transition={{ delay: 0.6 + (index * 0.1) }}
-       whileHover={{
-         scale: 1.08,
-         backgroundColor: "rgba(30, 214, 150, 0.1)",
-         borderColor: "rgba(30, 214, 150, 0.5)",
-         color: "#1ED696"
-       }}
-     >
-       {text}
+  return (
+    <motion.div
+      className="bg-[#121212] border border-[#1A936F]/30 text-[#8FE7C3] text-[11px] px-2.5 py-1 rounded-full relative overflow-hidden"
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ delay: 0.6 + (index * 0.1) }}
+      whileHover={{
+        scale: 1.08,
+        backgroundColor: "rgba(30, 214, 150, 0.1)",
+        borderColor: "rgba(30, 214, 150, 0.5)",
+        color: "#1ED696"
+      }}
+    >
+      {text}
       <motion.div
         className="absolute top-0 left-0 w-full h-full bg-gradient-to- r from-transparent via-white/10 to-transparent"
         initial={{ x: "-100%" }}

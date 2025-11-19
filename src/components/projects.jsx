@@ -6,6 +6,14 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function Projects() {
     const projects = [
         {
+            title: "internship Docs LS2N",
+            description: "Documentation of my internship at LS2N laboratory, where I worked on signal processing and embedded systems, with a focus on computer vision applications.",
+            image: "docs.png",
+            techstack: ['python', "Signal proccessing", "embedded systems", "Computer Vision"],
+            link: "https://github.com/0asaca0rum0/writings-ls2n-str",
+            category: "AI",
+        },
+        {
             title: "E-commerce Dashboard",
             description: "A comprehensive dashboard for managing an e-commerce platform, was meant for fri7a, a local shop in Algeria.",
             image: "project-1.webp",
@@ -20,14 +28,7 @@ export default function Projects() {
             techstack: ['Next 13', "Node.js", "Express"],
             link: "https://fri7a.pages.dev",
             category: "Web App",
-        },       {
-            title: "internship Docs LS2N",
-            description: "Documentation of my internship at LS2N laboratory, where I worked on signal processing and embedded systems, with a focus on computer vision applications.",
-            image: "docs.png",
-            techstack: ['python', "Signal proccessing", "embedded systems","Computer Vision"],
-            link: "https://github.com/0asaca0rum0/writings-ls2n-str",
-            category: "AI",
-        },
+        }, 
         {
             title: "E-commerce (bilwafi)",
             description: "A responsive e-commerce website for selling products online, intended for bilwafi, a local cosmetic shop in Algeria. Integrated with a payment gateway and a product management dashboard.",
@@ -103,10 +104,10 @@ export default function Projects() {
 
     const [activeCategory, setActiveCategory] = useState("all");
     const [currentIndex, setCurrentIndex] = useState(0);
-    
+
     // Track direction to drive slide animations
     const [slideDirection, setSlideDirection] = useState(null);
-    
+
     // Filter projects based on active category
     const filteredProjects = activeCategory === "all"
         ? projects
@@ -146,26 +147,29 @@ export default function Projects() {
 
     const slideVariants = {
         enter: (direction) => ({
-            x: direction === "left" ? 40 : -40,
+            x: direction === "left" ? 100 : -100,
             opacity: 0,
-            scale: 0.98,
+            scale: 0.9,
+            zIndex: 10,
         }),
         center: {
             x: 0,
             opacity: 1,
             scale: 1,
+            zIndex: 20,
         },
         exit: (direction) => ({
-            x: direction === "left" ? -40 : 40,
+            x: direction === "left" ? -100 : 100,
             opacity: 0,
-            scale: 0.98,
+            scale: 0.9,
+            zIndex: 10,
         }),
     };
 
     return (
-        <div className="w-full flex flex-col items-center font-['Comfortaa'] gap-6 sm:gap-8 lg:gap-10 ">
+        <div className="w-full flex flex-col items-center font-['Comfortaa'] gap-6 sm:gap-8 lg:gap-10 -mt-10">
             <motion.h2
-                className="text-xl md:text-2xl lg:text-3xl font-bold text-[#FAF3DD] text-center sm:text-left px-4"
+                className="text-xl md:text-2xl lg:text-3xl font-bold text-[#FAF3DD] text-center sm:text-left px-4 drop-shadow-[0_0_10px_rgba(30,214,150,0.5)]"
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
@@ -182,56 +186,52 @@ export default function Projects() {
             >
                 {/* Modern Filter Container with glassmorphic style */}
                 <div
-                    className="flex justify-center gap-3"
+                    className="flex justify-center gap-3 flex-wrap"
                 >
                     {/* Evenly distributed category buttons with creative styling */}
                     {categories.map((category) => (
                         <motion.button
                             key={category.value}
                             onClick={() => setActiveCategory(category.value)}
-                            className={`relative py-2.5 px-6 text-center text-sm font-medium transition-all duration-300 rounded-xl touch-feedback ${
-                                activeCategory === category.value
-                                    ? 'text-[#1ED696] font-semibold bg-[#1A936F]/15 border border-[#1A936F]/40'
-                                    : 'text-[#8FE7C3]/70 hover:text-[#8FE7C3] border border-transparent'
-                            }`}
+                            className={`relative py-2 px-5 text-center text-sm font-medium transition-all duration-300 rounded-full touch-feedback ${activeCategory === category.value
+                                ? 'text-[#0F0F0F] font-bold bg-[#1ED696] shadow-[0_0_20px_rgba(30,214,150,0.4)]'
+                                : 'text-[#8FE7C3]/70 hover:text-[#8FE7C3] bg-[#1A936F]/10 border border-[#1A936F]/20'
+                                }`}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                         >
                             {category.label}
-                     
                         </motion.button>
                     ))}
                 </div>
-                
-                {/* Enhanced Stats Indicator with improved animation */}
-                {/* Removed - stats shown in counter */}
             </motion.div>
 
             {/* Card Stack with improved spacing and animation */}
             <div className="w-full flex flex-col items-center">
                 {/* Card Container with better height based on card content */}
                 <div
-                    className="relative w-full mx-auto max-w-[280px] md:max-w-[300px] lg:max-w-[320px] h-[300px] md:h-[310px] lg:h-[330px] m-6"
+                    className="relative w-full mx-auto max-w-[300px] md:max-w-[340px] lg:max-w-[380px] h-[340px] md:h-[360px] lg:h-[380px] m-6 perspective-[1000px]"
                 >
                     {/* Current active card with smoother slide animations */}
                     <AnimatePresence
-                        mode="wait"
+                        mode="popLayout"
                         initial={false}
                         custom={slideDirection || "left"}
                     >
                         {hasProjects && (
                             <motion.div
                                 key={currentProject?.title ?? currentIndex}
-                                className="w-full h-full"
+                                className="w-full h-full absolute top-0 left-0"
                                 variants={slideVariants}
                                 custom={slideDirection || "left"}
                                 initial="enter"
                                 animate="center"
                                 exit="exit"
                                 transition={{
-                                    duration: 0.35,
+                                    duration: 0.8,
                                     ease: [0.22, 1, 0.36, 1],
                                 }}
+                                style={{ zIndex: 20 }}
                             >
                                 <AnimatedCard
                                     project={currentProject}
@@ -245,10 +245,10 @@ export default function Projects() {
                     {filteredProjects.map((project, idx) => {
                         // Calculate position in stack relative to current card
                         const position = (idx - currentIndex + filteredProjects.length) % filteredProjects.length;
-                        
+
                         // Only render background cards (positions 1-4)
-                        if (position === 0 || position >= 5) return null;
-                        
+                        if (position === 0 || position >= 4) return null;
+
                         return (
                             <AnimatedCard
                                 key={`bg-${project.title}-${idx}`}
@@ -259,9 +259,9 @@ export default function Projects() {
                         );
                     })}
                 </div>
-                
+
                 {/* Touch navigation hint - improved styling and animation */}
-                <motion.div 
+                <motion.div
                     className="flex justify-center gap-3 items-center mt-4 sm:hidden"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -281,13 +281,13 @@ export default function Projects() {
                         <FaChevronRight size={10} className="text-[#1ED696]/70" />
                     </motion.div>
                 </motion.div>
-                
+
                 {/* Improved navigation controls with better spacing */}
                 <div className="relative w-full max-w-xs md:max-w-sm lg:max-w-md flex flex-col items-center mt-8">
                     {/* Enhanced Progress Bar with smoother animation */}
-                    <div className="w-full h-1.5 bg-[#0F0F0F] rounded-full overflow-hidden mb-6 shadow-inner">
+                    <div className="w-full h-1 bg-[#1A936F]/20 rounded-full overflow-hidden my-6">
                         <motion.div
-                            className="h-full bg-gradient-to-r from-[#1A936F] to-[#1ED696] shadow-[0_0_6px_rgba(30,214,150,0.3)]"
+                            className="h-full bg-[#1ED696] shadow-[0_0_10px_rgba(30,214,150,0.5)]"
                             initial={{ width: '0%' }}
                             animate={{
                                 width: totalProjects > 0
@@ -302,21 +302,21 @@ export default function Projects() {
                             }}
                         />
                     </div>
-                    
+
                     {/* Side-clickable navigation areas */}
-                    <div className="absolute top-[-300px] left-0 right-0 bottom-0 pointer-events-none">
+                    <div className="absolute top-[-350px] left-[-20px] right-[-20px] bottom-0 pointer-events-none">
                         <div className="relative w-full h-full">
-                            <div 
-                                className="absolute left-0 w-1/3 h-full pointer-events-auto cursor-pointer opacity-0"
+                            <div
+                                className="absolute left-0 w-1/4 h-full pointer-events-auto cursor-pointer opacity-0"
                                 onClick={prevCard}
                             />
-                            <div 
-                                className="absolute right-0 w-1/3 h-full pointer-events-auto cursor-pointer opacity-0"
+                            <div
+                                className="absolute right-0 w-1/4 h-full pointer-events-auto cursor-pointer opacity-0"
                                 onClick={nextCard}
                             />
                         </div>
                     </div>
-                    
+
                     {/* Improved Navigation Buttons with better spacing and press feedback */}
                     <div className="w-full flex items-center justify-between gap-6">
                         <ProjectNavButton
@@ -333,11 +333,11 @@ export default function Projects() {
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -5 }}
                                 transition={{ duration: 0.2 }}
-                                className="text-sm text-[#FCFFF0]/80"
+                                className="text-sm text-[#FCFFF0]/80 font-mono"
                             >
-                                <span className="text-[#1ED696] font-semibold">{currentIndex + 1}</span>
-                                <span className="mx-1">/</span>
-                                <span>{totalProjects}</span>
+                                <span className="text-[#1ED696] font-bold text-lg">{(currentIndex + 1).toString().padStart(2, '0')}</span>
+                                <span className="mx-2 text-[#1A936F]">/</span>
+                                <span>{totalProjects.toString().padStart(2, '0')}</span>
                             </motion.div>
                         </div>
 
@@ -347,8 +347,6 @@ export default function Projects() {
                             disabled={totalProjects <= 1}
                         />
                     </div>
-                    
-                    {/* Dots Navigation - Hidden */}
                 </div>
             </div>
         </div>
@@ -356,51 +354,53 @@ export default function Projects() {
 }
 
 function ProjectNavButton({ variant, onClick, disabled }) {
-   const isPrev = variant === "prev";
-   const label = isPrev ? "Prev" : "Next";
-   const title = isPrev ? "Previous project" : "Next project";
-   const hoverX = isPrev ? -3 : 3;
+    const isPrev = variant === "prev";
+    const label = isPrev ? "Prev" : "Next";
+    const title = isPrev ? "Previous project" : "Next project";
+    const hoverX = isPrev ? -3 : 3;
 
-   return (
-       <motion.button
-           onClick={onClick}
-           className="group flex items-center justify-center gap-2 py-3 px-5 rounded-lg bg-[#0F0F0F] border border-[#1A936F]/20 text-[#8FE7C3] hover:bg-[#1A936F]/10 transition-colors min-w-[80px] shadow-md touch-feedback disabled:opacity-50 disabled:cursor-not-allowed"
-           whileHover={{ x: hoverX, transition: { duration: 0.2 } }}
-           whileTap={{ scale: 0.95, transition: { duration: 0.1 } }}
-           title={title}
-           disabled={disabled}
-       >
-           {isPrev && (
-               <>
-                   <FaChevronLeft className="text-xs group-hover:text-[#1ED696]" />
-                   <span className="text-sm hidden sm:inline truncate max-w-[50px] font-medium">
-                       {label}
-                   </span>
-               </>
-           )}
-           {!isPrev && (
-               <>
-                   <span className="text-sm hidden sm:inline truncate max-w-[50px] font-medium">
-                       {label}
-                   </span>
-                   <FaChevronRight className="text-xs group-hover:text-[#1ED696]" />
-               </>
-           )}
-       </motion.button>
-   );
+    return (
+        <motion.button
+            onClick={onClick}
+            className="group flex items-center justify-center gap-2 py-3 px-6 rounded-full bg-[#1A936F]/10 border border-[#1A936F]/30 text-[#8FE7C3] hover:bg-[#1A936F]/20 hover:border-[#1ED696]/50 transition-all min-w-[100px] shadow-lg backdrop-blur-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            whileHover={{ x: hoverX, transition: { duration: 0.2 } }}
+            whileTap={{ scale: 0.95, transition: { duration: 0.1 } }}
+            title={title}
+            disabled={disabled}
+        >
+            {isPrev && (
+                <>
+                    <FaChevronLeft className="text-xs group-hover:text-[#1ED696]" />
+                    <span className="text-sm hidden sm:inline font-medium">
+                        {label}
+                    </span>
+                </>
+            )}
+            {!isPrev && (
+                <>
+                    <span className="text-sm hidden sm:inline font-medium">
+                        {label}
+                    </span>
+                    <FaChevronRight className="text-xs group-hover:text-[#1ED696]" />
+                </>
+            )}
+        </motion.button>
+    );
 }
 
 function AnimatedCard({ project, position = 0, isActive }) {
     const [isExpanded, setIsExpanded] = useState(false);
 
+    // Calculate rotation for counter-rotation logic
+    const rotation = isActive ? 0 : (position > 0 ? (position % 2 === 0 ? -3 : 3) : 0);
+
     // Card styling based on position
     const cardStyle = useMemo(() => {
         // Only apply position styling for background cards
         if (!isActive) {
-            const scale = 1 - position * 0.035;
-            const yOffset = -10 * position;
+            const scale = 1 - position * 0.05;
+            const yOffset = -15 * position;
             const zIndex = 10 - position;
-            const rotation = position > 0 ? (position % 2 === 0 ? -2 : 2) / (position + 1) : 0;
 
             return {
                 position: "absolute",
@@ -408,13 +408,14 @@ function AnimatedCard({ project, position = 0, isActive }) {
                 y: yOffset,
                 zIndex,
                 rotate: rotation,
-                opacity: 0.95 - position * 0.15,
+                opacity: 0.6 - position * 0.15,
+                filter: `blur(${position * 2}px)`,
                 top: 0,
                 left: 0,
                 right: 0,
             };
         }
-        
+
         // Active card
         return {
             position: "relative",
@@ -423,51 +424,52 @@ function AnimatedCard({ project, position = 0, isActive }) {
             zIndex: 20,
             rotate: 0,
             opacity: 1,
+            filter: "blur(0px)",
             top: 0,
             left: 0,
             right: 0,
         };
-    }, [position, isActive]);
+    }, [position, isActive, rotation]);
 
     return (
         <motion.div
-            className="relative rounded-xl overflow-hidden w-full bg-gradient-to-b from-[#04110C] via-[#050A14] to-[#050708] border border-white/5 shadow-[0_10px_28px_rgba(0,0,0,0.55)] group"
+            className="relative rounded-2xl overflow-hidden w-full bg-[#0a0a0a] border border-[#1A936F]/30 shadow-[0_20px_50px_rgba(0,0,0,0.7)] group "
             initial={false}
             animate={cardStyle}
             transition={{ type: "spring", stiffness: 230, damping: 24 }}
-            whileHover={isActive ? { scale: 1.01 } : {}}
+            whileHover={isActive ? { scale: 1.02, rotate: 0 } : {}}
             style={{ pointerEvents: isActive ? "auto" : "none" }}
         >
-            {/* Gradient and accent layers */}
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#1A936F]/22 via-transparent to-[#1ED696]/12" />
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#1ED696]/80 to-transparent" />
-            <div className="relative">
+            {/* Glass effect overlay */}
+            <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none z-10" />
+
+            <div className="relative z-0">
                 {/* Card content */}
                 <div className="relative aspect-video overflow-hidden">
                     <img
                         src={project.image}
                         alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-400 group-hover:scale-102"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                     {isActive && (
-                        <div className="absolute inset-0 bg-black/45 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-250">
-                            <div className="flex gap-3.5">
+                        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300 backdrop-blur-[2px]">
+                            <div className="flex gap-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                                 <a
                                     href="https://github.com/0asaca0rum0"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="p-2.5 bg-[#1A936F] text-white rounded-full hover:bg-[#1ED696] transition-colors"
+                                    className="p-3 bg-[#1A936F] text-white rounded-full hover:bg-[#1ED696] hover:scale-110 transition-all shadow-lg"
                                 >
-                                    <FaGithub size={18} />
+                                    <FaGithub size={20} />
                                 </a>
                                 {project.link && (
                                     <a
                                         href={project.link}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="p-2.5 bg-[#1A936F] text-white rounded-full hover:bg-[#1ED696] transition-colors"
+                                        className="p-3 bg-white text-[#0a0a0a] rounded-full hover:bg-[#FAF3DD] hover:scale-110 transition-all shadow-lg"
                                     >
-                                        <FaExternalLinkAlt size={18} />
+                                        <FaExternalLinkAlt size={20} />
                                     </a>
                                 )}
                             </div>
@@ -475,40 +477,38 @@ function AnimatedCard({ project, position = 0, isActive }) {
                     )}
                 </div>
 
-                <div className="p-3.5 flex flex-col">
-                    <div className="flex items-center mb-2">
-                        <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-[#1A936F]/10 text-[10px] uppercase tracking-[0.18em] text-[#8FE7C3]/80">
+                <motion.div
+                    className="p-5 flex flex-col bg-[#0F0F0F]/90 backdrop-blur-md"
+                    animate={{ rotate: -rotation }}
+                    transition={{ type: "spring", stiffness: 230, damping: 24 }}
+                >
+                    <div className="flex items-center justify-between mb-2">
+                        <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-[#1A936F]/20 text-[10px] uppercase tracking-wider font-bold text-[#1ED696]">
                             {project.category}
                         </span>
                     </div>
-                    <h3 className="text-[13px] md:text-[15px] font-semibold mb-1.5 text-[#FDFCF7] group-hover:text-[#1ED696] tracking-tight transition-colors">
+                    <h3 className="text-lg font-bold mb-2 text-[#FDFCF7] group-hover:text-[#1ED696] transition-colors">
                         {project.title}
                     </h3>
                     <p
                         onClick={() => setIsExpanded((prev) => !prev)}
-                        className={`text-xs leading-relaxed text-[#D1FAE5]/80 transition-all duration-300 cursor-pointer ${
-                            !isExpanded && "line-clamp-2"
-                        }`}
+                        className={`text-sm leading-relaxed text-[#A0A0A0] transition-all duration-300 cursor-pointer ${!isExpanded && "line-clamp-2"
+                            }`}
                     >
                         {project.description}
                     </p>
-                    <button
-                        onClick={() => setIsExpanded((prev) => !prev)}
-                        className="self-start mt-1.5 text-[10px] text-[#34D399] hover:underline font-medium"
-                    >
-                        {isExpanded ? "Show less" : "Read more"}
-                    </button>
-                    <div className="flex flex-wrap gap-1.5 mt-2.5">
+
+                    <div className="flex flex-wrap gap-2 mt-4">
                         {project.techstack.map((tech, i) => (
                             <span
                                 key={i}
-                                className="bg-[#071B14] border border-[#1A936F]/30 text-[#C4F3DA] text-[9px] px-2.5 py-0.5 rounded-full tracking-wide"
+                                className="bg-black/40 border border-[#1A936F]/20 text-[#C4F3DA] text-[10px] px-3 py-1 rounded-full"
                             >
                                 {tech}
                             </span>
                         ))}
                     </div>
-                </div>
+                </motion.div>
             </div>
         </motion.div>
     );

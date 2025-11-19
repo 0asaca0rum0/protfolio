@@ -1,11 +1,12 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, useAnimation } from "framer-motion";
 import {
   FaReact,
   FaNodeJs,
   FaServer,
   FaLinux,
   FaPython,
+  FaMicrochip,
 } from "react-icons/fa";
 import { TbBrandNextjs, TbBrandMysql } from "react-icons/tb";
 import { SiTailwindcss, SiNginx, SiOpenai, SiNvidia } from "react-icons/si";
@@ -18,238 +19,219 @@ const techList = [
   {
     name: "React",
     icon: FaReact,
-    lightColor: "#61DAFB",
-    darkColor: "#00D8FF",
+    color: "#61DAFB",
     level: 90,
-    learning: false,
+    description: "Building dynamic, interactive user interfaces with modern React patterns, hooks, and state management.",
   },
   {
     name: "Next.js",
     icon: TbBrandNextjs,
-    lightColor: "#000000",
-    darkColor: "#FFFFFF",
+    color: "#FFFFFF",
     level: 85,
-    learning: false,
+    description: "Developing server-side rendered and statically generated web applications for optimal performance and SEO.",
   },
   {
-    name: "Tailwind CSS",
+    name: "Tailwind",
     icon: SiTailwindcss,
-    lightColor: "#38BDF8",
-    darkColor: "#06B6D4",
+    color: "#38BDF8",
     level: 95,
-    learning: false,
+    description: "Rapidly styling responsive designs with a utility-first approach and custom design systems.",
   },
   {
     name: "Node.js",
     icon: FaNodeJs,
-    lightColor: "#68A063",
-    darkColor: "#8CC84B",
+    color: "#68A063",
     level: 80,
-    learning: false,
+    description: "Creating scalable backend services and RESTful APIs using the Node.js runtime.",
   },
   {
     name: "Express",
     icon: FaServer,
-    lightColor: "#808080",
-    darkColor: "#CCCCCC",
+    color: "#808080",
     level: 75,
-    learning: false,
+    description: "Architecting robust web servers and middleware for seamless request handling.",
   },
   {
     name: "MySQL",
     icon: TbBrandMysql,
-    lightColor: "#00758F",
-    darkColor: "#F29111",
+    color: "#00758F",
     level: 70,
-    learning: false,
+    description: "Designing normalized database schemas and writing efficient queries for data persistence.",
   },
   {
     name: "Nginx",
     icon: SiNginx,
-    lightColor: "#009639",
-    darkColor: "#00FF00",
+    color: "#009639",
     level: 65,
-    learning: false,
+    description: "Configuring reverse proxies, load balancers, and web servers for high-traffic deployments.",
   },
   {
     name: "Linux",
     icon: FaLinux,
-    lightColor: "#FCC624",
-    darkColor: "#FFFFFF",
+    color: "#FCC624",
     level: 85,
-    learning: false,
+    description: "Proficient in shell scripting, system administration, and deploying applications in Linux environments.",
   },
   {
     name: "Python",
     icon: FaPython,
-    lightColor: "#3776AB",
-    darkColor: "#3776AB",
+    color: "#3776AB",
     level: 80,
-    learning: false,
+    description: "Leveraging Python for scripting, automation, data analysis, and backend development.",
   },
   {
     name: "Go",
     icon: BiLogoGoLang,
-    lightColor: "#00ADD8",
-    darkColor: "#00ADD8",
+    color: "#00ADD8",
     level: 40,
-    learning: false,
-    customColor: "#FFDD00",
+    description: "Building high-performance, concurrent system tools and microservices.",
   },
   {
     name: "NLP",
     icon: SiOpenai,
-    lightColor: "#10A37F",
-    darkColor: "#10A37F",
-    level: 30,
-    learning: false,
+    color: "#10A37F",
+    level: 40,
+    description: "Exploring Natural Language Processing techniques and integrating LLMs into applications.",
   },
   {
-    name: "Image Processing",
+    name: "Image processing",
     icon: SiNvidia,
-    lightColor: "#76B900",
-    darkColor: "#76B900",
-    level: 25,
-    learning: false,
+    color: "#76B900",
+    level: 50,
+    description: "Working with computer vision libraries and hardware acceleration for image processing tasks.",
+  },
+  {
+    name: "Embedded",
+    icon: FaMicrochip,
+    color: "#E53935",
+    level: 40, // Intermediate
+    description: "Programming microcontrollers and interfacing with hardware sensors for IoT solutions.",
   },
 ];
 
-const getLevelLabel = (tech) => {
-  if (tech.learning) return "Learning";
-  if (tech.level >= 90) return "Expert";
-  if (tech.level >= 75) return "Advanced";
-  return "Intermediate";
-};
+const Orbit = () => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [selectedTech, setSelectedTech] = useState(null);
 
-const getLevelColor = (tech) => {
-  if (tech.learning) {
-    // learning stays orange
-    return "linear-gradient(90deg, #F29111 0%, #FFB347 100%)";
-  }
-  if (tech.level >= 90) {
-    // expert - bright green
-    return "linear-gradient(90deg, #0E8A5F 0%, #1ED696 100%)";
-  }
-  if (tech.level >= 75) {
-    // advanced - deep green
-    return "linear-gradient(90deg, #114E3C 0%, #1A936F 100%)";
-  }
-  // intermediate (below 75 and not learning) - yellow bar
-  return "linear-gradient(90deg, #FBBF24 0%, #FACC15 100%)";
-};
+  // Calculate positions for a spherical/orbital distribution
+  const getPosition = (index, total) => {
+    const phi = Math.acos(-1 + (2 * index) / total);
+    const theta = Math.sqrt(total * Math.PI) * phi;
+    const radius = 220; // Orbit radius
 
-const TechCard = ({ tech }) => {
-  const Icon = tech.icon;
-  const levelLabel = getLevelLabel(tech);
+    return {
+      x: radius * Math.cos(theta) * Math.sin(phi),
+      y: radius * Math.sin(theta) * Math.sin(phi),
+      z: radius * Math.cos(phi),
+    };
+  };
 
   return (
-    <motion.div
-      className="relative w-full rounded-2xl overflow-hidden bg-gradient-to-br from-[#0a0f0d] to-[#050807] border border-[#16A472]/30 shadow-lg hover:shadow-[0_8px_32px_rgba(31,225,167,0.15)] transition-shadow duration-300"
-      whileHover={{ y: -6, scale: 1.02 }}
-      transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-    >
-      {/* Subtle glow effect */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(31,225,167,0.08),transparent_50%)] opacity-60" />
+    <section className="w-full h-full min-h-[680px] flex flex-col items-center justify-center font-['Comfortaa'] overflow-hidden relative">
 
-      <div className="relative z-10 p-5 sm:p-6 flex flex-col gap-4 sm:gap-5">
-        {/* Icon + Title Row */}
-        <div className="flex items-center gap-3 sm:gap-4">
-          {/* Icon with refined glow */}
-          <div className="relative flex-shrink-0">
-            <div className="absolute inset-0 blur-lg rounded-full bg-[#1FE1A7]/20" />
-            <div className="relative flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-black/90 to-black/70 border border-[#1FE1A7]/40 shadow-inner">
-              <Icon size={22} className="text-[#1FE1A7]" strokeWidth={1} />
-            </div>
-          </div>
-
-          {/* Title and Level */}
-          <div className="flex-1 min-w-0">
-            <h3 className="text-base sm:text-lg font-semibold text-[#F7FFF8] truncate mb-0.5">
-              {tech.name}
-            </h3>
-            <p className="text-[10px] sm:text-[11px] uppercase tracking-wider font-medium text-[#7DE5BE]/90">
-              {levelLabel}
-            </p>
-          </div>
-
-          {/* Percentage Badge */}
-          <div className="flex-shrink-0 px-2.5 py-1 rounded-lg bg-black/60 border border-[#1FE1A7]/20 backdrop-blur-sm">
-            <span className="text-xs sm:text-sm font-semibold text-[#1FE1A7]">
-              {tech.level}%
-            </span>
-          </div>
-        </div>
-
-        {/* Progress Bar */}
-        <div className="space-y-2">
-          <div className="w-full h-2 rounded-full bg-black/60 overflow-hidden border border-[#16A472]/20 shadow-inner">
-            <motion.div
-              className="h-full rounded-full relative"
-              style={{
-                background: tech.customColor || getLevelColor(tech),
-              }}
-              initial={{ width: 0 }}
-              animate={{ width: `${tech.level}%` }}
-              transition={{ duration: 1, ease: [0.4, 0, 0.2, 1], delay: 0.1 }}
-            >
-              {/* Shimmer effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
-            </motion.div>
-          </div>
-        </div>
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#1A936F]/10 rounded-full blur-[100px]" />
       </div>
 
-      {/* Hover border glow */}
-      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none border border-[#1FE1A7]/40" />
-    </motion.div>
-  );
-};
-
-const TechGrid = () => {
-  return (
-   <section className="w-full font-['Comfortaa'] bg-transparent">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 space-y-8 sm:space-y-10 -mt-12 sm:-mt-16">
-        {/* Heading */}
-        <div className="text-center space-y-2 sm:space-y-3 max-w-2xl mx-auto">
-          <motion.h2
-            className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#1FE1A7] tracking-tight"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-          >
-            Technology Orbit
-          </motion.h2>
-          <motion.p
-            className="text-sm sm:text-base text-[#8FE7C3]/80 leading-relaxed"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.1 }}
-          >
-            Explore my technology ecosystem — each card shows experience level
-          </motion.p>
-        </div>
-
-        {/* Grid */}
-        <motion.div 
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+      <div className="relative w-[500px] h-[500px] perspective-[1000px]" style={{ transformStyle: "preserve-3d" }}>
+        {/* Central Core - Static */}
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-gradient-to-br from-[#1A936F] to-[#1ED696] rounded-full shadow-[0_0_50px_rgba(30,214,150,0.6)] flex items-center justify-center z-10 backdrop-blur-md border border-white/20"
+          style={{ transform: "translate(-50%, -50%) translateZ(0)" }}
         >
-          {techList.map((tech, index) => (
-            <motion.div
-              key={tech.name}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.05 * index }}
-            >
-              <TechCard tech={tech} />
-            </motion.div>
-          ))}
-        </motion.div>
+          <div className="text-white font-bold text-xl tracking-wider">TECH</div>
+        </div>
+
+        <div
+          className="w-full h-full relative animate-orbit"
+          style={{ transformStyle: "preserve-3d" }}
+        >
+          {/* Orbiting Items */}
+          {techList.map((tech, index) => {
+            const pos = getPosition(index, techList.length);
+            return (
+              <TechItem
+                key={tech.name}
+                tech={tech}
+                x={pos.x}
+                y={pos.y}
+                z={pos.z}
+                onClick={() => setSelectedTech(tech)}
+              />
+            );
+          })}
+        </div>
       </div>
+
+      <div className="mt-12 text-center z-10">
+        <h2 className="text-3xl font-bold text-[#1ED696] mb-2">Tech Universe</h2>
+        <p className="text-[#8FE7C3]/80">Interactive 3D Skill System</p>
+      </div>
+
+      {/* Tech Detail Modal */}
+      {selectedTech && (
+        <div className="absolute inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedTech(null)}>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 20 }}
+            className="relative w-full max-w-md bg-[#0a0a0a]/90 border border-[#1A936F]/50 rounded-2xl p-6 shadow-[0_0_30px_rgba(30,214,150,0.2)] flex flex-col items-center text-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setSelectedTech(null)}
+              className="absolute top-4 right-4 text-white/50 hover:text-white transition-colors"
+            >
+              ✕
+            </button>
+
+            <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#1A936F]/20 to-[#1ED696]/20 flex items-center justify-center mb-4 border border-[#1A936F]/30 shadow-inner">
+              <selectedTech.icon size={40} color={selectedTech.color} />
+            </div>
+
+            <h3 className="text-2xl font-bold text-white mb-1">{selectedTech.name}</h3>
+            <div className="flex items-center gap-2 mb-4">
+              <div className="h-1.5 w-24 bg-gray-700 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-[#1ED696] rounded-full"
+                  style={{ width: `${selectedTech.level}%` }}
+                />
+              </div>
+              <span className="text-xs text-[#1ED696] font-mono">{selectedTech.level}%</span>
+            </div>
+
+            <p className="text-gray-300 text-sm leading-relaxed">
+              {selectedTech.description}
+            </p>
+          </motion.div>
+        </div>
+      )}
     </section>
   );
 };
 
-export default TechGrid;
+const TechItem = ({ tech, x, y, z, onClick }) => {
+  const Icon = tech.icon;
+
+  return (
+    <div
+      className="absolute top-1/2 left-1/2 flex items-center justify-center group cursor-pointer tech-item"
+      style={{
+        transform: `translate3d(${x}px, ${y}px, ${z}px)`,
+        transformStyle: "preserve-3d",
+      }}
+      onClick={onClick}
+    >
+      <div
+        className="relative flex flex-col items-center gap-2 p-3 rounded-xl bg-[#0a0a0a]/80 backdrop-blur-md border border-[#1A936F]/30 hover:border-[#1ED696] hover:bg-black/90 transition-all duration-300 shadow-[0_0_15px_rgba(0,0,0,0.5)] animate-counter-orbit"
+      >
+        <Icon size={28} color={tech.color} />
+        <span className="text-[10px] text-white font-medium opacity-0 group-hover:opacity-100 transition-opacity absolute -bottom-6 whitespace-nowrap bg-black/80 px-2 py-1 rounded">
+          {tech.name}
+        </span>
+      </div>
+    </div>
+  );
+};
+
+export default Orbit;

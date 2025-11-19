@@ -7,31 +7,31 @@ const Contact = () => {
     const [activeTab, setActiveTab] = useState('form');
     const [formStatus, setFormStatus] = useState('idle'); // idle, sending, success, error
     const [direction, setDirection] = useState(0); // -1 for left, 1 for right
-    
+
     const switchTab = (tab) => {
         setDirection(tab === 'form' ? -1 : 1);
         setActiveTab(tab);
     };
-    
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setFormStatus('sending');
-        
+
         fetch(e.target.action, {
             method: e.target.method,
             body: new FormData(e.target),
             headers: { 'Accept': 'application/json' }
         })
-        .then(response => {
-            if (response.ok) {
-                setFormStatus('success');
-                e.target.reset();
-                setTimeout(() => setFormStatus('idle'), 3000);
-            } else {
-                setFormStatus('error');
-            }
-        })
-        .catch(() => setFormStatus('error'));
+            .then(response => {
+                if (response.ok) {
+                    setFormStatus('success');
+                    e.target.reset();
+                    setTimeout(() => setFormStatus('idle'), 3000);
+                } else {
+                    setFormStatus('error');
+                }
+            })
+            .catch(() => setFormStatus('error'));
     };
 
     const containerVariants = {
@@ -47,13 +47,13 @@ const Contact = () => {
 
     const itemVariants = {
         hidden: { opacity: 0, y: 20 },
-        show: { 
-            opacity: 1, 
+        show: {
+            opacity: 1,
             y: 0,
             transition: { type: "spring", stiffness: 300, damping: 24 }
         }
     };
-    
+
     return (
         <motion.section
             className="w-full py-6 sm:py-10 font-['Comfortaa'] relative overflow-hidden"
@@ -85,7 +85,7 @@ const Contact = () => {
 
             <div className="max-w-4xl mx-auto px-4 relative z-10">
                 {/* Section Header */}
-                <motion.div 
+                <motion.div
                     className="text-center mb-6 sm:mb-8"
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -106,7 +106,7 @@ const Contact = () => {
                             </span>
                         </h2>
                     </motion.div>
-                    <motion.p 
+                    <motion.p
                         className="mt-2 text-[#8FE7C3]/80 text-sm sm:text-base"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -117,7 +117,7 @@ const Contact = () => {
                 </motion.div>
 
                 {/* Improved Tab Navigation */}
-                <motion.div 
+                <motion.div
                     className="flex justify-center mb-6"
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -134,9 +134,8 @@ const Contact = () => {
                             transition={{ type: "spring", stiffness: 320, damping: 26 }}
                         />
                         <motion.button
-                            className={`px-4 py-1.5 text-xs sm:text-sm rounded-full relative z-10 flex-1 text-center transition-colors ${
-                                activeTab === 'form' ? 'text-white font-medium' : 'text-[#8FE7C3]/80 hover:text-[#8FE7C3]'
-                            }`}
+                            className={`px-4 py-1.5 text-xs sm:text-sm rounded-full relative z-10 flex-1 text-center transition-colors ${activeTab === 'form' ? 'text-white font-medium' : 'text-[#8FE7C3]/80 hover:text-[#8FE7C3]'
+                                }`}
                             onClick={() => switchTab('form')}
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
@@ -144,9 +143,8 @@ const Contact = () => {
                             Send Message
                         </motion.button>
                         <motion.button
-                            className={`px-4 py-1.5 text-xs sm:text-sm rounded-full relative z-10 flex-1 text-center transition-colors ${
-                                activeTab === 'info' ? 'text-white font-medium' : 'text-[#8FE7C3]/80 hover:text-[#8FE7C3]'
-                            }`}
+                            className={`px-4 py-1.5 text-xs sm:text-sm rounded-full relative z-10 flex-1 text-center transition-colors ${activeTab === 'info' ? 'text-white font-medium' : 'text-[#8FE7C3]/80 hover:text-[#8FE7C3]'
+                                }`}
                             onClick={() => switchTab('info')}
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
@@ -155,16 +153,16 @@ const Contact = () => {
                         </motion.button>
                     </div>
                 </motion.div>
-                
+
                 {/* Main Content */}
-                <motion.div 
-                    className="relative bg-gradient-to-br from-[#0a0f0d]/95 to-[#050708]/90 backdrop-blur-md rounded-2xl max-w-2xl mx-auto shadow-[0_20px_50px_rgba(0,0,0,0.75),inset_0_1px_1px_rgba(255,255,255,0.05)] overflow-hidden border border-[#1A936F]/25"
+                <motion.div
+                    className="relative bg-gradient-to-br from-[#0a0a0a]/90 to-[#050505]/95 backdrop-blur-xl rounded-2xl max-w-2xl mx-auto shadow-[0_20px_50px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.05)] overflow-hidden border border-[#1A936F]/20"
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4, type: "spring", stiffness: 200, damping: 20 }}
                 >
                     {/* Enhanced corner glows */}
-                    <motion.div 
+                    <motion.div
                         className="pointer-events-none absolute -top-16 -right-10 w-40 h-40 bg-[#1ED696]/15 rounded-full blur-3xl"
                         animate={{
                             scale: [1, 1.2, 1],
@@ -172,7 +170,7 @@ const Contact = () => {
                         }}
                         transition={{ duration: 4, repeat: Infinity }}
                     />
-                    <motion.div 
+                    <motion.div
                         className="pointer-events-none absolute -bottom-12 -left-10 w-40 h-40 bg-[#1A936F]/10 rounded-full blur-3xl"
                         animate={{
                             scale: [1, 1.3, 1],
@@ -189,7 +187,7 @@ const Contact = () => {
                         }}
                         transition={{ duration: 3, repeat: Infinity }}
                     />
-                    
+
                     <AnimatePresence mode="wait" custom={direction}>
                         {activeTab === 'form' ? (
                             <motion.div
@@ -201,10 +199,10 @@ const Contact = () => {
                                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
                                 className="p-5 sm:p-6 relative"
                             >
-                                <motion.form 
-                                    action="https://formspree.io/f/xgegpyra" 
-                                    method="POST" 
-                                    onSubmit={handleSubmit} 
+                                <motion.form
+                                    action="https://formspree.io/f/xgegpyra"
+                                    method="POST"
+                                    onSubmit={handleSubmit}
                                     className="space-y-4"
                                     variants={containerVariants}
                                     initial="hidden"
@@ -212,7 +210,7 @@ const Contact = () => {
                                 >
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                         {/* Name Input */}
-                                        <motion.div 
+                                        <motion.div
                                             className="relative group"
                                             variants={itemVariants}
                                         >
@@ -220,9 +218,9 @@ const Contact = () => {
                                                 className="absolute -inset-0.5 bg-gradient-to-r from-[#1A936F]/20 to-[#1ED696]/20 rounded-lg opacity-0 group-hover:opacity-100 blur transition-opacity duration-300"
                                             />
                                             <input
-                                                type="text" 
-                                                id="name" 
-                                                name="name" 
+                                                type="text"
+                                                id="name"
+                                                name="name"
                                                 placeholder=" "
                                                 className="peer relative w-full bg-[#0a0a0a]/80 backdrop-blur-sm border border-[#1A936F]/30 text-[#FCFFF0] rounded-lg p-3 pt-5 focus:border-[#1ED696] focus:shadow-[0_0_15px_rgba(30,214,150,0.2)] transition-all outline-none"
                                                 required
@@ -231,9 +229,9 @@ const Contact = () => {
                                                 Name
                                             </label>
                                         </motion.div>
-                                        
+
                                         {/* Email Input */}
-                                        <motion.div 
+                                        <motion.div
                                             className="relative group"
                                             variants={itemVariants}
                                         >
@@ -241,9 +239,9 @@ const Contact = () => {
                                                 className="absolute -inset-0.5 bg-gradient-to-r from-[#1A936F]/20 to-[#1ED696]/20 rounded-lg opacity-0 group-hover:opacity-100 blur transition-opacity duration-300"
                                             />
                                             <input
-                                                type="email" 
-                                                id="email" 
-                                                name="email" 
+                                                type="email"
+                                                id="email"
+                                                name="email"
                                                 placeholder=" "
                                                 className="peer relative w-full bg-[#0a0a0a]/80 backdrop-blur-sm border border-[#1A936F]/30 text-[#FCFFF0] rounded-lg p-3 pt-5 focus:border-[#1ED696] focus:shadow-[0_0_15px_rgba(30,214,150,0.2)] transition-all outline-none"
                                                 required
@@ -253,9 +251,9 @@ const Contact = () => {
                                             </label>
                                         </motion.div>
                                     </div>
-                                    
+
                                     {/* Message Textarea */}
-                                    <motion.div 
+                                    <motion.div
                                         className="relative group"
                                         variants={itemVariants}
                                     >
@@ -263,9 +261,9 @@ const Contact = () => {
                                             className="absolute -inset-0.5 bg-gradient-to-r from-[#1A936F]/20 to-[#1ED696]/20 rounded-lg opacity-0 group-hover:opacity-100 blur transition-opacity duration-300"
                                         />
                                         <textarea
-                                            id="message" 
-                                            name="message" 
-                                            rows="4" 
+                                            id="message"
+                                            name="message"
+                                            rows="4"
                                             placeholder=" "
                                             className="peer relative w-full bg-[#0a0a0a]/80 backdrop-blur-sm border border-[#1A936F]/30 text-[#FCFFF0] rounded-lg p-3 pt-5 focus:border-[#1ED696] focus:shadow-[0_0_15px_rgba(30,214,150,0.2)] transition-all resize-none outline-none"
                                             required
@@ -274,15 +272,15 @@ const Contact = () => {
                                             Message
                                         </label>
                                     </motion.div>
-                                    
+
                                     {/* Form Footer */}
-                                    <motion.div 
+                                    <motion.div
                                         className="flex justify-between items-center pt-2"
                                         variants={itemVariants}
                                     >
                                         <AnimatePresence mode="wait">
                                             {formStatus === 'success' && (
-                                                <motion.span 
+                                                <motion.span
                                                     className="text-sm text-[#1ED696] flex items-center gap-2"
                                                     initial={{ opacity: 0, x: -10 }}
                                                     animate={{ opacity: 1, x: 0 }}
@@ -292,7 +290,7 @@ const Contact = () => {
                                                 </motion.span>
                                             )}
                                             {formStatus === 'error' && (
-                                                <motion.span 
+                                                <motion.span
                                                     className="text-sm text-red-400"
                                                     initial={{ opacity: 0, x: -10 }}
                                                     animate={{ opacity: 1, x: 0 }}
@@ -305,7 +303,7 @@ const Contact = () => {
                                                 <div />
                                             )}
                                         </AnimatePresence>
-                                        
+
                                         <motion.button
                                             type="submit"
                                             className="relative bg-gradient-to-r from-[#114E3C] to-[#1A936F] hover:from-[#1A936F] hover:to-[#1ED696] text-white flex items-center gap-2 py-2.5 px-5 rounded-full shadow-[0_0_20px_rgba(30,214,150,0.25),inset_0_1px_1px_rgba(255,255,255,0.1)] border border-[#1ED696]/20 font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden group"
@@ -332,8 +330,8 @@ const Contact = () => {
                                                 animate={formStatus === 'sending' ? { rotate: 360 } : {}}
                                                 transition={{ duration: 1, repeat: formStatus === 'sending' ? Infinity : 0, ease: "linear" }}
                                             >
-                                                {formStatus === 'sending' ? 
-                                                    <FaRegPaperPlane className="text-sm" /> : 
+                                                {formStatus === 'sending' ?
+                                                    <FaRegPaperPlane className="text-sm" /> :
                                                     <FaPaperPlane className="text-sm" />
                                                 }
                                             </motion.div>
@@ -342,7 +340,7 @@ const Contact = () => {
                                 </motion.form>
                             </motion.div>
                         ) : (
-                            <motion.div 
+                            <motion.div
                                 key="info"
                                 custom={direction}
                                 initial={{ x: direction > 0 ? 50 : -50, opacity: 0 }}
@@ -351,7 +349,7 @@ const Contact = () => {
                                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
                                 className="p-5 sm:p-6 relative"
                             >
-                                <motion.div 
+                                <motion.div
                                     className="grid grid-cols-1 md:grid-cols-2 gap-6"
                                     variants={containerVariants}
                                     initial="hidden"
@@ -370,19 +368,19 @@ const Contact = () => {
                                             <h3 className="text-[#1ED696] font-semibold text-lg">Direct Contact</h3>
                                         </div>
                                         <div className="space-y-3">
-                                            <ContactLink 
+                                            <ContactLink
                                                 href="mailto:elmasriahmed.dev@gmail.com"
                                                 icon={<SiGmail />}
                                                 text="elmasriahmed.dev@gmail.com"
                                                 delay={0}
                                             />
-                                            <ContactLink 
+                                            <ContactLink
                                                 href="tel:+33773225719"
                                                 icon={<FaPhone />}
                                                 text="+33 7 73 22 57 19"
                                                 delay={0.1}
                                             />
-                                            <ContactLink 
+                                            <ContactLink
                                                 href="https://t.me/karasuma_renya"
                                                 icon={<FaTelegramPlane />}
                                                 text="@karasuma_renya"
@@ -391,7 +389,7 @@ const Contact = () => {
                                             />
                                         </div>
                                     </motion.div>
-                                    
+
                                     {/* Other Links */}
                                     <motion.div variants={itemVariants}>
                                         <div className="flex items-center gap-2 mb-4">
@@ -405,21 +403,21 @@ const Contact = () => {
                                             <h3 className="text-[#1ED696] font-semibold text-lg">Other Links</h3>
                                         </div>
                                         <div className="space-y-3">
-                                            <ContactLink 
+                                            <ContactLink
                                                 href="https://github.com/0asaca0rum0"
                                                 icon={<FaGithub />}
                                                 text="github.com/0asaca0rum0"
                                                 external
                                                 delay={0}
                                             />
-                                            <ContactLink 
+                                            <ContactLink
                                                 href="/cv.pdf"
                                                 icon={<FaDownload />}
                                                 text="Download CV"
                                                 download
                                                 delay={0.1}
                                             />
-                                            <motion.div 
+                                            <motion.div
                                                 className="flex items-center gap-3 text-[#FCFFF0]/80 px-3 py-2 rounded-lg bg-[#0a0a0a]/40 backdrop-blur-sm border border-[#1A936F]/20"
                                                 initial={{ opacity: 0, x: -10 }}
                                                 animate={{ opacity: 1, x: 0 }}
@@ -463,8 +461,8 @@ const ContactLink = ({ href, icon, text, external, download, delay = 0 }) => {
                 initial={false}
                 transition={{ duration: 0.3 }}
             />
-            
-            <motion.span 
+
+            <motion.span
                 className="relative p-2 bg-[#1A936F]/20 group-hover:bg-[#1A936F]/30 rounded-full text-[#1ED696] transition-colors"
                 whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
                 transition={{ duration: 0.4 }}
@@ -472,7 +470,7 @@ const ContactLink = ({ href, icon, text, external, download, delay = 0 }) => {
                 {React.cloneElement(icon, { size: 14 })}
             </motion.span>
             <span className="relative text-sm flex-1">{text}</span>
-            
+
             {/* Arrow indicator */}
             <motion.span
                 className="relative text-[#1ED696] opacity-0 group-hover:opacity-100 transition-opacity"

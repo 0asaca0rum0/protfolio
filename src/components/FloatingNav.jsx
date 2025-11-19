@@ -64,7 +64,7 @@ const FloatingNav = ({ items, isMobile, showSidebar, toggleSidebar }) => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="absolute bottom-16 right-0 bg-[#131313]/90 border border-[#1A936F]/30 backdrop-blur-md rounded-xl p-3 shadow-lg"
+            className="absolute bottom-16 right-0 bg-[#0a0a0a]/90 border border-[#1A936F]/30 backdrop-blur-xl rounded-xl p-3 shadow-[0_10px_40px_rgba(0,0,0,0.6)]"
             initial={{ scale: 0.8, opacity: 0, y: 10 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.8, opacity: 0, y: 10 }}
@@ -82,7 +82,7 @@ const FloatingNav = ({ items, isMobile, showSidebar, toggleSidebar }) => {
                 </span>
                 <span className="text-sm">Download CV</span>
               </motion.button>
-              
+
               {windowWidth < 768 && (
                 <motion.button
                   onClick={() => {
@@ -101,28 +101,26 @@ const FloatingNav = ({ items, isMobile, showSidebar, toggleSidebar }) => {
                   <span className="text-sm">{showSidebar ? "View Content" : "View Profile"}</span>
                 </motion.button>
               )}
-              
+
               {(!isMobile || (isMobile && !showSidebar)) && items.map((item, index) => (
                 <NavLink
                   key={item.name}
                   to={item.path}
                   onClick={() => setIsOpen(false)}
                   className={({ isActive }) =>
-                    `flex items-center gap-3 px-4 py-2.5 rounded-lg ${
-                      isActive
-                        ? "bg-[#1A936F]/40 text-[#FCFFF0]"
-                        : "bg-[#1A936F]/10 text-[#FCFFF0]/70 hover:bg-[#1A936F]/20"
+                    `flex items-center gap-3 px-4 py-2.5 rounded-lg ${isActive
+                      ? "bg-[#1A936F]/40 text-[#FCFFF0]"
+                      : "bg-[#1A936F]/10 text-[#FCFFF0]/70 hover:bg-[#1A936F]/20"
                     } transition-all duration-300 w-full text-left`
                   }
                 >
                   {({ isActive }) => (
                     <>
                       <motion.span
-                        className={`p-1.5 ${
-                          isActive
+                        className={`p-1.5 ${isActive
                             ? "bg-[#1A936F]/50"
                             : "bg-[#1A936F]/20"
-                        } rounded-full`}
+                          } rounded-full`}
                         whileHover={{ scale: 1.1 }}
                       >
                         {React.cloneElement(item.icon, {

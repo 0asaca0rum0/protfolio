@@ -102,7 +102,7 @@ const Header = ({ items, isMobile, showSidebar, toggleSidebar }) => {
     window.addEventListener('resize', updateActiveIndicator, { passive: true });
     return () => window.removeEventListener('resize', updateActiveIndicator);
   }, [location.pathname]);
-  
+
   // Handle downloading CV
   const handleDownloadCV = () => {
     const link = document.createElement('a');
@@ -113,7 +113,7 @@ const Header = ({ items, isMobile, showSidebar, toggleSidebar }) => {
     document.body.removeChild(link);
     setIsMenuOpen(false);
   };
-  
+
   // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -121,22 +121,22 @@ const Header = ({ items, isMobile, showSidebar, toggleSidebar }) => {
         setIsMenuOpen(false);
       }
     };
-    
+
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isMenuOpen]);
-  
+
   // Filter navigation items based on sidebar visibility on mobile
-  const visibleItems = isMobile && showSidebar 
+  const visibleItems = isMobile && showSidebar
     ? [] // No navigation items when sidebar is visible on mobile
     : items;
-  
+
   // Define content navigation items for when sidebar is visible on mobile
   const contentNavItems = [
     { name: 'projects', path: '/projects', icon: <FaCode size={16} />, label: 'Projects' },
     { name: 'contact', path: '/contact', icon: <FaEnvelope size={16} />, label: 'Contact' },
   ];
-  
+
   return (
     <motion.div
       className="sticky top-0 left-0 right-0 z-50 flex justify-center pt-3 pointer-events-none"
@@ -146,11 +146,10 @@ const Header = ({ items, isMobile, showSidebar, toggleSidebar }) => {
     >
       <motion.header
         ref={headerRef}
-        className={`relative pointer-events-auto font-['Comfortaa'] px-5 md:px-8 lg:px-10 transition-all duration-300 rounded-full max-w-[96%] w-full md:w-auto mx-auto ${
-          scrolled
-            ? 'py-2.5  backdrop-blur-[20px] border border-[#1ED696]/35 shadow-[0_14px_40px_rgba(0,0,0,0.75)]'
-            : 'py-3.5  backdrop-blur-[26px] border border-[#8FE7C3]/30 shadow-[0_12px_32px_rgba(0,0,0,0.7)]'
-        }`}
+        className={`relative pointer-events-auto font-['Comfortaa'] px-5 md:px-8 lg:px-10 transition-all duration-300 rounded-full max-w-[96%] w-full md:w-auto mx-auto ${scrolled
+          ? 'py-2.5 backdrop-blur-xl bg-[#0a0a0a]/80 border border-[#10B981]/40 shadow-[0_10px_30px_rgba(0,0,0,0.5)]'
+          : 'py-3.5 backdrop-blur-md bg-[#0a0a0a]/60 border border-[#10B981]/20 shadow-[0_10px_30px_rgba(0,0,0,0.3)]'
+          }`}
         initial={{ y: -80, opacity: 0 }}
         animate={{
           y: headerVisible ? 0 : -80,
@@ -166,7 +165,7 @@ const Header = ({ items, isMobile, showSidebar, toggleSidebar }) => {
         <div className="pointer-events-none absolute inset-[1px] rounded-full border border-white/15 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.35)]" />
         {/* Subtle top reflection */}
         <div className="pointer-events-none absolute top-0 left-[6%] right-[6%] h-[52%] rounded-full bg-gradient-to-b from-white/12 via-white/3 to-transparent opacity-35 mix-blend-screen" />
- 
+
 
 
         <div className="relative flex justify-between items-center">
@@ -176,22 +175,21 @@ const Header = ({ items, isMobile, showSidebar, toggleSidebar }) => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <NavLink to="/" className="flex items-center gap-2">
-              <div className="relative">
-                <motion.div
-                  className="absolute -inset-1 bg-gradient-to-r from-[#114E3C]/40 to-[#1ED696]/40 rounded-full opacity-60 blur-sm"
-                  animate={{
-                    scale: [1, 1.12, 1],
-                    opacity: [0.35, 0.55, 0.35],
-                  }}
-                  transition={{ duration: 3.2, repeat: Infinity }}
-                />
-                <div className="w-8 h-8 m-2 md:w-9 md:h-9   rounded-full flex items-center justify-center relative z-10 shadow-[0_0_18px_rgba(12,148,136,0.45)]">
-                <img src="/savr.svg" alt="logo" />
+            <div className="flex items-center gap-4">
+              <NavLink to="/" className="relative group">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-[#1ED696]/20 transition-all duration-300">
+                  <img src="savr.svg" alt="" />
                 </div>
-              </div>
+              </NavLink>
 
-            </NavLink>
+              {/* Mobile Route Indication */}
+              <div className="md:hidden flex flex-col">
+                <span className="text-[10px] text-[#8FE7C3]/60 uppercase tracking-wider font-bold">Current View</span>
+                <span className="text-sm font-bold text-[#FCFFF0] capitalize">
+                  {location.pathname === '/' && isMobile  ? 'Profile' : location.pathname.substring(1)}
+                </span>
+              </div>
+            </div>
           </motion.div>
 
           {isMobile ? (
@@ -199,11 +197,10 @@ const Header = ({ items, isMobile, showSidebar, toggleSidebar }) => {
             <div className="flex items-center gap-2">
               <motion.button
                 onClick={toggleSidebar}
-                className={`p-2 rounded-full border ${
-                  showSidebar
-                    ? 'bg-[#1A936F]/20 text-[#1ED696] border-[#1ED696]/60'
-                    : 'bg-[#050708]/60 text-[#8FE7C3] border-[#1A936F]/40'
-                } transition-all`}
+                className={`p-2 rounded-full border ${showSidebar
+                  ? 'bg-[#1A936F]/20 text-[#1ED696] border-[#1ED696]/60'
+                  : 'bg-[#050708]/60 text-[#8FE7C3] border-[#1A936F]/40'
+                  } transition-all`}
                 whileTap={{ scale: 0.9 }}
                 aria-label="Toggle Sidebar"
               >
@@ -241,10 +238,9 @@ const Header = ({ items, isMobile, showSidebar, toggleSidebar }) => {
                     key={item.name}
                     to={item.path}
                     className={({ isActive }) =>
-                      `nav-link relative px-4 py-1.5 text-[13px] rounded-full transition-all duration-200 ${
-                        isActive
-                          ? 'text-[#E7FFFA] bg-[#071B14] border border-[#1ED696]/70 shadow-[0_0_18px_rgba(15,118,110,0.45)]'
-                          : 'text-[#D1FAE5]/70 hover:text-[#E7FFFA] hover:bg-white/5'
+                      `nav-link relative px-4 py-1.5 text-[13px] rounded-full transition-all duration-200 ${isActive
+                        ? 'text-[#E7FFFA] bg-[#071B14] border border-[#1ED696]/70 shadow-[0_0_18px_rgba(15,118,110,0.45)]'
+                        : 'text-[#D1FAE5]/70 hover:text-[#E7FFFA] hover:bg-white/5'
                       }`
                     }
                   >
@@ -348,30 +344,28 @@ const Header = ({ items, isMobile, showSidebar, toggleSidebar }) => {
 // Mobile navigation link with animation
 const MobileNavLink = ({ to, icon, label, onClick, delay }) => {
   return (
-    <NavLink 
-      to={to} 
+    <NavLink
+      to={to}
       onClick={onClick}
-      className={({ isActive }) => 
-        `flex items-center gap-3 px-4 py-2.5 rounded-md ${
-          isActive 
-            ? 'bg-[#1A936F]/30 text-[#FCFFF0]' 
-            : 'hover:bg-[#1A936F]/10 text-[#FCFFF0]/80'
+      className={({ isActive }) =>
+        `flex items-center gap-3 px-4 py-2.5 rounded-md ${isActive
+          ? 'bg-[#1A936F]/30 text-[#FCFFF0]'
+          : 'hover:bg-[#1A936F]/10 text-[#FCFFF0]/80'
         } transition-all`
       }
     >
       {({ isActive }) => (
         <>
           <motion.span
-            className={`p-1.5 ${
-              isActive ? 'bg-[#1A936F]/40' : 'bg-[#1A936F]/20'
-            } rounded-full`}
+            className={`p-1.5 ${isActive ? 'bg-[#1A936F]/40' : 'bg-[#1A936F]/20'
+              } rounded-full`}
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay }}
           >
             {React.cloneElement(icon, { className: "text-[#8FE7C3]", size: 16 })}
           </motion.span>
-          <motion.span 
+          <motion.span
             className="text-sm"
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}

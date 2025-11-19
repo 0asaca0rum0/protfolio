@@ -1,7 +1,6 @@
 import React, { Suspense, lazy, useState, useLayoutEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
-import Contact from './components/contact';
 import Header from './components/Header';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaProjectDiagram, FaCode } from 'react-icons/fa';
@@ -12,6 +11,7 @@ import './index.css';
 const Projects = lazy(() => import('./components/projects'));
 const Carousel = lazy(() => import('./components/Carousel'));
 const Techno = lazy(() => import('./components/Techno'));
+const Contact = lazy(() => import('./components/contact'));
 const ErrorPage = lazy(() => import('./components/ErrorPage'));
 
 // Loading component
@@ -24,7 +24,7 @@ const LoadingFallback = () => (
 // Component to handle animated routes
 const AnimatedRoutes = ({ isMobile }) => {
   const location = useLocation();
-  
+
   return (
     <AnimatePresence mode="wait">
       <motion.div
@@ -134,7 +134,7 @@ function App() {
               onCollapse={handleSidebarCollapse}
             />
           )}
-          
+
           {(!isMobile || (isMobile && !showSidebar)) && (
             <motion.main
               className={`content-container ${isMobile ? 'mobile-content' : ''}`}
@@ -145,6 +145,14 @@ function App() {
             </motion.main>
           )}
         </div>
+
+        {/* SVG Filter for Liquid Glass Effect */}
+        <svg style={{ position: 'absolute', width: 0, height: 0 }}>
+          <filter id="liquid-glass">
+            <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="10" />
+          </filter>
+        </svg>
       </div>
     </Router>
   );
