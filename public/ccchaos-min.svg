@@ -75,7 +75,7 @@
                     type="rotate"
                     from="0 75 75"
                     to="360 75 75"
-                    dur="120s"
+                    dur="45s"
                     repeatCount="indefinite" />
             </use>
             
@@ -86,7 +86,7 @@
                     type="rotate"
                     from="0 75 75"
                     to="-360 75 75"
-                    dur="180s"
+                    dur="60s"
                     repeatCount="indefinite" />
             </use>
             
@@ -97,7 +97,7 @@
                     type="rotate"
                     from="0 75 75"
                     to="360 75 75"
-                    dur="240s"
+                    dur="80s"
                     repeatCount="indefinite" />
             </use>
             
@@ -108,7 +108,7 @@
                     type="rotate"
                     from="0 75 75"
                     to="-360 75 75"
-                    dur="300s"
+                    dur="100s"
                     repeatCount="indefinite" />
             </use>
             
@@ -119,7 +119,7 @@
                     type="rotate"
                     from="0 75 75"
                     to="360 75 75"
-                    dur="360s"
+                    dur="120s"
                     repeatCount="indefinite" />
             </use>
             
@@ -130,7 +130,7 @@
                     type="rotate"
                     from="0 75 75"
                     to="-360 75 75"
-                    dur="420s"
+                    dur="150s"
                     repeatCount="indefinite" />
             </use>
         </g>

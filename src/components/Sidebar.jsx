@@ -483,6 +483,8 @@ export default function Sidebar({ className, onCollapse }) {
                     ))}
                   </div>
                 </motion.div>
+                                  <span className="text-[8px] text-[#1ED696]/50">up up down down left right left right</span>
+
               </motion.div>
             </div>
 
@@ -663,10 +665,10 @@ const ContactItem = ({ icon, text, href, delay, type = "link" }) => {
 const SkillTag = ({ text, index }) => {
   return (
     <motion.div
-      className="bg-[#121212] border border-[#1A936F]/30 text-[#8FE7C3] text-[11px] px-2.5 py-1 rounded-full relative overflow-hidden"
+      className="bg-[#121212] border border-[#1A936F]/30 text-[#8FE7C3] text-[11px] px-2.5 py-1 rounded-full relative overflow-hidden skill-tag"
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: 0.6 + (index * 0.1) }}
+      transition={{ delay: 0.2 + (index * 0.05) }}
       whileHover={{
         scale: 1.08,
         backgroundColor: "rgba(30, 214, 150, 0.1)",
@@ -675,12 +677,6 @@ const SkillTag = ({ text, index }) => {
       }}
     >
       {text}
-      <motion.div
-        className="absolute top-0 left-0 w-full h-full bg-gradient-to- r from-transparent via-white/10 to-transparent"
-        initial={{ x: "-100%" }}
-        animate={{ x: "200%" }}
-        transition={{ duration: 1, repeat: Infinity, repeatDelay: index + 3 }}
-      />
     </motion.div>
   );
 };

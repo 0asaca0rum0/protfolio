@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { FaGithub, FaExternalLinkAlt, FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Projects() {
@@ -28,7 +28,7 @@ export default function Projects() {
             techstack: ['Next 13', "Node.js", "Express"],
             link: "https://fri7a.pages.dev",
             category: "Web App",
-        }, 
+        },
         {
             title: "E-commerce (bilwafi)",
             description: "A responsive e-commerce website for selling products online, intended for bilwafi, a local cosmetic shop in Algeria. Integrated with a payment gateway and a product management dashboard.",
@@ -82,7 +82,7 @@ export default function Projects() {
             description: "A browser extension and platform that helps users find better deals by comparing product prices across different sites using product URLs, images, or price values.",
             image: "savr.png",
             techstack: ["Next.js", "TypeScript", "Tailwind", "Puppeteer", "Chrome Extension API"],
-            link: "https://savr.pro",
+            link: "https://chromewebstore.google.com/detail/savr/ahfolhcgajfddmgimlmniiacdlidlkmn?hl=en",
             category: "Web App",
         },
         {
@@ -147,22 +147,25 @@ export default function Projects() {
 
     const slideVariants = {
         enter: (direction) => ({
-            x: direction === "left" ? 100 : -100,
+            x: direction === "left" ? 80 : -80,
             opacity: 0,
-            scale: 0.9,
-            zIndex: 10,
+            scale: 0.96,
+            position: 'absolute',
+            zIndex: 20,
         }),
         center: {
             x: 0,
             opacity: 1,
             scale: 1,
+            position: 'absolute',
             zIndex: 20,
         },
         exit: (direction) => ({
-            x: direction === "left" ? -100 : 100,
+            x: direction === "left" ? -80 : 80,
             opacity: 0,
-            scale: 0.9,
-            zIndex: 10,
+            scale: 0.96,
+            position: 'absolute',
+            zIndex: 15,
         }),
     };
 
@@ -212,26 +215,24 @@ export default function Projects() {
                 <div
                     className="relative w-full mx-auto max-w-[300px] md:max-w-[340px] lg:max-w-[380px] h-[340px] md:h-[360px] lg:h-[380px] m-6 perspective-[1000px]"
                 >
-                    {/* Current active card with smoother slide animations */}
+                    {/* Current active card with simultaneous slide animation */}
                     <AnimatePresence
-                        mode="popLayout"
                         initial={false}
                         custom={slideDirection || "left"}
                     >
                         {hasProjects && (
                             <motion.div
                                 key={currentProject?.title ?? currentIndex}
-                                className="w-full h-full absolute top-0 left-0"
+                                className="w-full h-full top-0 left-0"
                                 variants={slideVariants}
                                 custom={slideDirection || "left"}
                                 initial="enter"
                                 animate="center"
                                 exit="exit"
                                 transition={{
-                                    duration: 0.8,
-                                    ease: [0.22, 1, 0.36, 1],
+                                    duration: 0.35,
+                                    ease: [0.25, 0.46, 0.45, 0.94],
                                 }}
-                                style={{ zIndex: 20 }}
                             >
                                 <AnimatedCard
                                     project={currentProject}
@@ -241,20 +242,28 @@ export default function Projects() {
                         )}
                     </AnimatePresence>
 
-                    {/* Background cards (no change) */}
+                    {/* Background card placeholders — lightweight, no images, no blur */}
                     {filteredProjects.map((project, idx) => {
-                        // Calculate position in stack relative to current card
                         const position = (idx - currentIndex + filteredProjects.length) % filteredProjects.length;
-
-                        // Only render background cards (positions 1-4)
                         if (position === 0 || position >= 4) return null;
-
+                        const scale = 1 - position * 0.05;
+                        const yOffset = -15 * position;
+                        const opacity = Math.max(0, 0.55 - position * 0.15);
+                        const rotation = position % 2 === 0 ? -3 : 3;
                         return (
-                            <AnimatedCard
-                                key={`bg-${project.title}-${idx}`}
-                                project={project}
-                                position={position}
-                                isActive={false}
+                            <div
+                                key={`bg-${project.title}`}
+                                style={{
+                                    position: 'absolute',
+                                    top: 0, left: 0, right: 0, bottom: 0,
+                                    transform: `scale(${scale}) translateY(${yOffset}px) rotate(${rotation}deg)`,
+                                    opacity,
+                                    zIndex: 10 - position,
+                                    borderRadius: '16px',
+                                    background: '#0a0a0a',
+                                    border: '1px solid rgba(26,147,111,0.25)',
+                                    boxShadow: '0 20px 50px rgba(0,0,0,0.6)',
+                                }}
                             />
                         );
                     })}
@@ -391,53 +400,12 @@ function ProjectNavButton({ variant, onClick, disabled }) {
 function AnimatedCard({ project, position = 0, isActive }) {
     const [isExpanded, setIsExpanded] = useState(false);
 
-    // Calculate rotation for counter-rotation logic
-    const rotation = isActive ? 0 : (position > 0 ? (position % 2 === 0 ? -3 : 3) : 0);
-
-    // Card styling based on position
-    const cardStyle = useMemo(() => {
-        // Only apply position styling for background cards
-        if (!isActive) {
-            const scale = 1 - position * 0.05;
-            const yOffset = -15 * position;
-            const zIndex = 10 - position;
-
-            return {
-                position: "absolute",
-                scale,
-                y: yOffset,
-                zIndex,
-                rotate: rotation,
-                opacity: 0.6 - position * 0.15,
-                filter: `blur(${position * 2}px)`,
-                top: 0,
-                left: 0,
-                right: 0,
-            };
-        }
-
-        // Active card
-        return {
-            position: "relative",
-            scale: 1,
-            y: 0,
-            zIndex: 20,
-            rotate: 0,
-            opacity: 1,
-            filter: "blur(0px)",
-            top: 0,
-            left: 0,
-            right: 0,
-        };
-    }, [position, isActive, rotation]);
-
     return (
         <motion.div
-            className="relative rounded-2xl overflow-hidden w-full bg-[#0a0a0a] border border-[#1A936F]/30 shadow-[0_20px_50px_rgba(0,0,0,0.7)] group "
+            className="relative rounded-2xl overflow-hidden w-full bg-[#0a0a0a] border border-[#1A936F]/30 shadow-[0_20px_50px_rgba(0,0,0,0.7)] group"
             initial={false}
-            animate={cardStyle}
-            transition={{ type: "spring", stiffness: 230, damping: 24 }}
-            whileHover={isActive ? { scale: 1.02, rotate: 0 } : {}}
+            transition={{ type: "spring", stiffness: 300, damping: 28 }}
+            whileHover={isActive ? { scale: 1.02 } : {}}
             style={{ pointerEvents: isActive ? "auto" : "none" }}
         >
             {/* Glass effect overlay */}
@@ -450,7 +418,7 @@ function AnimatedCard({ project, position = 0, isActive }) {
                         loading="lazy"
                         src={project.image}
                         alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 "
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                     {isActive && (
                         <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300 backdrop-blur-[2px]">
@@ -478,11 +446,7 @@ function AnimatedCard({ project, position = 0, isActive }) {
                     )}
                 </div>
 
-                <motion.div
-                    className="p-5 flex flex-col bg-[#0F0F0F]/90 backdrop-blur-md"
-                    animate={{ rotate: -rotation }}
-                    transition={{ type: "spring", stiffness: 230, damping: 24 }}
-                >
+                <div className="p-5 flex flex-col bg-[#0F0F0F]/90 backdrop-blur-md">
                     <div className="flex items-center justify-between mb-2">
                         <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-[#1A936F]/20 text-[10px] uppercase tracking-wider font-bold text-[#1ED696]">
                             {project.category}
@@ -493,8 +457,7 @@ function AnimatedCard({ project, position = 0, isActive }) {
                     </h3>
                     <p
                         onClick={() => setIsExpanded((prev) => !prev)}
-                        className={`text-sm leading-relaxed text-[#A0A0A0] transition-all duration-300 cursor-pointer ${!isExpanded && "line-clamp-2"
-                            }`}
+                        className={`text-sm leading-relaxed text-[#A0A0A0] transition-all duration-300 cursor-pointer ${!isExpanded && "line-clamp-2"}`}
                     >
                         {project.description}
                     </p>
@@ -509,7 +472,7 @@ function AnimatedCard({ project, position = 0, isActive }) {
                             </span>
                         ))}
                     </div>
-                </motion.div>
+                </div>
             </div>
         </motion.div>
     );

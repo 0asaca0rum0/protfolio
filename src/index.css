@@ -219,6 +219,8 @@ body {
   left: -120px;
   background: radial-gradient(circle at center, rgba(30, 214, 150, 0.85), transparent 60%);
   animation: float-orb-1 22s var(--transition-smooth) infinite alternate;
+  will-change: transform;
+  filter: blur(60px);
 }
 
 .main-container::after {
@@ -226,6 +228,8 @@ body {
   right: -120px;
   background: radial-gradient(circle at center, rgba(143, 231, 195, 0.75), transparent 60%);
   animation: float-orb-2 28s var(--transition-smooth) infinite alternate;
+  will-change: transform;
+  filter: blur(60px);
 }
 
 @keyframes float-orb-1 {
@@ -309,7 +313,6 @@ body {
     right: 0;
     bottom: 0;
     box-shadow: inset 0 0 2000px rgba(0, 0, 0, 0.2);
-    filter: url(#liquid-glass);
     opacity: 0.4;
     pointer-events: none;
     z-index: -1;
@@ -798,4 +801,24 @@ body:has(.tech-item:hover) .animate-counter-orbit {
     max-height: 800px;
     animation: fadeIn 0.3s ease-in-out;
   }
+}
+
+/* Konami Code Easter Egg */
+@keyframes barrelRoll {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(180deg) scale(0.6);
+  }
+
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+.barrel-roll {
+  animation: barrelRoll 2s cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards;
+  pointer-events: none;
 }

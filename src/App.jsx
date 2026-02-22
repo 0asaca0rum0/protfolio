@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useState, useLayoutEffect, useEffect } from 'react';
+import React, { Suspense, lazy, useState, useLayoutEffect, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
@@ -13,6 +13,47 @@ const Carousel = lazy(() => import('./components/Carousel'));
 const Techno = lazy(() => import('./components/Techno'));
 const Contact = lazy(() => import('./components/contact'));
 const ErrorPage = lazy(() => import('./components/ErrorPage'));
+const SnakeGame = lazy(() => import('./components/SnakeGame'));
+
+// Robust Konami code hook using refs to avoid closure state issues
+const useKonamiCode = (callback) => {
+  const sequenceRef = useRef([]);
+  const timeoutRef = useRef(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // Ignore modifier keys
+      if (['Shift', 'Control', 'Alt', 'Meta'].includes(e.key)) return;
+
+      const key = e.key.toLowerCase();
+      sequenceRef.current.push(key);
+
+      // Keep only the last 8 strokes (length of our sequence)
+      if (sequenceRef.current.length > 8) {
+        sequenceRef.current.shift();
+      }
+
+      const konami = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright'];
+
+      if (sequenceRef.current.join('') === konami.join('')) {
+        callback();
+        sequenceRef.current = [];
+      }
+
+      // Reset sequence if typing stops for 3 seconds
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = setTimeout(() => {
+        sequenceRef.current = [];
+      }, 3000);
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      clearTimeout(timeoutRef.current);
+    };
+  }, [callback]);
+};
 
 // Loading component
 const PageLoader = () => (
@@ -31,7 +72,7 @@ const AnimatedRoutes = ({ isMobile }) => {
           path="/"
           element={
             <Suspense fallback={<PageLoader />}>
-              <Carousel />
+              <Projects />
             </Suspense>
           }
         />
@@ -74,9 +115,16 @@ const AnimatedRoutes = ({ isMobile }) => {
 
 function App() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  const [showSidebar, setShowSidebar] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(window.innerWidth >= 768);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [headerHeight, setHeaderHeight] = useState(0);
+  const [showSnakeGame, setShowSnakeGame] = useState(false);
+
+  // Easter egg listener
+  useKonamiCode(() => {
+    console.log("EASTER EGG TRIGGERED: Snake Game!");
+    setShowSnakeGame(true);
+  });
 
   useLayoutEffect(() => {
     const updateHeaderHeight = () => {
@@ -167,6 +215,15 @@ function App() {
               <feDisplacementMap in="SourceGraphic" in2="noise" scale="10" />
             </filter>
           </svg>
+
+          {/* Easter Egg Game Overlay */}
+          <AnimatePresence>
+            {showSnakeGame && (
+              <Suspense fallback={null}>
+                <SnakeGame onClose={() => setShowSnakeGame(false)} />
+              </Suspense>
+            )}
+          </AnimatePresence>
         </div>
       </LazyMotion>
     </Router>
