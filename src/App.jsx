@@ -208,12 +208,34 @@ function App() {
             )}
           </div>
 
-          {/* SVG Filter for Liquid Glass Effect */}
+          {/* SVG Filter for Liquid Glass Refraction */}
           <svg style={{ position: 'absolute', width: 0, height: 0 }}>
-            <filter id="liquid-glass">
-              <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="1" result="noise" />
-              <feDisplacementMap in="SourceGraphic" in2="noise" scale="10" />
-            </filter>
+            <defs>
+              <filter id="liquid-glass" x="-20%" y="-20%" width="140%" height="140%" colorInterpolationFilters="sRGB">
+                <feTurbulence
+                  type="fractalNoise"
+                  baseFrequency="0.012 0.018"
+                  numOctaves="3"
+                  seed="2"
+                  result="noise"
+                >
+                  <animate
+                    attributeName="baseFrequency"
+                    values="0.012 0.018; 0.022 0.010; 0.008 0.024; 0.018 0.014; 0.012 0.018"
+                    dur="18s"
+                    repeatCount="indefinite"
+                  />
+                  <animate
+                    attributeName="seed"
+                    values="2;5;8;3;2"
+                    dur="30s"
+                    repeatCount="indefinite"
+                  />
+                </feTurbulence>
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="22" xChannelSelector="R" yChannelSelector="G" result="displaced" />
+                <feComposite in="displaced" in2="SourceGraphic" operator="in" />
+              </filter>
+            </defs>
           </svg>
 
           {/* Easter Egg Game Overlay */}

@@ -15,28 +15,29 @@ const fadeUp = {
 const Contact = () => {
     const [formStatus, setFormStatus] = useState('idle');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setFormStatus('sending');
-        fetch(e.target.action, {
-            method: e.target.method,
-            body: new FormData(e.target),
-            headers: { Accept: 'application/json' },
-        })
-            .then((res) => {
-                if (res.ok) {
-                    setFormStatus('success');
-                    e.target.reset();
-                    setTimeout(() => setFormStatus('idle'), 4000);
-                } else {
-                    setFormStatus('error');
-                    setTimeout(() => setFormStatus('idle'), 4000);
-                }
-            })
-            .catch(() => {
+        const formData = new FormData(e.target);
+        formData.append('access_key', '3d2c2f6f-f1ae-4a0b-b8c1-8ed16903f2d9');
+        try {
+            const res = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formData,
+            });
+            const data = await res.json();
+            if (data.success) {
+                setFormStatus('success');
+                e.target.reset();
+                setTimeout(() => setFormStatus('idle'), 4000);
+            } else {
                 setFormStatus('error');
                 setTimeout(() => setFormStatus('idle'), 4000);
-            });
+            }
+        } catch {
+            setFormStatus('error');
+            setTimeout(() => setFormStatus('idle'), 4000);
+        }
     };
 
     return (
@@ -78,11 +79,10 @@ const Contact = () => {
                     >
                         <h3 className="text-[#1ED696] font-semibold text-base mb-5">Send a message</h3>
                         <form
-                            action="https://formspree.io/f/xgegpyra"
-                            method="POST"
                             onSubmit={handleSubmit}
                             className="space-y-4"
                         >
+                            <input type="hidden" name="access_key" value="3d2c2f6f-f1ae-4a0b-b8c1-8ed16903f2d9" />
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <Field id="name" name="name" label="Name" type="text" required />
                                 <Field id="email" name="email" label="Email" type="email" required />

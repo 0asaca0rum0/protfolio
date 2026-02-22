@@ -134,6 +134,25 @@ function getGridBg() {
      return off;
 }
 
+// Pre-render shield circle (fix #4)
+let shieldCanvas = null;
+function getShieldCanvas() {
+     if (shieldCanvas) return shieldCanvas;
+     const size = 54; // 24 radius * 2 + some padding
+     const off = document.createElement('canvas');
+     off.width = size;
+     off.height = size;
+     const c = off.getContext('2d');
+     c.strokeStyle = 'rgba(30, 214, 150, 0.45)';
+     c.lineWidth = 2;
+     c.setLineDash([4, 4]);
+     c.beginPath();
+     c.arc(size / 2, size / 2, 24, 0, 6.28);
+     c.stroke();
+     shieldCanvas = off;
+     return off;
+}
+
 function buildGrid() {
      const enemies = [];
      for (let r = 0; r < ROWS; r++) {
@@ -182,6 +201,7 @@ export default function SpaceShooter({ onClose }) {
      }
 
      function addParticles(s, x, y, color, big) {
+          if (s.particles.length > 120) return; // fix #3: hard cap
           const n = big ? 10 : 4;
           for (let i = 0; i < n; i++) {
                const a = Math.random() * 6.28;
@@ -221,6 +241,7 @@ export default function SpaceShooter({ onClose }) {
 
           // Ensure caches exist
           const grid = getGridBg();
+          const shield = getShieldCanvas(); // fix #4: pre-baked
           bakeSprite('player', '#1ED696', '#DCFFF5');
           Object.keys(ROW_COLORS).forEach(t => bakeSprite(t, ROW_COLORS[t]));
 
@@ -252,8 +273,10 @@ export default function SpaceShooter({ onClose }) {
                     shootCD.current = s.rapidFireTimer > 0 ? 6 : 15;
                }
 
-               // formation
+               // fix #5: compute alive ONCE per frame, reuse everywhere
                const alive = s.enemies.filter(e => e.alive);
+
+               // formation
                if (s.fdrop) {
                     s.fy += 20; s.fdir *= -1; s.fdx += 0.15; s.fdrop = false;
                } else {
@@ -273,7 +296,7 @@ export default function SpaceShooter({ onClose }) {
                     e.y = GRID_Y0 + e.row * (EH + GAP_Y) + EH / 2 + s.fy;
                }
 
-               // enemy fire
+               // enemy fire (reuses `alive`)
                s.eFireTimer++;
                if (s.eFireTimer >= s.eFireRate && alive.length) {
                     s.eFireTimer = 0;
@@ -288,30 +311,30 @@ export default function SpaceShooter({ onClose }) {
                     if (bot) s.ebullets.push({ x: bot.x, y: bot.y + EH / 2 });
                }
 
-               // move bullets
-               for (let i = s.bullets.length - 1; i >= 0; i--) {
+               // fix #2: move bullets, mark dead instead of splicing
+               for (let i = 0; i < s.bullets.length; i++) {
                     s.bullets[i].y -= 10;
                     s.bullets[i].x += s.bullets[i].vx;
-                    if (s.bullets[i].y < -10) { s.bullets.splice(i, 1); }
+                    if (s.bullets[i].y < -10) s.bullets[i].dead = true;
                }
-               for (let i = s.ebullets.length - 1; i >= 0; i--) {
+               for (let i = 0; i < s.ebullets.length; i++) {
                     s.ebullets[i].y += 5;
-                    if (s.ebullets[i].y > H + 10) { s.ebullets.splice(i, 1); }
+                    if (s.ebullets[i].y > H + 10) s.ebullets[i].dead = true;
                }
-               for (let i = s.powerups.length - 1; i >= 0; i--) {
+               for (let i = 0; i < s.powerups.length; i++) {
                     s.powerups[i].y += s.powerups[i].vy;
-                    if (s.powerups[i].y > H + 20) { s.powerups.splice(i, 1); }
+                    if (s.powerups[i].y > H + 20) s.powerups[i].dead = true;
                }
 
-               // collisions: bullet vs enemy
-               for (let bi = s.bullets.length - 1; bi >= 0; bi--) {
+               // fix #1: collisions — iterate alive cache, not full enemy array
+               for (let bi = 0; bi < s.bullets.length; bi++) {
                     const b = s.bullets[bi];
-                    for (let ei = 0; ei < s.enemies.length; ei++) {
-                         const e = s.enemies[ei];
-                         if (!e.alive) continue;
+                    if (b.dead) continue;
+                    for (let ei = 0; ei < alive.length; ei++) {
+                         const e = alive[ei];
                          if (Math.abs(b.x - e.x) < EW * 0.6 && Math.abs(b.y - e.y) < EH * 0.6) {
                               e.hp--;
-                              s.bullets.splice(bi, 1);
+                              b.dead = true; // fix #2: flag, don't splice
                               if (e.hp <= 0) {
                                    e.alive = false;
                                    s.score += ROW_PTS[e.type];
@@ -326,24 +349,26 @@ export default function SpaceShooter({ onClose }) {
                }
 
                // powerup pickup
-               for (let i = s.powerups.length - 1; i >= 0; i--) {
+               for (let i = 0; i < s.powerups.length; i++) {
                     const p = s.powerups[i];
+                    if (p.dead) continue;
                     if (Math.abs(p.x - s.player.x) < 24 && Math.abs(p.y - s.player.y) < 24) {
                          if (p.type === 'rapid') s.rapidFireTimer = 400;
                          if (p.type === 'spread') s.spreadFireTimer = 400;
                          if (p.type === 'shield') s.hasShield = true;
                          s.score += 50;
                          addParticles(s, s.player.x, s.player.y, pColors[p.type], false);
-                         s.powerups.splice(i, 1);
+                         p.dead = true; // fix #2
                     }
                }
 
                // enemy bullet vs player
                if (s.invTimer === 0) {
-                    for (let i = s.ebullets.length - 1; i >= 0; i--) {
+                    for (let i = 0; i < s.ebullets.length; i++) {
                          const b = s.ebullets[i];
+                         if (b.dead) continue;
                          if (Math.abs(b.x - s.player.x) < 16 && Math.abs(b.y - s.player.y) < 16) {
-                              s.ebullets.splice(i, 1);
+                              b.dead = true; // fix #2
                               if (s.hasShield) {
                                    s.hasShield = false;
                                    s.invTimer = 60;
@@ -362,21 +387,29 @@ export default function SpaceShooter({ onClose }) {
                     s.invTimer--;
                }
 
-               // particles
-               for (let i = s.particles.length - 1; i >= 0; i--) {
+               // particles — update in place, mark dead
+               for (let i = 0; i < s.particles.length; i++) {
                     const p = s.particles[i];
                     p.x += p.vx; p.y += p.vy; p.life -= p.decay;
-                    if (p.life <= 0) s.particles.splice(i, 1);
                }
+
+               // fix #2: single filter pass per frame for all arrays
+               s.bullets = s.bullets.filter(b => !b.dead);
+               s.ebullets = s.ebullets.filter(b => !b.dead);
+               s.powerups = s.powerups.filter(p => !p.dead);
+               s.particles = s.particles.filter(p => p.life > 0);
 
                // sync react state every 5th frame to reduce re-renders
                if (s.tick % 5 === 0) { setScore(s.score); setLives(s.lives); }
 
-               // end conditions
+               // end conditions (reuses `alive` — fix #5)
                if (s.lives <= 0) { setScore(s.score); setPhase('dead'); return; }
-               const anyAlive = s.enemies.some(e => e.alive);
-               if (!anyAlive) { setScore(s.score); setPhase('clear'); return; }
-               if (s.enemies.some(e => e.alive && e.y > H - 60)) { setScore(s.score); setPhase('dead'); return; }
+               if (alive.length === 0) { setScore(s.score); setPhase('clear'); return; }
+               let enemyReachedLine = false;
+               for (let i = 0; i < alive.length; i++) {
+                    if (alive[i].y > H - 60) { enemyReachedLine = true; break; }
+               }
+               if (enemyReachedLine) { setScore(s.score); setPhase('dead'); return; }
 
                // ── DRAW (no shadowBlur, cached sprites) ──────────────────────────
                ctx.fillStyle = '#050506';
@@ -433,13 +466,8 @@ export default function SpaceShooter({ onClose }) {
                     const ps = bakeSprite('player', '#1ED696', '#DCFFF5');
                     ctx.drawImage(ps, (s.player.x - ps.width / 2) | 0, (s.player.y - ps.height / 2) | 0);
                     if (s.hasShield) {
-                         ctx.strokeStyle = 'rgba(30, 214, 150, 0.45)';
-                         ctx.lineWidth = 2;
-                         ctx.setLineDash([4, 4]);
-                         ctx.beginPath();
-                         ctx.arc(s.player.x, s.player.y, 24, 0, 6.28);
-                         ctx.stroke();
-                         ctx.setLineDash([]);
+                         // fix #4: pre-baked shield drawImage instead of arc()
+                         ctx.drawImage(shield, (s.player.x - shield.width / 2) | 0, (s.player.y - shield.height / 2) | 0);
                     }
                }
 
